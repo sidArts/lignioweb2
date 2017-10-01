@@ -1,4 +1,4 @@
-<?php
+	<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -77,9 +77,9 @@ $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'root',
-	'password' => 'root',
+	'password' => 'admin',
 	'database' => 'lignio_db',
-	'dbdriver' => 'mysqli',
+	'dbdriver' => 'mysqli',	
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
