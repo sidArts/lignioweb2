@@ -20,6 +20,18 @@ class AppController extends CI_Controller {
 	 */
 	public function index()
 	{
-		print "Welcome to the most fantastic EMR on Earth!";
+		$headerData['title']	= "Lignio | Diagnostic Lab Dashboard";
+		$data['header']      	= $this->load->view("partials/header", $headerData, TRUE);
+		$data['sidebar']      	= $this->load->view("partials/sidebar.php", [], TRUE);	
+		$data['heading']     	= "RB Diagnostic Center";
+		$data['bookings']		= 21;
+        $data['reports']		= 45;
+        $data['collection']		= 34;
+        $data['rescheduled']	= 10;
+		$this->load->view("index", $data);
+	}
+
+	public function insert() {
+		print "End";
 	}
 }
