@@ -53,3 +53,4 @@ class Testinfo extends CI_Controller {
 	}
 
 }
+	
