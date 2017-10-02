@@ -71,7 +71,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= base_url() ?>booking/new" class="nav-link ">
+                        <a href="<?= base_url() ?>booking/newBooking" class="nav-link ">
                             <span class="title">New Booking</span>
                         </a>
                     </li>
@@ -90,7 +90,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= base_url() ?>Testinfo/new" class="nav-link ">
+                        <a href="<?= base_url() ?>Testinfo/newDiagnosticTest" class="nav-link ">
                             <span class="title">Add New</span>
                         </a>
                     </li>

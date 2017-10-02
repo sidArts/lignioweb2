@@ -63,7 +63,7 @@ class Testinfo extends CI_Controller {
 		$this->load->view("diagnosticTest/index", $data);
 	}
 
-	public function new() {
+	public function newDiagnosticTest() {
 		$headerData['title']	= "Lignio | Diagnostic Lab Dashboard";
 		$data['header']      	= $this->load->view("partials/header", $headerData, TRUE);
 		$data['sidebar']      	= $this->load->view("partials/sidebar.php", [], TRUE);
