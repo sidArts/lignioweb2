@@ -29,7 +29,7 @@ class Booking extends CI_Controller {
 		$this->load->view("booking/bookingsList", $data);
 	}
 
-	public function new() {
+	public function newBooking() {
 		$headerData['title']	= "Lignio | Diagnostic Lab Dashboard";
 		$data['header']      	= $this->load->view("partials/header", $headerData, TRUE);
 		$data['sidebar']      	= $this->load->view("partials/sidebar.php", [], TRUE);
@@ -55,3 +55,4 @@ class Booking extends CI_Controller {
 		}
 	}
 }
+
