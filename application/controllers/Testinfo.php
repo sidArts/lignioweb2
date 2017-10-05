@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Testinfo extends CI_Controller {
+class Testinfo extends MY_Controller {
 
 	function __construct() {
 		parent::__construct();
@@ -54,24 +54,16 @@ class Testinfo extends CI_Controller {
 
 	public function index() {
 		$headerData['title']	= "Lignio | Diagnostic Lab Dashboard";
-		$data['header']      	= $this->load->view("partials/header", $headerData, TRUE);
-		$data['sidebar']      	= $this->load->view("partials/sidebar.php", [], TRUE);
-		$data['footer']			= $this->load->view("partials/footer.php", [], TRUE);
-		$data['coreplugins']	= $this->load->view("partials/coreplugins.php", [], TRUE);
 		$data['diagnosticLabId']= 1;
 		$data['heading']     	= "RB Diagnostic Center";
-		$this->load->view("diagnosticTest/index", $data);
+		
+		$this->layout->render("diagnosticTest/index", $data);
 	}
 
 	public function newDiagnosticTest() {
-		$headerData['title']	= "Lignio | Diagnostic Lab Dashboard";
-		$data['header']      	= $this->load->view("partials/header", $headerData, TRUE);
-		$data['sidebar']      	= $this->load->view("partials/sidebar.php", [], TRUE);
-		$data['footer']			= $this->load->view("partials/footer.php", [], TRUE);
-		$data['coreplugins']	= $this->load->view("partials/coreplugins.php", [], TRUE);
 		$data['diagnosticLabId']= 1;
 		$data['heading']     	= "RB Diagnostic Center";
-		$this->load->view("diagnosticTest/createNew", $data);
+		$this->layout->render("diagnosticTest/createNew", $data);
 	}
 
 }

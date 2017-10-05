@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Booking extends CI_Controller {
+class Booking extends MY_Controller {
 
 	function __construct() {
 		parent::__construct();
@@ -19,25 +19,15 @@ class Booking extends CI_Controller {
 	}
 
 	public function index() {
-		$headerData['title']	= "Lignio | Diagnostic Lab Dashboard";
-		$data['header']      	= $this->load->view("partials/header", $headerData, TRUE);
-		$data['sidebar']      	= $this->load->view("partials/sidebar.php", [], TRUE);
-		$data['footer']			= $this->load->view("partials/footer.php", [], TRUE);
-		$data['coreplugins']	= $this->load->view("partials/coreplugins.php", [], TRUE);
 		$data['diagnosticLabId']= 1;
 		$data['heading']     	= "RB Diagnostic Center";
-		$this->load->view("booking/bookingsList", $data);
+		$this->layout->render("booking/bookingsList", $data);
 	}
 
 	public function newBooking() {
-		$headerData['title']	= "Lignio | Diagnostic Lab Dashboard";
-		$data['header']      	= $this->load->view("partials/header", $headerData, TRUE);
-		$data['sidebar']      	= $this->load->view("partials/sidebar.php", [], TRUE);
-		$data['footer']			= $this->load->view("partials/footer.php", [], TRUE);
-		$data['coreplugins']	= $this->load->view("partials/coreplugins.php", [], TRUE);
 		$data['diagnosticLabId']= 1;
 		$data['heading']     	= "RB Diagnostic Center";
-		$this->load->view("booking/newBooking", $data);
+		$this->layout->render("booking/newBooking", $data);
 	}
 
 	public function _validateRequest($config) {

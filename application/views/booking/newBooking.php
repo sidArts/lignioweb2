@@ -1,10 +1,4 @@
-<?= $header ?>
-
-<div class="page-container" style="height: 100%;">
-    <?= $sidebar ?>
-
-    <!-- BEGIN CONTENT -->
-    <div class="page-content-wrapper">
+<div class="page-content-wrapper">
 
         <div ng-app="newBookingModule" ng-controller="newBookingController" class="page-content" style="min-height: 1001px;">
             <!-- BEGIN PAGE HEADER-->
@@ -115,16 +109,7 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
-
-<!-- BEGIN FOOTER -->
-<?= $footer ?>
-<!-- BEGIN FOOTER -->
-
-<!-- BEGIN CORE PLUGINS -->
-<?= $coreplugins ?>
-<!-- END CORE PLUGINS -->
 
 <script src="<?= base_url() . 'assets' ?>/js/lib/angular/angular.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/bookingModule/bookingController.js"></script>
