@@ -53,7 +53,6 @@ class Testinfo extends MY_Controller {
 	}
 
 	public function index() {
-		$headerData['title']	= "Lignio | Diagnostic Lab Dashboard";
 		$data['diagnosticLabId']= 1;
 		$data['heading']     	= "RB Diagnostic Center";
 		
