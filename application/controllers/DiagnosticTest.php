@@ -1,23 +1,25 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Booking extends MY_Controller {
+class DiagnosticTest extends MY_Controller {
 
 	function __construct() {
 		parent::__construct();
-		$this->load->model("BookingModel", "booking");
+		$this->load->model("TestInformationModel", "testInfo");
 	}	
 
 	public function index() {
 		$data['diagnosticLabId']= 1;
 		$data['heading']     	= "RB Diagnostic Center";
-		$this->layout->render("booking/bookingsList", $data);
+		
+		$this->layout->render("diagnosticTest/index", $data);
 	}
 
 	public function create() {
 		$data['diagnosticLabId']= 1;
 		$data['heading']     	= "RB Diagnostic Center";
-		$this->layout->render("booking/newBooking", $data);
+		$this->layout->render("diagnosticTest/createNew", $data);
 	}
-}
 
+}
+	

@@ -111,5 +111,5 @@
         </div>
 </div>
 
-<script src="<?= base_url() . 'assets' ?>/js/lib/angular/angular.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/bookingModule/bookingController.js"></script>
+<?php print $js ?>
+<script src="<?= base_url('assets/js/bookingModule/newBooking.js')?>"></script>

@@ -28,12 +28,12 @@
             </a>
             <ul class="sub-menu">
                <li class="nav-item">
-                  <a href="<?php print base_url(); ?>report" class="nav-link ">
+                  <a href="<?php print base_url('Report'); ?>" class="nav-link ">
                      <span class="title">View Shared Reports</span>
                   </a>
                </li>
                <li class="nav-item">
-                  <a href="<?php print base_url(); ?>report/create" class="nav-link ">
+                  <a href="<?php print base_url('Report/create'); ?>" class="nav-link ">
                      <span class="title">Upload New Report</span>
                   </a>
                </li>
@@ -61,12 +61,12 @@
                      </a>
                      <ul class="sub-menu">
                         <li class="nav-item">
-                           <a href="<?php print base_url(); ?>booking" class="nav-link ">
+                           <a href="<?php print base_url('Booking'); ?>" class="nav-link ">
                               <span class="title">View Bookings</span>
                            </a>
                         </li>
                         <li class="nav-item">
-                           <a href="<?php print base_url(); ?>booking/newBooking" class="nav-link ">
+                           <a href="<?php print base_url('Booking/create'); ?>" class="nav-link ">
                               <span class="title">New Booking</span>
                            </a>
                         </li>
@@ -80,12 +80,12 @@
                      </a>
                      <ul class="sub-menu">
                         <li class="nav-item">
-                           <a href="<?php print base_url(); ?>Testinfo" class="nav-link ">
+                           <a href="<?php print base_url('DiagnosticTest'); ?>" class="nav-link ">
                               <span class="title">View Diagnostic Tests</span>
                            </a>
                         </li>
                         <li class="nav-item">
-                           <a href="<?php print base_url(); ?>Testinfo/newDiagnosticTest" class="nav-link ">
+                           <a href="<?php print base_url('DiagnosticTest/create'); ?>/" class="nav-link ">
                               <span class="title">Add New</span>
                            </a>
                         </li>

@@ -9,7 +9,7 @@ class MY_Controller extends CI_Controller {
 	}
 
 
-	public function __remap($method, $param = []) {
+	public function _remap($method, $params = []) {
 		if (method_exists($this, $method)) {
 			call_user_func_array(array($this, $method), $params);
 		} else {
@@ -17,4 +17,6 @@ class MY_Controller extends CI_Controller {
 		}
 		
 	}
+
+
 }

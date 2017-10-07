@@ -156,8 +156,7 @@
     var diagnosticLabId = '<?= $diagnosticLabId ?>';
 </script>
 <script src="<?= base_url('assets/js/lib/bootbox.js') ?>"></script>
-<script src="<?= base_url('assets/js/lib/angular/angular.js') ?>"></script>
 <script src="<?= base_url('assets/js/lib/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?= base_url('assets/js/lib/datatables/dataTables.bootstrap.js') ?>"></script>
 <script src="<?= base_url('assets/js/lib/datatables/angular-datatables.js') ?>"></script>
-<script src="<?= base_url('assets/js/diagnosticTestModule/diagnosticTestModule.js') ?>"></script>
+<script src="<?= base_url('assets/js/diagnosticTestModule/diagnosticTestView.js') ?>"></script>

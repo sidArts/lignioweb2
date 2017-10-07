@@ -9,6 +9,9 @@
       <meta content="" name="author">
 
       <?php print $css; ?>
+      <script type="text/javascript">
+         var BASEPATH = 'http://localhost/lignioweb/';
+      </script>
    </head>
    <!-- END HEAD -->
    <body class="page-header-fixed page-sidebar-closed-hide-logo">

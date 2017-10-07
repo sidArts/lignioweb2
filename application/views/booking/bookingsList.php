@@ -75,4 +75,4 @@
 <script src="<?php print base_url('assets/js/lib/datatables/jquery.dataTables.js'); ?>"></script>
 <script src="<?php print base_url('assets/js/lib/datatables/dataTables.bootstrap.js'); ?>"></script>
 <script src="<?php print base_url('assets/js/lib/datatables/angular-datatables.js'); ?>"></script>
-<script src="<?php print base_url('assets/js/bookingModule/bookingController.js'); ?>"></script>
+<script src="<?php print base_url('assets/js/bookingModule/bookingsView.js'); ?>"></script>

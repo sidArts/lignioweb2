@@ -76,7 +76,8 @@ class Layout {
 			"layout.min.js",
 			"demo.min.js",
 			"quick-sidebar.min.js",
-			"quick-nav.min.js"
+			"quick-nav.min.js",
+			"angular/angular.js"
 		);
 	}
 
