@@ -5,7 +5,7 @@ class DiagnosticTest extends MY_Controller {
 
 	function __construct() {
 		parent::__construct();
-		$this->load->model("TestInformationModel", "testInfo");
+		$this->load->model("DiagnosticTestModel", "diagnosticTestModel");
 	}	
 
 	public function index() {

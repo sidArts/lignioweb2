@@ -19,7 +19,8 @@ class REST_Controller extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();			
-		$this->load->model($this->modelName);	
+		$this->userDetails = [];
+		$this->load->model($this->modelName);
 		$this->http_request_headers = [
 			'index'		=> [ "request"   => "GET" ],
 			'create'	=> [ "request"   => "POST", "dataType" => "application/json" ]
@@ -39,11 +40,35 @@ class REST_Controller extends CI_Controller {
 		$this->_response(REST_Controller::HTTP_CREATED, $insertedId);
 	}
 
-	public function _remap($method, $params = []) {
+	public function _remap($method, $params = []) {	
+		$p = explode('_', $method)[0];
+		$p = (($p == 'index') ? 'read' : $p); 
+		if (method_exists($this, $method)) {			
+			$permission = strtolower(get_class($this)) . '_' . $p ;
+			$this->userDetails = [
+				'user_id'	=> 1,
+				'org_id'	=> 1,
+				'username'	=> 'sid',
+				'fullname'	=> 'Siddhartha Murari',
+				'roles'		=> [ 1 ]
+			];
 
-		if (method_exists($this, $method)) {
-			$this->_validateRequest($method);
-			call_user_func_array(array($this, $method), $params);
+			$query = $this->db->distinct()
+								->select('permission_description as permission, p.restrict')
+								->from('role_permissions rp')
+								->join('permissions p', 'p.permission_id = rp.permission_id')
+								->where_in('role_id', $this->userDetails['roles'])
+								->like('permission_description', $permission, 'none')
+								->get();
+
+			if($query->num_rows() > 0) {
+				$row = $query->row_array();	
+				$this->_validateRequest($method);
+				call_user_func_array(array($this, $method), $params);
+			} else {
+				$this->_response(self::HTTP_UNAUTHORIZED);
+			}
+			
 		} else {
 			$this->_response(REST_Controller::HTTP_NOT_FOUND);
 		}
