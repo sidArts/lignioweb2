@@ -21,9 +21,12 @@ class REST_Controller extends CI_Controller {
 		parent::__construct();			
 		$this->userDetails = [];
 		$this->load->model($this->modelName);
+		$this->load->library("EncryptDecrypt", 'encryptDecrypt');
 		$this->http_request_headers = [
 			'index'		=> [ "request"   => "GET" ],
-			'create'	=> [ "request"   => "POST", "dataType" => "application/json" ]
+			'create'	=> [ "request"   => "POST", 	"dataType" => "application/json" ],
+			'update'	=> [ "request"   => "PATCH",  	"dataType" => "application/json" ],
+			'update'	=> [ "request"   => "DELETE" ]
 		];
 	}
 
@@ -40,7 +43,38 @@ class REST_Controller extends CI_Controller {
 		$this->_response(REST_Controller::HTTP_CREATED, $insertedId);
 	}
 
+	public function update() {
+		$model 		= $this->modelName;
+		$data 		= json_decode($this->input->raw_input_stream, TRUE);
+		$model_id	= strtolower(get_class($this)) . '_id';
+		$where 		= [ $model_id => $data[$model_id] ];
+		if($this->$model->update($where, $data))
+			$this->_response(self::HTTP_NO_CONTENT);		
+		else
+			$this->_response(self::HTTP_BAD_REQUEST);		
+	}
+
+	public function delete($id) {
+		$model 		= $this->modelName;
+		$model_id	= strtolower(get_class($this)) . '_id';
+		$where 		= [ $model_id => $id ];
+		if($this->$model->delete($where))
+			$this->_response(self::HTTP_NO_CONTENT);		
+		else
+			$this->_response(self::HTTP_BAD_REQUEST);		
+	}
+
 	public function _remap($method, $params = []) {	
+		
+		$token = $this->input->get_request_header('Authorization');
+		if($token === NULL) {			
+			$this->_response(REST_Controller::HTTP_UNAUTHORIZED);
+		}
+
+		$tokenString = $this->_encryptDecrypt("decrypt", $token);
+
+		$this->userDetails = json_decode($tokenString, TRUE);
+
 		$p = explode('_', $method)[0];
 		$p = (($p == 'index') ? 'read' : $p); 
 		if (method_exists($this, $method)) {			
@@ -79,12 +113,18 @@ class REST_Controller extends CI_Controller {
      	if (is_array($data) || is_object($data)):
      		$this->output->set_content_type(REST_Controller::HTTP_MIME_TYPE_JSON);
 	 		$this->output->set_output(json_encode($data));
+	 		$this->output->_display();
+	 		exit;
  		elseif (is_string($data) || is_bool($data) || is_int($data) || is_float($data) || is_numeric($data)):
  			$this->output->set_content_type(REST_Controller::HTTP_MIME_TYPE_JSON);
 	 		$this->output->set_output($data);
+	 		$this->output->_display();
+	 		exit;
  		else:
  			$this->output->set_content_type($contentType);
 	 		$this->output->set_output($data);
+	 		$this->output->_display();
+	 		exit;
  		endif;
 	}
 
@@ -98,6 +138,25 @@ class REST_Controller extends CI_Controller {
 		    $this->output->set_status_header(REST_Controller::HTTP_UNSUPPORTED_METHOD)->_display();
 		    exit;
 		}
+	}
+
+	public function _encryptDecrypt($action, $string) {
+		$output = false;
+		$encrypt_method = "AES-256-CBC";
+		$secret_key = 'This is my secret key';
+		$secret_iv = 'This is my secret iv';
+    	// hash
+		$key = hash('sha256', $secret_key);
+
+    	// iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+		$iv = substr(hash('sha256', $secret_iv), 0, 16);
+		if ( $action == 'encrypt' ) {
+			$output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+			$output = base64_encode($output);
+		} else if( $action == 'decrypt' ) {
+			$output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+		}
+		return $output;
 	}
 	
 }

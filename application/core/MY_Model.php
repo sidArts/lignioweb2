@@ -66,7 +66,9 @@ class MY_Model extends CI_Model {
 
 		if($this->db->affected_rows() > 0) {
 			$data = $this->observe('after_update', $args[1]);	
+			return true;
 		}
+		return false;
 	}
 	public function delete()
 	{
