@@ -16,6 +16,9 @@
    <!-- END HEAD -->
    <body class="page-header-fixed page-sidebar-closed-hide-logo">
       <div class="page-wrapper">
+         <form id="pageNavigateForm" method="post" action="">
+            <input type="hidden" name="Authorization" id="Authorization" value="<?php print $token ?>">
+         </form>
       <?php print $header; ?>
       <!-- BEGIN HEADER & CONTENT DIVIDER -->
       <div class="clearfix"> </div>
