@@ -53,7 +53,7 @@ DROP TABLE IF EXISTS `diagnostic_tests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `diagnostic_tests` (
-  `test_info_id` int(11) NOT NULL AUTO_INCREMENT,
+  `diagnostictest_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `specimen` varchar(45) DEFAULT NULL,
   `method` varchar(45) DEFAULT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE `diagnostic_tests` (
   `is_active` tinyint(4) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`test_info_id`)
+  PRIMARY KEY (`diagnostictest_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -73,6 +73,29 @@ LOCK TABLES `diagnostic_tests` WRITE;
 /*!40000 ALTER TABLE `diagnostic_tests` DISABLE KEYS */;
 INSERT INTO `diagnostic_tests` VALUES (1,'Absolute Basophil Count','Pathological Tests',NULL,'100',1,'2017-10-02 12:08:04','2017-10-02 12:08:04'),(2,'Absolute Granulocyte Count','Pathological Tests',NULL,'250',1,'2017-10-02 12:09:10','2017-10-02 12:09:10'),(3,'Absolute Lymphocyte Count','Pathological Tests',NULL,'300',1,'2017-10-02 12:24:26','2017-10-02 12:24:26'),(4,'','3mL. Blood',NULL,NULL,1,'2017-10-07 09:41:44','2017-10-07 09:41:44');
 /*!40000 ALTER TABLE `diagnostic_tests` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `jwt`
+--
+
+DROP TABLE IF EXISTS `jwt`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `jwt` (
+  `token` longtext NOT NULL,
+  `expiry` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `jwt`
+--
+
+LOCK TABLES `jwt` WRITE;
+/*!40000 ALTER TABLE `jwt` DISABLE KEYS */;
+INSERT INTO `jwt` VALUES ('YmJEODloZWtGYVdXVG1Qa3U1c3hZNE9IalEwcUcySTViRnRaMEhHR2EvbVAxQkM2QzhxT1QxbVBRcGFaQkk4UVRhdGhVd3NlaHJkbTIrWmNaTmdKQ3lhc3h6cGsvYUUrNUEwODh0VnAwMlg0RkwwMmROc0ZVaDhKQnJlVFJydko=',1507899831149);
+/*!40000 ALTER TABLE `jwt` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -192,9 +215,10 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
-  `email_address` varchar(50) NOT NULL,
+  `email` varchar(60) NOT NULL,
   `password` varchar(250) NOT NULL,
-  `org_id` int(11) NOT NULL,
+  `fullname` varchar(255) DEFAULT NULL,
+  `org_id` int(11) DEFAULT NULL,
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   `is_active` int(11) NOT NULL,
@@ -208,7 +232,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'sid','sid@mail.com','111',1,NULL,NULL,1);
+INSERT INTO `user` VALUES (1,'sid','sid@mail.com','111','Siddhartha Murari',1,NULL,NULL,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -235,6 +259,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
+INSERT INTO `user_role` VALUES (1,1),(1,2);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -247,4 +272,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-08 20:51:43
+-- Dump completed on 2017-10-13 18:34:31

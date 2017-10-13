@@ -35,7 +35,8 @@ class MY_Controller extends CI_Controller {
 					if($this->db->affected_rows() == 1) {
 						$this->data = [ 'token' => $token ];
 						$this->output->set_header('Authorization: '. $token);
-						call_user_func_array(array($this, $method), $params);					
+						call_user_func_array(array($this, $method), $params);	
+						$this->layout->render($this->view, $this->data);				
 					} else {
 						print 'Authorization token could not be updated!'; exit;
 					}
