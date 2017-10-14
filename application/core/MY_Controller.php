@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller {
 
+	const TOKEN_EXPIRY = (60 * 60 * 1000);
+
 	public function __construct() {
 		parent::__construct();		
 		$this->load->library("Layout", "layout");
@@ -20,8 +22,9 @@ class MY_Controller extends CI_Controller {
 				exit;
 			endif;
 			$query = $this->db->get_where('jwt', [ 'token' => $token ]);
-			$tokenDetails = $query->row_array();
+			
 			if($query->num_rows() > 0):
+				$tokenDetails = $query->row_array();
 				$tokenString = $this->_encryptDecrypt("decrypt", $tokenDetails['token']);
 				$this->userDetails = json_decode($tokenString, TRUE);
 				$milliseconds = round(microtime(true) * 1000);
@@ -31,7 +34,7 @@ class MY_Controller extends CI_Controller {
 					print 'Your session has expired!';
 				} else {					
 					$this->db->where('token', $token);
-					$this->db->update('jwt', [ 'expiry' => $milliseconds + (0.5 * 60 * 1000) ]);
+					$this->db->update('jwt', [ 'expiry' => $milliseconds + self::TOKEN_EXPIRY ]);
 					if($this->db->affected_rows() == 1) {
 						$this->data = [ 'token' => $token ];
 						$this->output->set_header('Authorization: '. $token);

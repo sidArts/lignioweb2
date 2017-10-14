@@ -3,6 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
 
+	function __construct() {
+		parent::__construct();
+	}
+
 	/**
 	 * Index Page for this controller.
 	 *
@@ -28,12 +32,13 @@ class Login extends CI_Controller {
 			
 			if($query->num_rows() > 0):
 				$result = $query->row_array();	
-				$milliseconds = round(microtime(true) * 1000);
+				$expiry = round(microtime(true) * 1000) + (1 * 60 * 1000);
 				$json = [
 					'user_id'	=> $result['user_id'],
 					'org_id'	=> $result['org_id'],
 					'username'	=> $result['username'],
 					'fullname'	=> $result['fullname'],
+					'expiry'	=> $expiry
 				];
 				$this->db->flush_cache();
 				$this->db->select('role_id');
@@ -53,7 +58,7 @@ class Login extends CI_Controller {
 
 					$this->db->insert('jwt', [ 
 						'token' 	=> $token, 
-						'expiry'	=> $milliseconds + (0.5 * 60 * 1000) 
+						'expiry'	=> $expiry 
 					]);
 					if($this->db->affected_rows() == 1){
 						$this->load->view('login', [ 'status' => true, 'token' => $token ]);	
