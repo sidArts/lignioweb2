@@ -51,64 +51,64 @@
                                </li>
                            </ul>
                         </li>-->
-                     </ul>
-                  </li>
-                  <li class="nav-item">
-                     <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        <span class="title">Bookings</span>
-                        <span class="arrow"></span>
-                     </a>
-                     <ul class="sub-menu">
-                        <li class="nav-item">
-                           <a href="<?php print base_url('Booking'); ?>" class="nav-link ">
-                              <span class="title">View Bookings</span>
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="<?php print base_url('Booking/create'); ?>" class="nav-link ">
-                              <span class="title">New Booking</span>
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li class="nav-item">
-                     <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="fa fa-stethoscope" aria-hidden="true"></i>
-                        <span class="title">Diagnostic Tests</span>
-                        <span class="arrow"></span>
-                     </a>
-                     <ul class="sub-menu">
-                        <li class="nav-item">
-                           <a href="<?php print base_url('DiagnosticTest'); ?>" class="nav-link ">
-                              <span class="title">View Diagnostic Tests</span>
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="<?php print base_url('DiagnosticTest/create'); ?>/" class="nav-link ">
-                              <span class="title">Add New</span>
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li class="nav-item">
-                     <a href="/diagnosticTestSample" class="nav-link nav-toggle">
-                        <i class="fa fa-stethoscope" aria-hidden="true"></i>
-                        <span class="title">Diagnostic Test Sample</span>
-                        <span class="arrow"></span>
-                     </a>
-                  </li>
-                  <li class="nav-item">
-                     <a href="/profile" class="nav-link nav-toggle">
-                        <i class="fa fa-user-o" aria-hidden="true"></i>
-                        <span class="title">Profile</span>
-                        <span class="arrow"></span>
-                     </a>
-                  </li>
-               </ul>
-               <!-- END SIDEBAR MENU -->
-               <!-- END SIDEBAR MENU -->
-            </div>
-            <!-- END SIDEBAR -->
-         </div>
-         <!-- END SIDEBAR -->    
+            </ul>
+         </li>
+         <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+               <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+               <span class="title">Bookings</span>
+               <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+               <li class="nav-item">
+                  <a href="javascript:void(0);" onclick="goToPage('Booking')" class="nav-link ">
+                     <span class="title">View Bookings</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a href="javascript:void(0);" onclick="goToPage('Booking/create')" class="nav-link ">
+                     <span class="title">New Booking</span>
+                  </a>
+               </li>
+            </ul>
+         </li>
+         <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+               <i class="fa fa-stethoscope" aria-hidden="true"></i>
+               <span class="title">Diagnostic Tests</span>
+               <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+               <li class="nav-item">
+                  <a href="javascript:void(0);" onclick="goToPage('DiagnosticTest')" class="nav-link ">
+                     <span class="title">View Diagnostic Tests</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a href="javascript:void(0);" onclick="goToPage('DiagnosticTest/create')" class="nav-link ">
+                     <span class="title">Add New</span>
+                  </a>
+               </li>
+            </ul>
+         </li>
+         <li class="nav-item">
+            <a href="/diagnosticTestSample" class="nav-link nav-toggle">
+               <i class="fa fa-stethoscope" aria-hidden="true"></i>
+               <span class="title">Diagnostic Test Sample</span>
+               <span class="arrow"></span>
+            </a>
+         </li>
+         <li class="nav-item">
+            <a href="/profile" class="nav-link nav-toggle">
+               <i class="fa fa-user-o" aria-hidden="true"></i>
+               <span class="title">Profile</span>
+               <span class="arrow"></span>
+            </a>
+         </li>
+      </ul>
+      <!-- END SIDEBAR MENU -->
+      <!-- END SIDEBAR MENU -->
+   </div>
+   <!-- END SIDEBAR -->
+</div>
+<!-- END SIDEBAR -->    

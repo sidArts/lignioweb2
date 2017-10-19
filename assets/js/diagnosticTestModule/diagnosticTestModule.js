@@ -28,4 +28,7 @@ var newDiagnosticTestController = function ($scope, $http, $window) {
 
 
 var newDiagnosticTestModule = angular.module("newDiagnosticTestModule", []);
+newDiagnosticTestModule.run(function($http) {
+  $http.defaults.headers.common.Authorization = document.getElementById('Authorization').value;
+});
 newDiagnosticTestModule.controller("newDiagnosticTestController", newDiagnosticTestController);

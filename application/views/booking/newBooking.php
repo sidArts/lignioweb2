@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="<?php print base_url('assets/css/lib/nya-bs-select.css') ?>">
 <div class="page-content-wrapper">
 
         <div ng-app="newBookingModule" ng-controller="newBookingController" class="page-content" style="min-height: 1001px;">
@@ -41,15 +42,7 @@
                             <!-- BEGIN FORM-->
                             <form action="#" class="form-horizontal">
                                 <div class="form-body">
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">Diagnostic Test</label>
-                                        <div class="col-md-4">
-                                            <select class="form-control input-circle-left input-circle-right" ng-model="booking.diagnosticTest" ng-options="value._id as value.name for value in diagnosticTestList">
-                                                <option value="">--Select--</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-md-3 control-label">First Name</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
@@ -81,7 +74,7 @@
                                                 <input type="email" ng-model="booking.email" class="form-control input-circle-right" placeholder="Email Address">
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Phone</label>
                                         <div class="col-md-4">
@@ -90,6 +83,16 @@
                                                 <span class="input-group-addon input-circle-right">
                                                     <i class="fa fa-phone-square" aria-hidden="true"></i>
                                                 </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Add Diagnostic Tests</label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-diagnostic-test-modal">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -104,6 +107,30 @@
                                 </div>
                             </form>
                             <!-- END FORM-->
+
+                            <div id="add-diagnostic-test-modal" class="modal fade">
+                                <div class="modal-dialog modal-lg">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Select Diagnostic Tests</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <diagnostic-test-view diagnostic-test-list="diagnosticTestList" checked-tests="checkedDiagnosticTests">
+
+                                            
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" ng-click="selectDiagnosticTest()">Done</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -112,4 +139,8 @@
 </div>
 
 <?php print $js ?>
+<script src="<?= base_url('assets/js/lib/nya-bs-select.js')?>"></script>
+<script src="<?= base_url('assets/js/lib/datatables/jquery.dataTables.js') ?>"></script>
+<script src="<?= base_url('assets/js/lib/datatables/dataTables.bootstrap.js') ?>"></script>
+<script src="<?= base_url('assets/js/lib/datatables/angular-datatables.js') ?>"></script>
 <script src="<?= base_url('assets/js/bookingModule/newBooking.js')?>"></script>

@@ -53,4 +53,7 @@ var diagnosticTestController = function($scope, $http, $window, DTOptionsBuilder
 };
 
 var diagnosticTestModule = angular.module("diagnosticTestModule", ['datatables']);
+diagnosticTestModule.run(function($http) {
+  $http.defaults.headers.common.Authorization = document.getElementById('Authorization').value;
+});
 diagnosticTestModule.controller("diagnosticTestController", diagnosticTestController);

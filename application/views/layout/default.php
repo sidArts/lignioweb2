@@ -38,5 +38,12 @@
       <!-- END CONTAINER -->
       
       <?php print $footer; ?>
+      <script type="text/javascript">
+         var goToPage = function(url) {
+            var pageNavigateForm = document.getElementById('pageNavigateForm');
+            pageNavigateForm.setAttribute('action', BASEPATH + url);
+            pageNavigateForm.submit();
+         };
+      </script>
    </body>
 </html>

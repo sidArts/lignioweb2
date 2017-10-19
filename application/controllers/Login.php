@@ -25,7 +25,8 @@ class Login extends CI_Controller {
 	public function index()
 	{		
 		if ($this->input->server('REQUEST_METHOD') == 'POST'):
-			$query = $this->db->get_where('user', [ 
+			$this->db->join('user_org_map uo', 'uo.user_id = u.user_id');
+			$query = $this->db->get_where('users u', [ 
 				'email' => $this->input->post('email'),
 				'password' => $this->input->post('password')
 			]);
@@ -36,8 +37,8 @@ class Login extends CI_Controller {
 				$json = [
 					'user_id'	=> $result['user_id'],
 					'org_id'	=> $result['org_id'],
-					'username'	=> $result['username'],
-					'fullname'	=> $result['fullname'],
+					'firstname'	=> $result['firstname'],
+					'lastname'	=> $result['lastname'],
 					'expiry'	=> $expiry
 				];
 				$this->db->flush_cache();
@@ -74,6 +75,10 @@ class Login extends CI_Controller {
 		else:
 			$this->load->view('login', [ 'status' => false, 'token' => '' ]);
 		endif;
+	}
+
+	public function logout() {
+		
 	}
 
 	public function _encryptDecrypt($action, $string) {

@@ -17,8 +17,11 @@ class MY_Model extends CI_Model {
 		
 		$args = func_get_args();
 		
+		if(isset($args[1]) && is_array($args[1])) {
+			$this->db->select(implode(',', $args[1]));
+		}
 		if (count($args) > 1 || is_array($args[0]))
-			$this->db->where($args);
+			$this->db->where($args[0]);
 		else
 			$this->db->where('id', $args[0]);
 		

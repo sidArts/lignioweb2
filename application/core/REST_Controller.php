@@ -68,7 +68,6 @@ class REST_Controller extends CI_Controller {
 
 	public function _remap($method, $params = []) {	
 		
-		
 		if (method_exists($this, $method)):		
 			$token = $this->input->get_request_header('Authorization');
 			// print $token; exit;
@@ -104,7 +103,7 @@ class REST_Controller extends CI_Controller {
 
 						if($query->num_rows() > 0):
 							$row = $query->row_array();	
-							$this->_validateRequest($method);
+							// $this->_validateRequest($method);
 							call_user_func_array(array($this, $method), $params);
 						else:
 							$this->_response(self::HTTP_FORBIDDEN);
@@ -146,7 +145,9 @@ class REST_Controller extends CI_Controller {
 		    exit;
 		}
 		if(isset($this->http_request_headers[$method]['dataType']) && $_SERVER['CONTENT_TYPE'] != $this->http_request_headers[$method]['dataType']) {
-		    $this->output->set_status_header(REST_Controller::HTTP_UNSUPPORTED_METHOD)->_display();
+			print $this->http_request_headers[$method]['dataType'];
+			print $_SERVER['CONTENT_TYPE']; exit;
+		    $this->output->set_status_header(REST_Controller::HTTP_UNSUPPORTED_MEDIA_TYPE)->_display();
 		    exit;
 		}
 	}

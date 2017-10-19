@@ -18,6 +18,35 @@ USE `lignio_db`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `booking_details`
+--
+
+DROP TABLE IF EXISTS `booking_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `booking_details` (
+  `booking_detail_id` int(11) NOT NULL AUTO_INCREMENT,
+  `booking_id` int(11) NOT NULL,
+  `diagnostic_test_id` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `is_active` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`booking_detail_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `booking_details`
+--
+
+LOCK TABLES `booking_details` WRITE;
+/*!40000 ALTER TABLE `booking_details` DISABLE KEYS */;
+INSERT INTO `booking_details` VALUES (1,2,1,1,'2017-10-20 00:31:56','2017-10-20 00:31:56',1),(2,2,3,1,'2017-10-20 00:31:56','2017-10-20 00:31:56',1),(3,3,1,1,'2017-10-20 00:33:35','2017-10-20 00:33:35',1),(4,3,3,1,'2017-10-20 00:33:35','2017-10-20 00:33:35',1);
+/*!40000 ALTER TABLE `booking_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `bookings`
 --
 
@@ -28,11 +57,12 @@ CREATE TABLE `bookings` (
   `booking_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `diagnostic_lab_id` int(11) DEFAULT NULL,
+  `booking_type` varchar(7) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `is_active` int(11) DEFAULT '1',
   PRIMARY KEY (`booking_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +71,7 @@ CREATE TABLE `bookings` (
 
 LOCK TABLES `bookings` WRITE;
 /*!40000 ALTER TABLE `bookings` DISABLE KEYS */;
-INSERT INTO `bookings` VALUES (1,1,1,NULL,NULL,1);
+INSERT INTO `bookings` VALUES (1,1,1,'Offline',NULL,NULL,1),(2,2,1,'Offline','2017-10-20 00:31:56','2017-10-20 00:31:56',1),(3,3,1,'Offline','2017-10-20 00:33:35','2017-10-20 00:33:35',1);
 /*!40000 ALTER TABLE `bookings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +92,7 @@ CREATE TABLE `diagnostic_tests` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`diagnostictest_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +101,7 @@ CREATE TABLE `diagnostic_tests` (
 
 LOCK TABLES `diagnostic_tests` WRITE;
 /*!40000 ALTER TABLE `diagnostic_tests` DISABLE KEYS */;
-INSERT INTO `diagnostic_tests` VALUES (1,'Absolute Basophil Count','Pathological Tests',NULL,'100',1,'2017-10-02 12:08:04','2017-10-02 12:08:04'),(2,'Absolute Granulocyte Count','Pathological Tests',NULL,'250',1,'2017-10-02 12:09:10','2017-10-02 12:09:10'),(3,'Absolute Lymphocyte Count','Pathological Tests',NULL,'300',1,'2017-10-02 12:24:26','2017-10-02 12:24:26'),(4,'','3mL. Blood',NULL,NULL,1,'2017-10-07 09:41:44','2017-10-07 09:41:44');
+INSERT INTO `diagnostic_tests` VALUES (1,'Absolute Basophil Count','3 mL. Blood',NULL,'100',1,'2017-10-02 12:08:04','2017-10-02 12:08:04'),(3,'Absolute Lymphocyte Count','3 mL. Blood',NULL,'300',1,'2017-10-02 12:24:26','2017-10-02 12:24:26'),(4,'Sugar Fasting','3 mL. Blood','','250',1,'2017-10-19 17:12:00','2017-10-19 17:12:00'),(6,'Absolute Granulocyte Count','3 mL. Blood',NULL,'250',1,'2017-10-02 12:09:10','2017-10-02 12:09:10');
 /*!40000 ALTER TABLE `diagnostic_tests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +124,7 @@ CREATE TABLE `jwt` (
 
 LOCK TABLES `jwt` WRITE;
 /*!40000 ALTER TABLE `jwt` DISABLE KEYS */;
-INSERT INTO `jwt` VALUES ('YmJEODloZWtGYVdXVG1Qa3U1c3hZNE9IalEwcUcySTViRnRaMEhHR2EvbVAxQkM2QzhxT1QxbVBRcGFaQkk4UVRhdGhVd3NlaHJkbTIrWmNaTmdKQ3lhc3h6cGsvYUUrNUEwODh0VnAwMlg0RkwwMmROc0ZVaDhKQnJlVFJydko=',1507899831149);
+INSERT INTO `jwt` VALUES ('YmJEODloZWtGYVdXVG1Qa3U1c3hZNE9IalEwcUcySTViRnRaMEhHR2EvbVAxQkM2QzhxT1QxbVBRcGFaQkk4UVRhdGhVd3NlaHJkbTIrWmNaTmdKQy8xbTJOSXpBU1RzTG93RzRkdzd3NjMzbCtQNklTbVU0bXlWZFRXbW16aHJoVHRReTRhbkpRRTRkRnprcjBPSmJVeThhRDdTbzgvSFpRWUZ4ckRBWWdFPQ==',1507947592208),('YmJEODloZWtGYVdXVG1Qa3U1c3hZNE9IalEwcUcySTViRnRaMEhHR2EvbVAxQkM2QzhxT1QxbVBRcGFaQkk4UVRhdGhVd3NlaHJkbTIrWmNaTmdKQy8xbTJOSXpBU1RzTG93RzRkdzd3NjBIOENJVmhhUWR5QzhBQVlPaWQvcjFEbjZxT3k5Y1Zja1REUGJ3SmNDNXRmUDlnL1RNNVY0TEREK2NXUE9MNWxVPQ==',1507951542979),('YmJEODloZWtGYVdXVG1Qa3U1c3hZNE9IalEwcUcySTViRnRaMEhHR2EvbVAxQkM2QzhxT1QxbVBRcGFaQkk4UVRhdGhVd3NlaHJkbTIrWmNaTmdKQy8xbTJOSXpBU1RzTG93RzRkdzd3NjBveEdEWTV4dFROdWhxTk1YWk51aDVWR3J5WG85LzRGVnZVR3gxcWN5TjZwR3NlQ2FxeVlpNkJTWHA2aHVoWXhFPQ==',1507953303770),('YmJEODloZWtGYVdXVG1Qa3U1c3hZNE9IalEwcUcySTViRnRaMEhHR2EvbVAxQkM2QzhxT1QxbVBRcGFaQkk4UVRhdGhVd3NlaHJkbTIrWmNaTmdKQy8xbTJOSXpBU1RzTG93RzRkdzd3NjJ1bjhkRlMxeWF5OUEyODdXM3F6NlduNTlFNmd3b2dGZlBBMUQ0aHJ4L2kyUmFkK3AyVjNNYjdwMTgwaHBDNjdNPQ==',1507992730792),('YmJEODloZWtGYVdXVG1Qa3U1c3hZNE9IalEwcUcySTViRnRaMEhHR2EvbVAxQkM2QzhxT1QxbVBRcGFaQkk4UVRhdGhVd3NlaHJkbTIrWmNaTmdKQy8xbTJOSXpBU1RzTG93RzRkdzd3NjNIU1pFbFZwOXhBMTJNODZRclRoVCtLc0RIVGwrRURUTjFmRTQyTkZKY1ZrTEVtQzdoOFN1UEVrOHZwVzRSdWY0PQ==',1508037965593),('YmJEODloZWtGYVdXVG1Qa3U1c3hZNE9IalEwcUcySTViRnRaMEhHR2EvbVAxQkM2QzhxT1QxbVBRcGFaQkk4UVRhdGhVd3NlaHJkbTIrWmNaTmdKQy8xbTJOSXpBU1RzTG93RzRkdzd3NjJUdVFxQXZkV3Y0MjVXMk42MEN6dStDWlhESmwvUUtZbzVNeFVXSm9WY3g1STI4ZUR1UHBNV0tvdnZHZVQrUCtNPQ==',1508078483308),('YmJEODloZWtGYVdXVG1Qa3U1c3hZNE9IalEwcUcySTViRnRaMEhHR2EvbVAxQkM2QzhxT1QxbVBRcGFaQkk4UVRhdGhVd3NlaHJkbTIrWmNaTmdKQy8xbTJOSXpBU1RzTG93RzRkdzd3NjE1NitLQytMeVR1ZERjdngvR2dNUHR0M2dVamxxNmF6SEdXQURvdW5CTXdaMFlYbzUybjJaeW5TYjRERzQwVFRjPQ==',1508402088880),('YmJEODloZWtGYVdXVG1Qa3U1c3hZNE9IalEwcUcySTViRnRaMEhHR2EvbVAxQkM2QzhxT1QxbVBRcGFaQkk4UVRhdGhVd3NlaHJkbTIrWmNaTmdKQy8xbTJOSXpBU1RzTG93RzRkdzd3NjBLMm9lbFNnSUYvL2VpaFdnMFFTNmcwZTJad05pMndDelRETjMrejZLdVBuSkhBcFg2bGZUaGJ1TXcrUjRPclZRPQ==',1508417882255),('YmJEODloZWtGYVdXVG1Qa3U1c3hZNE9IalEwcUcySTViRnRaMEhHR2EvbVAxQkM2QzhxT1QxbVBRcGFaQkk4UVRhdGhVd3NlaHJkbTIrWmNaTmdKQy8xbTJOSXpBU1RzTG93RzRkdzd3NjJxZmpMYm9DYjNTL0hScjU3eVZqVGg4V3IxMFd0ekRWZ0tWOEpwQTFCOGtOTHhaT292eW56K2h4R1IxNHpDNWtzPQ==',1508441600819),('YmJEODloZWtGYVdXVG1Qa3U1c3hZK0lkM3gzcC9lYXpSMjVLME1raHFMK1VJWjhtMTk5Yy9peWtzNnl0Mis0SFR5SEJGNXBMOGwvZnAyRjNMcFpEcnhaZk5xOVZndzZmMzJUcGp2S1BFOVliREZTaXc4dXA0TU9DSlkzYkRFYWxLNURadkZFejd5S0x0ZmlmVWNLZlp3PT0=',1508441614276),('YmJEODloZWtGYVdXVG1Qa3U1c3hZK0lkM3gzcC9lYXpSMjVLME1raHFMK1VJWjhtMTk5Yy9peWtzNnl0Mis0SFR5SEJGNXBMOGwvZnAyRjNMcFpEcnpyQ3ZTQUdiQlcwc1pRQ3h6WTdKdVBSdzBPQ2t5RzM4bHVnWS9yZWdnNlRxdWhHOXNtZXlYaTlwMkhsZjBSVE53PT0=',1508441669705),('YmJEODloZWtGYVdXVG1Qa3U1c3hZK0lkM3gzcC9lYXpSMjVLME1raHFMK1VJWjhtMTk5Yy9peWtzNnl0Mis0SFR5SEJGNXBMOGwvZnAyRjNMcFpEcjI5a0FVcXhlN1FtK1MxcTFDbi9TOUdvdkpucTFoUXNqcUlWWkxxUm1xQmtpTTZjc284RE5tQWxTMi9RNUV2QXVRPT0=',1508442303316),('YmJEODloZWtGYVdXVG1Qa3U1c3hZNE9IalEwcUcySTViRnRaMEhHR2EvbXlzdkg2dlp6NnI1WDFBRnUyVGJHOWMxYWNyRFd2UU9IbFluY0JVYitaQmxibVYycDlyUTh0R2s0MFNSMVFPN2twS3JqWXRvekRTb2NER0NTL0UxZlQxLzFIaEo2R3dPc0VzNmlvaFp4dDNnPT0=',1508442363321),('YmJEODloZWtGYVdXVG1Qa3U1c3hZL1ZCQi9jM0MxdjQxUkt4WlhpeE5VNXJxVGk2aklIOFIybkpXU0p0Wlk2MFphcWVEZGpHZ2QzTmtNdmpIbjlTKzFRVVFLNXBXRmpGeGRIaHFaVjFSMGNsVnhCVzN4Qko0WDlhLzlmUXl3STVDUjVXSnpEQS9wT2kwU0pxS3UrZ1BZS0lkUGhVRS9pZWFHdS9rb29jbjRFPQ==',1508445061563);
 /*!40000 ALTER TABLE `jwt` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,34 +236,26 @@ INSERT INTO `role_permissions` VALUES (1,1,2),(2,1,4),(3,1,8),(4,1,11),(5,1,12),
 UNLOCK TABLES;
 
 --
--- Table structure for table `user`
+-- Table structure for table `user_org_map`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `user_org_map`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL,
-  `email` varchar(60) NOT NULL,
-  `password` varchar(250) NOT NULL,
-  `fullname` varchar(255) DEFAULT NULL,
-  `org_id` int(11) DEFAULT NULL,
-  `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL,
-  `is_active` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+CREATE TABLE `user_org_map` (
+  `user_id` int(11) DEFAULT NULL,
+  `org_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `user_org_map`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'sid','sid@mail.com','111','Siddhartha Murari',1,NULL,NULL,1);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `user_org_map` WRITE;
+/*!40000 ALTER TABLE `user_org_map` DISABLE KEYS */;
+INSERT INTO `user_org_map` VALUES (1,1);
+/*!40000 ALTER TABLE `user_org_map` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -246,9 +268,9 @@ DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  KEY `user_id` (`user_id`),
   KEY `role_id` (`role_id`),
-  CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  KEY `user_role_ibfk_1_idx` (`user_id`),
+  CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -262,6 +284,45 @@ LOCK TABLES `user_role` WRITE;
 INSERT INTO `user_role` VALUES (1,1),(1,2);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(100) DEFAULT NULL,
+  `lastname` varchar(100) DEFAULT NULL,
+  `phone` varchar(11) DEFAULT NULL,
+  `email` varchar(60) DEFAULT NULL,
+  `password` varchar(80) DEFAULT NULL,
+  `gender` varchar(6) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `pincode` int(11) DEFAULT NULL,
+  `city` varchar(45) DEFAULT NULL,
+  `state` varchar(45) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT '1',
+  `is_first_login` varchar(1) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `phone_UNIQUE` (`phone`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Siddhartha','Murari','9674544035','sid@mail.com','111','MALE','283, Janapath, West Durganagar, North Dum Dum',700065,'Kolkata','West Bengal','2017-10-19 23:39:00','2017-10-19 23:39:00',1,'N'),(2,NULL,NULL,'8961112533',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-10-20 00:31:56','2017-10-20 00:31:56',1,'Y'),(3,NULL,NULL,'9804668722',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2017-10-20 00:33:35','2017-10-20 00:33:35',1,'Y');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -272,4 +333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-13 18:34:31
+-- Dump completed on 2017-10-20  1:03:35

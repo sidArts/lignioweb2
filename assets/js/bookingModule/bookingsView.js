@@ -28,6 +28,9 @@ var bookingController = function($scope, $http, $window, DTOptionsBuilder, DTCol
     };
 };
 
-var bookingModule = angular.module("bookingModule", ['datatables']);
-bookingModule.controller("bookingController", bookingController);
+var lignioApp = angular.module("bookingModule", ['datatables']);
+lignioApp.run(function($http) {
+  $http.defaults.headers.common.Authorization = document.getElementById('Authorization').value;
+});
+lignioApp.controller("bookingController", bookingController);
 

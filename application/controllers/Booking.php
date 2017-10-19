@@ -9,15 +9,16 @@ class Booking extends MY_Controller {
 	}	
 
 	public function index() {
-		$data['diagnosticLabId']= 1;
-		$data['heading']     	= "RB Diagnostic Center";
-		$this->layout->render("booking/bookingsList", $data);
+		$this->data['diagnosticLabId'] = 1;
+		$this->data['heading']     	   = "RB Diagnostic Center";
+		$this->view = "booking/bookingsList";
+		
 	}
 
 	public function create() {
-		$data['diagnosticLabId']= 1;
-		$data['heading']     	= "RB Diagnostic Center";
-		$this->layout->render("booking/newBooking", $data);
+		$this->data['diagnosticLabId']= 1;
+		$this->data['heading']     	= "RB Diagnostic Center";
+		$this->view = "booking/newBooking";
 	}
 }
 

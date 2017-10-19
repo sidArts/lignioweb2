@@ -46,9 +46,9 @@
                     <tbody>
                         <tr ng-repeat="booking in bookings">
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ booking.bookingType }}</td>
-                            <td>{{ booking._id }}</td>
-                            <td>{{ booking.userId.firstname }}&nbsp;{{ booking.userId.lastname }}</td>
+                            <td>{{ booking.booking_type }}</td>
+                            <td>{{ booking.booking_id }}</td>
+                            <td>{{ booking.firstname }}&nbsp;{{ booking.lastname }}</td>
                             <td>{{ booking.status }}</td>
                             <td>{{ booking.created_at | date : 'MMM d, y h:mm a' }}</td>
                             <td class="text-right" style="width: 30px;">
