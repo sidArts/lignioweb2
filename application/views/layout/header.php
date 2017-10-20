@@ -146,7 +146,8 @@
                <ul class="dropdown-menu dropdown-menu-default">
                   <li>
                      <a href="http://keenthemes.com/preview/metronic/theme/admin_1/page_user_profile_1.html">
-                        <i class="icon-user"></i> My Profile </a>
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i> My Profile 
+                     </a>
                   </li>
                   <li>
                      <a href="javascript:void(0);" onclick="logoutUser()">

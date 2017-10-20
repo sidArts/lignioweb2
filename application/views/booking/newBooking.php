@@ -42,14 +42,11 @@
                             <!-- BEGIN FORM-->
                             <form action="#" class="form-horizontal">
                                 <div class="form-body">
-                                    <!-- <div class="form-group">
+                                    <div class="form-group">
                                         <label class="col-md-3 control-label">First Name</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <span class="input-group-addon input-circle-left">
-                                                    <i class="fa fa-envelope"></i>
-                                                </span>
-                                                <input type="text" ng-model="booking.firstname" class="form-control input-circle-right" placeholder="First Name">
+                                                <input type="text" ng-model="booking.firstname" class="form-control" placeholder="First Name">
                                             </div>
                                         </div>
                                     </div>
@@ -57,10 +54,7 @@
                                         <label class="col-md-3 control-label">Last Name</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <span class="input-group-addon input-circle-left">
-                                                    <i class="fa fa-envelope"></i>
-                                                </span>
-                                                <input type="text" ng-model="booking.lastname" class="form-control input-circle-right" placeholder="Last Name">
+                                                <input type="text" ng-model="booking.lastname" class="form-control" placeholder="Last Name">
                                             </div>
                                         </div>
                                     </div>
@@ -68,21 +62,15 @@
                                         <label class="col-md-3 control-label">Email</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <span class="input-group-addon input-circle-left">
-                                                    <i class="fa fa-envelope"></i>
-                                                </span>
-                                                <input type="email" ng-model="booking.email" class="form-control input-circle-right" placeholder="Email Address">
+                                                <input type="email" ng-model="booking.email" class="form-control" placeholder="Email Address">
                                             </div>
                                         </div>
-                                    </div> -->
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Phone</label>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <input type="text" ng-model="booking.phone" class="form-control input-circle-left" placeholder="Phone">
-                                                <span class="input-group-addon input-circle-right">
-                                                    <i class="fa fa-phone-square" aria-hidden="true"></i>
-                                                </span>
+                                                <input type="text" ng-model="booking.phone" class="form-control" placeholder="Phone">
                                             </div>
                                         </div>
                                     </div>

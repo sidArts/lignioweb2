@@ -111,7 +111,8 @@
                                 <div class="mt-comments">
                                     <div class="mt-comment">
                                         <div class="mt-comment-img">
-                                            <img src="<?= base_url() . 'assets' ?>/img/avatar1(1).jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar1(1).jpg') ?>" alt=""> 
+                                        </div>
                                         <div class="mt-comment-body">
                                             <div class="mt-comment-info">
                                                 <span class="mt-comment-author">Michael Baker</span>
@@ -136,7 +137,7 @@
                                     </div>
                                     <div class="mt-comment">
                                         <div class="mt-comment-img">
-                                            <img src="<?= base_url() . 'assets' ?>/img/avatar6.jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar6.jpg') ?>"> </div>
                                         <div class="mt-comment-body">
                                             <div class="mt-comment-info">
                                                 <span class="mt-comment-author">Larisa Maskalyova</span>
@@ -161,7 +162,7 @@
                                     </div>
                                     <div class="mt-comment">
                                         <div class="mt-comment-img">
-                                            <img src="<?= base_url() . 'assets' ?>/img/avatar8.jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar8.jpg') ?>"> </div>
                                         <div class="mt-comment-body">
                                             <div class="mt-comment-info">
                                                 <span class="mt-comment-author">Natasha Kim</span>
@@ -186,7 +187,7 @@
                                     </div>
                                     <div class="mt-comment">
                                         <div class="mt-comment-img">
-                                            <img src="/img/avatar4.jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar4.jpg') ?>"> </div>
                                         <div class="mt-comment-body">
                                             <div class="mt-comment-info">
                                                 <span class="mt-comment-author">Sebastian Davidson</span>
@@ -217,7 +218,7 @@
                                 <div class="mt-comments">
                                     <div class="mt-comment">
                                         <div class="mt-comment-img">
-                                            <img src="<?= base_url() . 'assets' ?>/img/avatar4.jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar4.jpg') ?>"> </div>
                                         <div class="mt-comment-body">
                                             <div class="mt-comment-info">
                                                 <span class="mt-comment-author">Michael Baker</span>
@@ -242,7 +243,7 @@
                                     </div>
                                     <div class="mt-comment">
                                         <div class="mt-comment-img">
-                                            <img src="<?= base_url() . 'assets' ?>/img/avatar8.jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar8.jpg') ?>"> </div>
                                         <div class="mt-comment-body">
                                             <div class="mt-comment-info">
                                                 <span class="mt-comment-author">Larisa Maskalyova</span>
@@ -267,7 +268,7 @@
                                     </div>
                                     <div class="mt-comment">
                                         <div class="mt-comment-img">
-                                            <img src="<?= base_url() . 'assets' ?>/img/avatar6.jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar6.jpg') ?>"> </div>
                                         <div class="mt-comment-body">
                                             <div class="mt-comment-info">
                                                 <span class="mt-comment-author">Natasha Kim</span>
@@ -292,7 +293,7 @@
                                     </div>
                                     <div class="mt-comment">
                                         <div class="mt-comment-img">
-                                            <img src="<?= base_url() . 'assets' ?><?= base_url() . 'assets' ?>/img/avatar1(1).jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar1(1).jpg') ?>"> </div>
                                         <div class="mt-comment-body">
                                             <div class="mt-comment-info">
                                                 <span class="mt-comment-author">Sebastian Davidson</span>
@@ -457,7 +458,7 @@
                                     </div>
                                     <div class="mt-action">
                                         <div class="mt-action-img">
-                                            <img src="/img/avatar8.jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar8.jpg') ?>"> </div>
                                         <div class="mt-action-body">
                                             <div class="mt-action-row">
                                                 <div class="mt-action-info ">
@@ -485,7 +486,7 @@
                                     </div>
                                     <div class="mt-action">
                                         <div class="mt-action-img">
-                                            <img src="/img/avatar9.jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar9.jpg') ?>"> </div>
                                         <div class="mt-action-body">
                                             <div class="mt-action-row">
                                                 <div class="mt-action-info ">
@@ -519,7 +520,7 @@
                                 <div class="mt-actions">
                                     <div class="mt-action">
                                         <div class="mt-action-img">
-                                            <img src="/img/avatar1(1).jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar1(1).jpg') ?>"> </div>
                                         <div class="mt-action-body">
                                             <div class="mt-action-row">
                                                 <div class="mt-action-info ">
@@ -547,7 +548,7 @@
                                     </div>
                                     <div class="mt-action">
                                         <div class="mt-action-img">
-                                            <img src="/img/avatar8.jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar8.jpg') ?>"> </div>
                                         <div class="mt-action-body">
                                             <div class="mt-action-row">
                                                 <div class="mt-action-info ">
@@ -575,7 +576,7 @@
                                     </div>
                                     <div class="mt-action">
                                         <div class="mt-action-img">
-                                            <img src="/img/avatar5.jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar5.jpg') ?>"> </div>
                                         <div class="mt-action-body">
                                             <div class="mt-action-row">
                                                 <div class="mt-action-info ">
@@ -603,7 +604,7 @@
                                     </div>
                                     <div class="mt-action">
                                         <div class="mt-action-img">
-                                            <img src="/img/avatar2(1).jpg"> </div>
+                                            <img src="<?php print base_url('assets/img/avatar2(1).jpg') ?>"> </div>
                                         <div class="mt-action-body">
                                             <div class="mt-action-row">
                                                 <div class="mt-action-info ">

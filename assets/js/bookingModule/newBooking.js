@@ -18,7 +18,7 @@ var newBookingController = function($scope, $http, $window) {
     $scope.submitBooking = function () {
         var data = angular.copy($scope.booking);
         var promise = $http({
-            url: BASEPATH + 'api/Booking/create',
+            url: BASEPATH + 'api/Booking/create_offline_booking',
             method: 'POST',
             data: data
         });

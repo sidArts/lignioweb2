@@ -34,7 +34,7 @@ class REST_Controller extends CI_Controller {
 
 	public function index() {
 		$model = $this->modelName;
-		$res = $this->$model->get_all();
+		$res = $this->$model->get_all($this->access_permission_restrict);
 		$this->_response(REST_Controller::HTTP_OK, $res);
 	}
 
@@ -103,10 +103,15 @@ class REST_Controller extends CI_Controller {
 
 						if($query->num_rows() > 0):
 							$row = $query->result_array();
+							
+
 							$this->access_permission_restrict = [];
 							foreach ($row as $value) {
-								$this->access_permission_restrict[$value['restrict']] = $this->userDetails[$value['restrict']];
+								if(isset($value['restrict']) && !empty($value['restrict'])):
+									$this->access_permission_restrict[$value['restrict']] = $this->userDetails[$value['restrict']];
+								endif;
 							}
+							// print_r($this->access_permission_restrict); exit;
 							// $this->_validateRequest($method);
 							call_user_func_array(array($this, $method), $params);
 						else:

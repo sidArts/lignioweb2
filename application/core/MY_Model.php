@@ -25,24 +25,26 @@ class MY_Model extends CI_Model {
 		else
 			$this->db->where('id', $args[0]);
 		
-		return $this->db->get($this->_table)->row();
+		return $this->db->get($this->_table)->row_array();
 	}
 
 
 	public function get_all() {
 		$args = func_get_args();
-		
-		if (isset($args) && count($args) > 1 && is_array($args[0]))
-			$this->db->where($args);
+		if(isset($args[1]) && is_array($args[1])) {
+			$this->db->select(implode(',', $args[1]));
+		}
+		if (isset($args) && is_array($args[0]))
+			$this->db->where($args[0]);
 
-		return $this->db->get($this->_table)->result();
+		return $this->db->get($this->_table)->result_array();
 	}
 	public function insert($data) {
 
 		$data = $this->observe('before_create', $data);
 
-		$success = $this->db->insert($this->_table, $data);
-		if ($success)
+		$this->db->insert($this->_table, $data);
+		if ($this->db->affected_rows() > 0)
 		{
 			$data = $this->observe('after_create', $data);
 			return $this->db->insert_id();

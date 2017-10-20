@@ -16,7 +16,7 @@ class Booking extends REST_Controller {
 		$this->_response(REST_Controller::HTTP_OK, $res);
 	}
 
-	public function create() {	
+	public function create_offline_booking() {	
 		$this->load->model('UserModel');
 		$this->load->model('BookingDetailModel');
 		$model 		= $this->modelName;
@@ -27,15 +27,19 @@ class Booking extends REST_Controller {
 		if(!$user):
 			$user = [];
 			$user['user_id'] = $this->UserModel->insert([ 
+				'firstname'			=> $data['firstname'],
+				'lastname'			=> $data['lastname'],
 				'phone' 			=> $data['phone'], 
 				'is_first_login' 	=> 'Y' 
 			]);
+			print $user['user_id']; exit;
 			if(!$user['user_id']):
 				$this->_response(parent::HTTP_BAD_REQUEST);
 			endif;
 		endif;
 		$booking['user_id'] 			= $user['user_id'];
-		$booking['diagnostic_lab_id'] 	= $this->userDetails['org_id'];
+		$booking['diagnostic_lab_id'] 	= $this->userDetails['diagnostic_lab_id'];
+		$booking['booking_type']		= 'Offline';
 		$insertedBookingId 				= $this->$model->insert($booking);
 		if(!$insertedBookingId):
 			$this->_response(parent::HTTP_BAD_REQUEST);
