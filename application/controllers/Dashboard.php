@@ -15,4 +15,6 @@ class Dashboard extends MY_Controller {
         $this->data['rescheduled']	= 10;
 		$this->view = 'index';
 	}
+
+	
 }

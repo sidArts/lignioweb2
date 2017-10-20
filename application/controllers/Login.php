@@ -24,19 +24,26 @@ class Login extends CI_Controller {
 	 */
 	public function index()
 	{		
+		$this->load->view('login');
+	}
+
+	public function authorize() {
 		if ($this->input->server('REQUEST_METHOD') == 'POST'):
-			$this->db->join('user_org_map uo', 'uo.user_id = u.user_id');
-			$query = $this->db->get_where('users u', [ 
-				'email' => $this->input->post('email'),
-				'password' => $this->input->post('password')
-			]);
-			
+			$credentials = json_decode($this->input->raw_input_stream, TRUE);
+
+			if(is_numeric($credentials['email'])):
+				$credentials['phone'] = $credentials['email'];
+				unset($credentials['email']);
+			endif;
+
+			// $this->db->join('user_org_map uo', 'uo.user_id = u.user_id');
+			$query = $this->db->get_where('users u', $credentials);
+
 			if($query->num_rows() > 0):
 				$result = $query->row_array();	
 				$expiry = round(microtime(true) * 1000) + (1 * 60 * 1000);
 				$json = [
 					'user_id'	=> $result['user_id'],
-					'org_id'	=> $result['org_id'],
 					'firstname'	=> $result['firstname'],
 					'lastname'	=> $result['lastname'],
 					'expiry'	=> $expiry
@@ -48,12 +55,19 @@ class Login extends CI_Controller {
 				if($query->num_rows() > 0):
 
 					$result = $query->result_array();
-					$roleIds = [];
-					
-					foreach ($result as $value) {
-						$roleIds[] = $value['role_id'];
-					}			
-					$json['roles'] = $roleIds;
+					if(count($result) == 1 && $result[0]['role_id'] == 3):
+						$json['roles'] = [3];
+					else:
+						$roleIds = [];
+						foreach ($result as $value):
+							$roleIds[] = $value['role_id'];						
+						endforeach;
+						$json['roles'] = $roleIds;	
+						$this->db->flush_cache();
+						$query = $this->db->get_where('user_org_map', [ 'user_id' => $json['user_id'] ]);
+						$result = $query->row_array();
+						$json['diagnostic_lab_id'] = $result['diagnostic_lab_id'];
+					endif;			
 
 					$token = $this->_encryptDecrypt('encrypt', json_encode($json));
 
@@ -61,24 +75,51 @@ class Login extends CI_Controller {
 						'token' 	=> $token, 
 						'expiry'	=> $expiry 
 					]);
-					if($this->db->affected_rows() == 1){
-						$this->load->view('login', [ 'status' => true, 'token' => $token ]);	
-					} else {
-						show_404();	
-					}					
+					if($this->db->affected_rows() == 1):
+						$this->output->set_status_header(200);
+						$this->output->set_content_type('application/json');
+						$output = [ 
+							"success" => TRUE, 
+							'message' => 'Login Successfull!', 
+							'token'   => $token	
+						];
+						$this->output->set_output(json_encode($output));
+					else:
+						$this->output->set_status_header(400);
+						$this->output->set_content_type('application/json');
+						$output = [ "success" => FALSE, 'message' => 'Unable to create token!' ];
+						$this->output->set_output(json_encode($output));
+						exit;
+					endif;					
 				else:
-					$this->load->view('login', [ 'status' => false, 'token' => '' ]);	
+					$this->output->set_status_header(401);
+					$this->output->set_content_type('application/json');
+					$output = [ "success" => FALSE, 'message' => 'No Roles are mapped!'];
+					$this->output->set_output(json_encode($output));
 				endif;				
 			else:
-				$this->load->view('login', [ 'status' => false, 'token' => '' ]);
+				$this->output->set_status_header(401);
+				$this->output->set_content_type('application/json');
+				$output = [ "success" => FALSE, 'message' => 'Invalid Username or Password!' ];
+				$this->output->set_output(json_encode($output));
 			endif;
 		else:
-			$this->load->view('login', [ 'status' => false, 'token' => '' ]);
-		endif;
+			$this->output->set_status_header(405)->_display();
+		endif;		
 	}
 
 	public function logout() {
-		
+		$token = $this->input->get_request_header('Authorization');
+		if($token != NULL):
+			$this->db->delete('jwt', [ 'token' => $token ]);
+			if($this->db->affected_rows() == 1):
+				$this->output->set_status_header(200);
+			else:
+				$this->output->set_status_header(500);
+			endif;
+		else:
+			$this->output->set_status_header(401);
+		endif;
 	}
 
 	public function _encryptDecrypt($action, $string) {

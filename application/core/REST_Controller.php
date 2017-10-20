@@ -102,7 +102,11 @@ class REST_Controller extends CI_Controller {
 											->get();
 
 						if($query->num_rows() > 0):
-							$row = $query->row_array();	
+							$row = $query->result_array();
+							$this->access_permission_restrict = [];
+							foreach ($row as $value) {
+								$this->access_permission_restrict[$value['restrict']] = $this->userDetails[$value['restrict']];
+							}
 							// $this->_validateRequest($method);
 							call_user_func_array(array($this, $method), $params);
 						else:

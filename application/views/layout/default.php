@@ -15,34 +15,55 @@
    </head>
    <!-- END HEAD -->
    <body class="page-header-fixed page-sidebar-closed-hide-logo">
-      <div class="page-wrapper">
-         <form id="pageNavigateForm" method="post" action="">
-            <input type="hidden" name="Authorization" id="Authorization" value="<?php print $token ?>">
-         </form>
-      <?php print $header; ?>
-      <!-- BEGIN HEADER & CONTENT DIVIDER -->
-      <div class="clearfix"> </div>
-      <!-- END HEADER & CONTENT DIVIDER -->
-      <!-- BEGIN HEADER & CONTENT DIVIDER -->
-      <div class="clearfix"> </div>
-      <!-- END HEADER & CONTENT DIVIDER -->
-      <!-- BEGIN CONTAINER -->
-      <div class="page-container">
-         <?php print $sidebar; ?>
-         <!-- BEGIN CONTENT -->
-         <div class="page-content-wrapper">
-            <?php print $content; ?>
+      <form id="pageNavigateForm" method="post">
+         <input type="hidden" name="Authorization" id="Authorization" value="<?php print $token ?>">
+      </form>
+      <div class="page-wrapper">         
+         <?php print $header; ?>
+         <!-- BEGIN HEADER & CONTENT DIVIDER -->
+         <div class="clearfix"> </div>
+         <!-- END HEADER & CONTENT DIVIDER -->
+         <!-- BEGIN HEADER & CONTENT DIVIDER -->
+         <div class="clearfix"> </div>
+         <!-- END HEADER & CONTENT DIVIDER -->
+         <!-- BEGIN CONTAINER -->
+         <div class="page-container">
+            <?php print $sidebar; ?>
+            <!-- BEGIN CONTENT -->
+            <div class="page-content-wrapper">
+               <?php print $content; ?>
+            </div>
+            <!-- END CONTENT -->
          </div>
-         <!-- END CONTENT -->
+         <!-- END CONTAINER -->         
+         <?php print $footer; ?>         
       </div>
-      <!-- END CONTAINER -->
-      
-      <?php print $footer; ?>
       <script type="text/javascript">
          var goToPage = function(url) {
             var pageNavigateForm = document.getElementById('pageNavigateForm');
             pageNavigateForm.setAttribute('action', BASEPATH + url);
             pageNavigateForm.submit();
+         };
+
+         var logoutUser = function() {
+            var token = document.getElementById('Authorization').value;
+            var asyncHttpReq = new XMLHttpRequest();            
+            asyncHttpReq.open("GET", BASEPATH + 'Login/logout');
+            asyncHttpReq.setRequestHeader('Authorization', token);
+            asyncHttpReq.addEventListener("load", function() {
+               if (asyncHttpReq.readyState === asyncHttpReq.DONE) {
+                  if (asyncHttpReq.status === 200) {
+                     bootbox.alert('You have Successfully logged out!', function() {
+                        window.location.href = BASEPATH;   
+                     });                     
+                  } else{
+                     bootbox.alert('Your session has expired!', function() {
+                        window.location.href = BASEPATH;   
+                     });
+                  }
+               }
+            });
+            asyncHttpReq.send();            
          };
       </script>
    </body>

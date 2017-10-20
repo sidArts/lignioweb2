@@ -77,6 +77,7 @@ class Layout {
 			"demo.min.js",
 			"quick-sidebar.min.js",
 			"quick-nav.min.js",
+			"bootbox.js",
 			"angular/angular.js"
 		);
 	}
