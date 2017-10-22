@@ -26,6 +26,11 @@ var bookingController = function($scope, $http, $window, DTOptionsBuilder, DTCol
     $scope.remove = function (index) {
         $scope.bookings.splice(index, 1);
     };
+
+    $scope.showBookingDetails = function(index) {
+        $scope.bookingDetails = angular.copy($scope.bookings[index].bookingDetails);
+        $('#booking-details-modal').modal('show');
+    }
 };
 
 var lignioApp = angular.module("bookingModule", ['datatables']);

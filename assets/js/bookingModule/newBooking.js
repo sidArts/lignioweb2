@@ -1,7 +1,7 @@
 var newBookingController = function($scope, $http, $window) {
     $scope.diagnosticTestList = [];
     $scope.booking = {};
-    $scope.booking.checkedDiagnosticTestIds = [];
+    $scope.booking.diagnosticTests = [];
     
     $scope.checkedDiagnosticTests = {};
     var getDiagnosticTestList = function(diagnosticLabId) {
@@ -24,18 +24,23 @@ var newBookingController = function($scope, $http, $window) {
         });
 
         promise.then(function (res) {
-            // $window.location.href = BASEPATH + "booking";
-            console.log('done booking');
+            bootbox.alert('Booking was successfully created!', function() {
+                
+            });
         });
 
         return promise;
     };
 
     $scope.selectDiagnosticTest = function() {
-        $scope.booking.checkedDiagnosticTestIds = [];
+        $scope.booking.diagnosticTests = [];
+        $scope.booking.totalAmount = 0;
         angular.forEach($scope.checkedDiagnosticTests, function(value, key){
-            if(value)
-                $scope.booking.checkedDiagnosticTestIds.push(key);
+            if(value) {
+                var diagnosticTest = _.find($scope.diagnosticTestList, { 'diagnostic_test_id': key });
+                $scope.booking.diagnosticTests.push(diagnosticTest);
+                $scope.booking.totalAmount += parseFloat(diagnosticTest.cost);
+            }
         });
         $('#add-diagnostic-test-modal').modal('hide');
     };

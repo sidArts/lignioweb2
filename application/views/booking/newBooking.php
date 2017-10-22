@@ -44,7 +44,7 @@
                                 <div class="form-body">
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">First Name</label>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="input-group">
                                                 <input type="text" ng-model="booking.firstname" class="form-control" placeholder="First Name">
                                             </div>
@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Last Name</label>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="input-group">
                                                 <input type="text" ng-model="booking.lastname" class="form-control" placeholder="Last Name">
                                             </div>
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Email</label>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="input-group">
                                                 <input type="email" ng-model="booking.email" class="form-control" placeholder="Email Address">
                                             </div>
@@ -68,7 +68,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Phone</label>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="input-group">
                                                 <input type="text" ng-model="booking.phone" class="form-control" placeholder="Phone">
                                             </div>
@@ -76,11 +76,59 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Add Diagnostic Tests</label>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="input-group">
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-diagnostic-test-modal">
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-diagnostic-test-modal">
                                                     <i class="fa fa-plus"></i>
                                                 </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-1"></label>
+                                        <div class="col-md-6">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Diagnostic Test</th>
+                                                        <th>Specimen</th>
+                                                        <th>Cost</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-if="booking.diagnosticTests.length == 0">
+                                                        <td colspan="4" class="text-center">
+                                                            <strong>No Record Found</strong>
+                                                        </td>
+                                                    </tr>
+                                                    <tr ng-repeat="value in booking.diagnosticTests">
+                                                        <td>{{$index + 1}}</td>
+                                                        <td>{{value.name}}</td>
+                                                        <td>{{value.specimen}}</td>
+                                                        <td>{{value.cost}}</td>
+                                                    </tr>
+                                                    <tr ng-if="booking.diagnosticTests.length > 0">
+                                                        <td colspan="3" class="text-right">Total:</td>
+                                                        <td>{{booking.totalAmount}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Amount Paying</label>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <input type="text" ng-model="booking.paid_amount" class="form-control" placeholder="Paid Amount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Expected Delivery Date</label>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <input type="date" ng-model="booking.expected_report_delivery_date" class="form-control" placeholder="Expected Delivery Date">
                                             </div>
                                         </div>
                                     </div>
@@ -131,4 +179,5 @@
 <script src="<?= base_url('assets/js/lib/datatables/jquery.dataTables.js') ?>"></script>
 <script src="<?= base_url('assets/js/lib/datatables/dataTables.bootstrap.js') ?>"></script>
 <script src="<?= base_url('assets/js/lib/datatables/angular-datatables.js') ?>"></script>
+<script src="<?= base_url('assets/js/lib/lodash.js') ?>"></script>
 <script src="<?= base_url('assets/js/bookingModule/newBooking.js')?>"></script>
