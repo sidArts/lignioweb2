@@ -26,8 +26,9 @@ class BookingModel extends MY_Model {
 
 	public function get() {
 		$where = func_get_args()[0];
-		$this->db->select('*, (select sum(dt.cost) from booking_details bd join diagnostic_tests dt on dt.diagnostic_test_id = bd.diagnostic_test_id where booking_id = '. $where['booking_id'] .') as required_amount');
-		$this->db->from('lignio_db.bookings');		
+		$this->db->select('b.*, s.name as statusDesc, (select sum(dt.cost) from booking_details bd join diagnostic_tests dt on dt.diagnostic_test_id = bd.diagnostic_test_id where booking_id = '. $where['booking_id'] .') as required_amount');
+		$this->db->from('lignio_db.bookings b');
+		$this->db->join('status s', 's.status_id = b.status');		
 		$this->db->where($where);
 		$query = $this->db->get();
 		if($query->num_rows() > 0):

@@ -12,7 +12,7 @@ class Booking extends REST_Controller {
 
 	public function index() {
 		$res 	= $this->BookingModel->get_all($this->access_permission_restrict);
-		$this->_response(REST_Controller::HTTP_OK, $res);
+		$this->_response(parent::HTTP_OK, $res);
 	}
 
 	public function create_offline_booking() {	

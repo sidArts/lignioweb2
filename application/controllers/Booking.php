@@ -20,5 +20,11 @@ class Booking extends MY_Controller {
 		$this->data['heading']     	= "RB Diagnostic Center";
 		$this->view = "booking/newBooking";
 	}
+
+	public function details($booking_id) {
+		$this->data['booking_id'] 	= $booking_id;
+		$this->data['heading']     	= "RB Diagnostic Center";
+		$this->view = "booking/bookingDetails";
+	}
 }
 
