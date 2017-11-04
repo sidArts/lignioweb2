@@ -143,25 +143,24 @@
 
                 <!-- Modal content-->
                 <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Assign User</h4>
-                </div>
-                <div class="modal-body">
-                    <select class="form-control" ng-model="bookingDetail.assigned_to">
-                        <option value="0">--select--</option>
-                        <option ng-repeat="value in pathologists" ng-value="value.user_id">
-                            {{value.firstname}}&nbsp;{{value.lastname}} ({{value.phone}})
-                        </option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="updateBookingDetail()">Assign</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Assign User</h4>
+                    </div>
+                    <div class="modal-body">
+                        <select class="form-control" ng-model="bookingDetail.assigned_to">
+                            <option value="0">--select--</option>
+                            <option ng-repeat="value in pathologists" ng-value="value.user_id">
+                                {{value.firstname}}&nbsp;{{value.lastname}} ({{value.phone}})
+                            </option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="updateBookingDetail()">Assign</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
-
-        </div>
         </div>
     </div>
     <!-- END CONTENT BODY -->
