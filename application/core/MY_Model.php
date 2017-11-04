@@ -7,11 +7,21 @@ class MY_Model extends CI_Model {
 		parent::__construct();
 	}
 
+	protected $_primary_key  = 'id';
+	protected $_table_alias	 = '';
 	public $before_create = array('setCreateAndUpdateDate');
 	public $before_update = array('setUpdateDate');
 	
 	public $after_create  = array();
 	public $after_update  = array();
+
+	public function getPrimaryKey() {
+		return $this->_primary_key;
+	}
+
+	public function getTableAlias() {
+		return $this->_table_alias;
+	}
 
 	public function get() {
 		
@@ -25,7 +35,7 @@ class MY_Model extends CI_Model {
 		else
 			$this->db->where('id', $args[0]);
 		
-		return $this->db->get($this->_table)->row_array();
+		return $this->db->get($this->_table . ' ' .$this->_table_alias)->row_array();
 	}
 
 
@@ -63,11 +73,11 @@ class MY_Model extends CI_Model {
 			$this->db->where($args);
 		}
 		else{
-			$this->db->where('id', $args[0]);
+			$this->db->where($this->_table_alias . '.' .$this->_primary_key, $args[0]);
 		}
 
 		$data = $this->observe('before_update', $args[1]);		
-		$this->db->update($this->_table, $args[1]);
+		$this->db->update($this->_table . ' ' .$this->_table_alias, $args[1]);
 
 		if($this->db->affected_rows() > 0) {
 			$data = $this->observe('after_update', $args[1]);	

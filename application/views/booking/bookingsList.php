@@ -14,7 +14,7 @@
         <div class="page-bar">
             <ul class="page-breadcrumb">
                 <li>
-                    <a href="/">Home</a>
+                    <a href="<?php print base_url(); ?>">Home</a>
                     <i class="fa fa-arrow-right"></i>
                 </li>
                 <li>
@@ -53,7 +53,7 @@
                             <td>{{ booking.expected_report_delivery_date }}</td>
                             <td>{{ ((booking.status == 3) ? booking.actual_report_delivery_date : 'NA')}}</td>
                             <td class="text-right" style="width: 30px;">
-                                <button class="btn btn-primary" ng-click="showBookingDetails($index)">
+                                <button class="btn btn-primary" ng-click="showBookingDetails(booking.booking_id)">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </button>
                             </td>

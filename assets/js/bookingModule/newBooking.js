@@ -6,7 +6,7 @@ var newBookingController = function($scope, $http, $window) {
     $scope.checkedDiagnosticTests = {};
     var getDiagnosticTestList = function(diagnosticLabId) {
         var promise = $http({
-            url: BASEPATH + 'api/DiagnosticTest',
+            url: BASEPATH + '/api/DiagnosticTest',
             method: 'GET'
         });
 
@@ -18,7 +18,7 @@ var newBookingController = function($scope, $http, $window) {
     $scope.submitBooking = function () {
         var data = angular.copy($scope.booking);
         var promise = $http({
-            url: BASEPATH + 'api/Booking/create_offline_booking',
+            url: BASEPATH + '/api/Booking/create_offline_booking',
             method: 'POST',
             data: data
         });
@@ -54,7 +54,7 @@ var newBookingController = function($scope, $http, $window) {
 var diagnosticTestViewDirective = function(DTOptionsBuilder, DTColumnDefBuilder) {
     return {
         restrict: 'E',
-        templateUrl: BASEPATH + 'assets/templates/diagnostic-test-view.html',
+        templateUrl: BASEPATH + '/assets/templates/diagnostic-test-view.html',
         scope: {
             diagnosticTestList: '=',
             checkedTests: '='

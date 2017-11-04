@@ -10,31 +10,30 @@ class Booking extends REST_Controller {
 		$this->load->model('BookingModel');
 	}	
 
-	public function index() {
+	public function read_all() {
 		$res 	= $this->BookingModel->get_all($this->access_permission_restrict);
-		$this->_response(REST_Controller::HTTP_OK, $res);
+		$this->_response(parent::HTTP_OK, $res);
 	}
 
 	public function create_offline_booking() {	
-		$this->load->model('UserModel');
+		$this->load->model('EndUserModel');
 		$this->load->model('BookingDetailModel');
 		$data 		= json_decode($this->input->raw_input_stream, TRUE);
 		$booking 	= [];		
-		$user 		= $this->UserModel->get([ 'phone' => $data['phone'] ], ['user_id']);
+		$user 		= $this->EndUserModel->get([ 'phone' => $data['phone'] ], ['end_user_id']);
 		
 		if(!$user):
 			$user = [];
-			$user['user_id'] = $this->UserModel->insert([ 
+			$user['end_user_id'] = $this->EndUserModel->insert([ 
 				'firstname'			=> $data['firstname'],
 				'lastname'			=> $data['lastname'],
-				'phone' 			=> $data['phone'], 
-				'is_first_login' 	=> 'Y' 
+				'phone' 			=> $data['phone']
 			]);
-			if(!$user['user_id']):
+			if(!$user['end_user_id']):
 				$this->_response(parent::HTTP_BAD_REQUEST);
 			endif;
 		endif;
-		$booking['user_id'] 			= $user['user_id'];
+		$booking['end_user_id'] 		= $user['end_user_id'];
 		$booking['diagnostic_lab_id'] 	= $this->userDetails['diagnostic_lab_id'];
 		$booking['booking_type']		= 'Offline';
 		$booking['booking_creator_id'] 	= $this->userDetails['user_id'];

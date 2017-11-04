@@ -8,7 +8,7 @@ class BookingModel extends MY_Model {
 		$args = func_get_args();
 		$this->db->select('b.*, u.firstname, u.lastname, u.phone, s.name as status_desc ');
 		$this->db->from('bookings b');
-		$this->db->join('users u', 'u.user_id = b.user_id');	
+		$this->db->join('end_users u', 'u.end_user_id = b.end_user_id');	
 		$this->db->join('status s', 'b.status = s.status_id');	
 		if (isset($args) && count($args) > 1 && is_array($args[0]))
 			$this->db->where($args);
@@ -26,8 +26,9 @@ class BookingModel extends MY_Model {
 
 	public function get() {
 		$where = func_get_args()[0];
-		$this->db->select('*, (select sum(dt.cost) from booking_details bd join diagnostic_tests dt on dt.diagnostic_test_id = bd.diagnostic_test_id where booking_id = '. $where['booking_id'] .') as required_amount');
-		$this->db->from('lignio_db.bookings');		
+		$this->db->select('b.*, s.name as statusDesc, (select sum(dt.cost) from booking_details bd join diagnostic_tests dt on dt.diagnostic_test_id = bd.diagnostic_test_id where booking_id = '. $where['booking_id'] .') as required_amount');
+		$this->db->from('lignio_db.bookings b');
+		$this->db->join('status s', 's.status_id = b.status');		
 		$this->db->where($where);
 		$query = $this->db->get();
 		if($query->num_rows() > 0):

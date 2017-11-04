@@ -38,6 +38,14 @@ class REST_Controller extends CI_Controller {
 		$this->_response(REST_Controller::HTTP_OK, $res);
 	}
 
+	public function read($id) {
+		$model = $this->modelName;
+		$primary_key = $this->$model->getTableAlias() . '.' . $this->$model->getPrimaryKey();
+		$condition = array_merge($this->access_permission_restrict, [ $primary_key => $id ]);
+		$res = $this->$model->get($condition);
+		$this->_response(REST_Controller::HTTP_OK, $res);
+	}
+
 	public function create() {	
 		$model 		= $this->modelName;
 		$data 		= json_decode($this->input->raw_input_stream, TRUE);
@@ -48,9 +56,8 @@ class REST_Controller extends CI_Controller {
 	public function update() {
 		$model 		= $this->modelName;
 		$data 		= json_decode($this->input->raw_input_stream, TRUE);
-		$model_id	= strtolower(get_class($this)) . '_id';
-		$where 		= [ $model_id => $data[$model_id] ];
-		if($this->$model->update($where, $data))
+		$primary_key	= $this->$model->getPrimaryKey();
+		if($this->$model->update($data[$primary_key], $data))
 			$this->_response(self::HTTP_NO_CONTENT);		
 		else
 			$this->_response(self::HTTP_BAD_REQUEST);		

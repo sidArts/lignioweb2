@@ -39,7 +39,7 @@
 <script type="text/javascript" src="<?php print base_url('assets/js/lib/bootstrap.min.js') ?>"></script>
 <script type="text/javascript" src="<?php print base_url('assets/js/lib/bootbox.js') ?>"></script>
 <script type="text/javascript">
-var BASEPATH = 'http://localhost/lignioweb/';
+var BASEPATH = '/';
 var app = angular.module('loginModule', []);
 app.controller("loginController", function($scope, $http) {
 	$scope.user = {};
@@ -51,8 +51,9 @@ app.controller("loginController", function($scope, $http) {
 		}).then(function(res) {
 			document.getElementById('Authorization').value = res.data.token;
 			document.getElementById('pageNavigateForm').submit();
-		}, function(err) { 
-			bootbox.alert(err.data.message, function() {
+		}, function(err) {
+			var msg = ((err.data.message) ? err.data.message : 'Something went wrong..Please try again!');
+			bootbox.alert(msg, function() {
 				$scope.user.password = '';
 				$scope.$apply();
 			}); 

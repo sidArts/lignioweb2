@@ -10,7 +10,7 @@
 
       <?php print $css; ?>
       <script type="text/javascript">
-         var BASEPATH = 'http://localhost/lignioweb/';
+         var BASEPATH = 'http://lignio.com';
       </script>
    </head>
    <!-- END HEAD -->
@@ -41,14 +41,14 @@
       <script type="text/javascript">
          var goToPage = function(url) {
             var pageNavigateForm = document.getElementById('pageNavigateForm');
-            pageNavigateForm.setAttribute('action', BASEPATH + url);
+            pageNavigateForm.setAttribute('action', BASEPATH + '/' + url);
             pageNavigateForm.submit();
          };
 
          var logoutUser = function() {
             var token = document.getElementById('Authorization').value;
             var asyncHttpReq = new XMLHttpRequest();            
-            asyncHttpReq.open("GET", BASEPATH + 'Login/logout');
+            asyncHttpReq.open("GET", BASEPATH + '/Login/logout');
             asyncHttpReq.setRequestHeader('Authorization', token);
             asyncHttpReq.addEventListener("load", function() {
                if (asyncHttpReq.readyState === asyncHttpReq.DONE) {

@@ -19,7 +19,7 @@ var bookingController = function($scope, $http, $window, DTOptionsBuilder, DTCol
         DTColumnDefBuilder.newColumnDef(6)
     ];
 
-    $http.get(BASEPATH + 'api/Booking').then(function(res) {
+    $http.get(BASEPATH + '/api/Booking').then(function(res) {
         $scope.bookings = res.data;
     });
 
@@ -27,9 +27,11 @@ var bookingController = function($scope, $http, $window, DTOptionsBuilder, DTCol
         $scope.bookings.splice(index, 1);
     };
 
-    $scope.showBookingDetails = function(index) {
-        $scope.bookingDetails = angular.copy($scope.bookings[index].bookingDetails);
-        $('#booking-details-modal').modal('show');
+    $scope.showBookingDetails = function(booking_id) {
+        /*$scope.bookingDetails = angular.copy($scope.bookings[index].bookingDetails);
+        $('#booking-details-modal').modal('show');*/
+        document.getElementById('pageNavigateForm').setAttribute('action', BASEPATH + '/Booking/details/' + booking_id);
+        document.getElementById('pageNavigateForm').submit();
     }
 };
 

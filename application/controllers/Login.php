@@ -94,7 +94,7 @@ class Login extends CI_Controller {
 				else:
 					$this->output->set_status_header(401);
 					$this->output->set_content_type('application/json');
-					$output = [ "success" => FALSE, 'message' => 'No Roles are mapped!'];
+					$output = [ "success" => FALSE, 'message' => 'End Users are not authorized to access Admin Panel!'];
 					$this->output->set_output(json_encode($output));
 				endif;				
 			else:

@@ -13,7 +13,7 @@ class Dashboard extends MY_Controller {
         $this->data['reports']		= 45;
         $this->data['collection']	= 34;
         $this->data['rescheduled']	= 10;
-		$this->view = 'index';
+		$this->view = 'dashboard';
 	}
 
 	
