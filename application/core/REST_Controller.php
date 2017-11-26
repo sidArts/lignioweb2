@@ -109,16 +109,16 @@ class REST_Controller extends CI_Controller {
 											->get();
 
 						if($query->num_rows() > 0):
-							$row = $query->result_array();
-							
+							$row = $query->result_array();						
 
 							$this->access_permission_restrict = [];
-							foreach ($row as $value) {
-								if(isset($value['restrict']) && !empty($value['restrict'])):
-									$this->access_permission_restrict[$value['restrict']] = $this->userDetails[$value['restrict']];
-								endif;
+							if($this->userDetails['diagnostic_lab_id'] != 0) {
+								foreach ($row as $value) {
+									if(isset($value['restrict']) && !empty($value['restrict'])):
+										$this->access_permission_restrict[$value['restrict']] = $this->userDetails[$value['restrict']];
+									endif;
+								}	
 							}
-							// print_r($this->access_permission_restrict); exit;
 							// $this->_validateRequest($method);
 							call_user_func_array(array($this, $method), $params);
 						else:

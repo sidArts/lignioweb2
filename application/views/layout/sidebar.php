@@ -20,6 +20,55 @@
                <span class="arrow open"></span>
             </a>
          </li>
+         <?php foreach ($menuList as $value): ?>
+            <li class="nav-item">
+               <a href="#" class="nav-link nav-toggle">
+                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                     <span class="title"><?php print $value['name']; ?></span>
+                     <span class="arrow"></span>
+               </a> 
+               <?php if(isset($value['sub_menu']) && is_array($value['sub_menu']) && count($value['sub_menu']) > 0): ?>
+               <ul class="sub-menu">
+                  <?php foreach ($value['sub_menu'] as $sub_menu): ?>
+                     <li class="nav-item">
+                        <a href="javascript:void(0);" onclick="goToPage('<?php print $sub_menu['url'] ?>')" class="nav-link ">
+                           <span class="title"><?php print $sub_menu['name'] ?></span>
+                        </a>
+                     </li>
+                  <?php endforeach; ?>
+               </ul>
+               <?php endif; ?>
+            </li>   
+         <?php endforeach; ?>
+         
+         
+         
+         <!-- <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+               <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+               <span class="title">Bookings</span>
+               <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+               <li class="nav-item">
+                  <a href="javascript:void(0);" onclick="goToPage('Booking')" class="nav-link ">
+                     <span class="title">View Bookings</span>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a href="javascript:void(0);" onclick="goToPage('Booking/create')" class="nav-link ">
+                     <span class="title">New Booking</span>
+                  </a>
+               </li>
+            </ul>
+         </li>
+         <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+               <i class="fa fa-tasks" aria-hidden="true"></i>
+               <span class="title">Tasks</span>
+               <span class="arrow"></span>
+            </a>
+         </li>
          <li class="nav-item">
             <a href="javascript:;" class="nav-link nav-toggle">
                <i class="fa fa-clipboard" aria-hidden="true"></i>
@@ -35,39 +84,6 @@
                <li class="nav-item">
                   <a href="<?php print base_url('Report/create'); ?>" class="nav-link ">
                      <span class="title">Upload New Report</span>
-                  </a>
-               </li>
-                        <!--<li class="nav-item">
-                           <a href="javascript:;" class="nav-link nav-toggle">
-                               <span class="title">Page Progress Bar</span>
-                               <span class="arrow"></span>
-                           </a>
-                           <ul class="sub-menu">
-                               <li class="nav-item ">
-                                   <a href="http://keenthemes.com/preview/metronic/theme/admin_1/ui_page_progress_style_1.html" class="nav-link "> Flash </a>
-                               </li>
-                               <li class="nav-item ">
-                                   <a href="http://keenthemes.com/preview/metronic/theme/admin_1/ui_page_progress_style_2.html" class="nav-link "> Big Counter </a>
-                               </li>
-                           </ul>
-                        </li>-->
-            </ul>
-         </li>
-         <li class="nav-item">
-            <a href="javascript:;" class="nav-link nav-toggle">
-               <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-               <span class="title">Bookings</span>
-               <span class="arrow"></span>
-            </a>
-            <ul class="sub-menu">
-               <li class="nav-item">
-                  <a href="javascript:void(0);" onclick="goToPage('Booking')" class="nav-link ">
-                     <span class="title">View Bookings</span>
-                  </a>
-               </li>
-               <li class="nav-item">
-                  <a href="javascript:void(0);" onclick="goToPage('Booking/create')" class="nav-link ">
-                     <span class="title">New Booking</span>
                   </a>
                </li>
             </ul>
@@ -104,7 +120,7 @@
                <span class="title">Profile</span>
                <span class="arrow"></span>
             </a>
-         </li>
+         </li> -->
       </ul>
       <!-- END SIDEBAR MENU -->
       <!-- END SIDEBAR MENU -->

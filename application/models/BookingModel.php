@@ -10,7 +10,7 @@ class BookingModel extends MY_Model {
 		$this->db->from('bookings b');
 		$this->db->join('end_users u', 'u.end_user_id = b.end_user_id');	
 		$this->db->join('status s', 'b.status = s.status_id');	
-		if (isset($args) && count($args) > 1 && is_array($args[0]))
+		if (isset($args) && count($args) > 1 && is_array($args[0]) && count($args[0]) > 0)
 			$this->db->where($args);
 		$query = $this->db->get();
 		if($query->num_rows() > 0):

@@ -43,18 +43,22 @@ class Login extends CI_Controller {
 				$result = $query->row_array();	
 				$expiry = round(microtime(true) * 1000) + (1 * 60 * 1000);
 				$json = [
-					'user_id'	=> $result['user_id'],
-					'firstname'	=> $result['firstname'],
-					'lastname'	=> $result['lastname'],
-					'expiry'	=> $expiry
+					'user_id'			=> $result['user_id'],
+					'firstname'			=> $result['firstname'],
+					'lastname'			=> $result['lastname'],
+					'expiry'			=> $expiry,
+					'diagnostic_lab_id' => $result['org_id']
 				];
 				$this->db->flush_cache();
 				$this->db->select('role_id');
-				$query = $this->db->get_where('user_role', [ 'user_id' => $result['user_id'] ]);
+				$query = $this->db->get_where('user_role', [ 
+					'user_id' => $result['user_id'] 
+				]);
 
 				if($query->num_rows() > 0):
 
 					$result = $query->result_array();
+					// in_array(5, $result)
 					if(count($result) == 1 && $result[0]['role_id'] == 3):
 						$json['roles'] = [3];
 					else:
@@ -64,9 +68,11 @@ class Login extends CI_Controller {
 						endforeach;
 						$json['roles'] = $roleIds;	
 						$this->db->flush_cache();
-						$query = $this->db->get_where('user_org_map', [ 'user_id' => $json['user_id'] ]);
+						/*$query = $this->db->get_where('user_org_map', [ 
+							'user_id' => $json['user_id'] 
+						]);
 						$result = $query->row_array();
-						$json['diagnostic_lab_id'] = $result['diagnostic_lab_id'];
+						$json['diagnostic_lab_id'] = $result['diagnostic_lab_id'];*/
 					endif;			
 
 					$token = $this->_encryptDecrypt('encrypt', json_encode($json));
@@ -94,7 +100,7 @@ class Login extends CI_Controller {
 				else:
 					$this->output->set_status_header(401);
 					$this->output->set_content_type('application/json');
-					$output = [ "success" => FALSE, 'message' => 'End Users are not authorized to access Admin Panel!'];
+					$output = [ "success" => FALSE, 'message' => 'Your Account is pending for approval'];
 					$this->output->set_output(json_encode($output));
 				endif;				
 			else:

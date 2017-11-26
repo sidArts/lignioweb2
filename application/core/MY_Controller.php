@@ -28,28 +28,70 @@ class MY_Controller extends CI_Controller {
 				$tokenString = $this->_encryptDecrypt("decrypt", $tokenDetails['token']);
 				$this->userDetails = json_decode($tokenString, TRUE);
 				$milliseconds = round(microtime(true) * 1000);
-				if($tokenDetails['expiry'] < $milliseconds) {
+				if($tokenDetails['expiry'] < $milliseconds):
 					$this->db->where('token', $token);
 					$this->db->delete('jwt');
 					print 'Your session has expired!';
-				} else {					
+				else:
 					$this->db->where('token', $token);
 					$this->db->update('jwt', [ 'expiry' => $milliseconds + self::TOKEN_EXPIRY ]);
-					if($this->db->affected_rows() == 1) {
-						$this->data = [ 'token' => $token, 'userDetails' => $this->userDetails ];
+					if($this->db->affected_rows() == 1) :
+						$menu_query = $this->db->query('select * from menus ms where ms.id in (select distinct menu_id from menu_access_by_roles join menus ms1 on ms1.id = menu_id where role_id in ('. join(',', $this->userDetails['roles']) .'))');
+						$menu = $menu_query->result_array();
+						$root_menus = [];
+						foreach($menu as $val):
+							if($val['parent_id'] == 0):
+								$root_menus[] = $val;
+							endif;
+						endforeach;
+						for($i = 0; $i < count($root_menus); ++$i):
+							for($j = 0; $j < count($root_menus) - 1 - $i; ++$j):
+								if($root_menus[$j]['sequence'] > $root_menus[$j + 1]['sequence']):
+									$tmp = $root_menus[$j];
+									$root_menus[$j] = $root_menus[$j + 1];
+									$root_menus[$j + 1] = $tmp;
+								endif;
+							endfor;
+						endfor;
+						$this->_createParentChildHierarchy($root_menus, $menu, 0);	
+						
+						$this->data = [ 
+							'token' 		=> $token, 
+							'userDetails' 	=> $this->userDetails,
+							'menuList' 		=> $root_menus
+						];
 						$this->output->set_header('Authorization: '. $token);
 						call_user_func_array(array($this, $method), $params);	
 						$this->layout->render($this->view, $this->data);				
-					} else {
+					else:
 						print 'Authorization token could not be updated!'; exit;
-					}
-				}
+					endif;
+				endif;
 			else:
 				print 'Invalid Authorization header'; exit;
 			endif;
 		else:
 			show_404();	
 		endif;
+		
+	}
+
+	public function _createParentChildHierarchy(&$menu_list, $master_list) {
+		
+			for ($i = 0; $i < count($menu_list); ++$i):
+				$sub_menu = [];
+				if(isset($menu_list[$i])):
+					foreach($master_list as $menu) :
+						if($menu['parent_id'] == $menu_list[$i]['id']):
+							$sub_menu[] = $menu;
+						endif;
+					endforeach;
+				endif;
+				$menu_list[$i]['sub_menu'] = $sub_menu;
+				if(count($menu_list[$i]['sub_menu']) > 0) :
+					$this->_createParentChildHierarchy($menu_list[$i]['sub_menu'], $master_list);
+				endif;
+			endfor;
 		
 	}
 

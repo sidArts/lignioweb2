@@ -74,10 +74,13 @@
                                 <td>Status</td>
                                 <td>{{booking.statusDesc}}</td>
                             </tr>
-                            <!-- <tr>
-                                <td>Paid Amount</td>
-                                <td>{{booking.required_amount}}</td>
-                            </tr> -->
+                            <tr>
+                                <td>Due Amount</td>
+                                <td>
+                                    <i class="fa fa-rupee"></i>&nbsp;
+                                    {{booking.required_amount - booking.paid_amount}}
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </div> 

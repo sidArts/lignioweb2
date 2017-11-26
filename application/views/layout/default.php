@@ -41,7 +41,7 @@
       <script type="text/javascript">
          var goToPage = function(url) {
             var pageNavigateForm = document.getElementById('pageNavigateForm');
-            pageNavigateForm.setAttribute('action', BASEPATH + '/' + url);
+            pageNavigateForm.setAttribute('action', BASEPATH + url);
             pageNavigateForm.submit();
          };
 

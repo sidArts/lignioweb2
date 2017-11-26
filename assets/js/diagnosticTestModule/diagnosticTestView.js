@@ -35,12 +35,12 @@ var diagnosticTestController = function($scope, $http, $window, DTOptionsBuilder
     }
 
     var getAllDiagnosticTests = function() {
-        $http.get(BASEPATH + 'api/DiagnosticTest').then(function(res) {
+        $http.get(BASEPATH + '/api/DiagnosticTest').then(function(res) {
             $scope.diagnosticTestList = res.data;
         });
     };
     var getCategoryList = function() {
-        $http.get(BASEPATH + 'diagnosticTest/category/getAll').then(function(res) {
+        $http.get(BASEPATH + '/api/diagnosticTest/category/getAll').then(function(res) {
             $scope.categoryList = res.data;
         });
     };

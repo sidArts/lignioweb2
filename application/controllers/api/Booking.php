@@ -37,6 +37,7 @@ class Booking extends REST_Controller {
 		$booking['diagnostic_lab_id'] 	= $this->userDetails['diagnostic_lab_id'];
 		$booking['booking_type']		= 'Offline';
 		$booking['booking_creator_id'] 	= $this->userDetails['user_id'];
+		$booking['paid_amount']			= $data['paid_amount'];
 		$booking['status']				= 1;
 		$insertedBookingId 				= $this->BookingModel->insert($booking);
 		if(!$insertedBookingId):
