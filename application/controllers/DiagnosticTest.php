@@ -16,7 +16,7 @@ class DiagnosticTest extends MY_Controller {
 	}
 
 	public function create() {
-		$this->data['diagnosticLabId']= 1;
+		$this->data['diagnosticLabId'] = 1;
 		$this->data['heading']     	= "RB Diagnostic Center";
 		$this->view = "diagnosticTest/createNew";
 	}

@@ -68,11 +68,6 @@ class Login extends CI_Controller {
 						endforeach;
 						$json['roles'] = $roleIds;	
 						$this->db->flush_cache();
-						/*$query = $this->db->get_where('user_org_map', [ 
-							'user_id' => $json['user_id'] 
-						]);
-						$result = $query->row_array();
-						$json['diagnostic_lab_id'] = $result['diagnostic_lab_id'];*/
 					endif;			
 
 					$token = $this->_encryptDecrypt('encrypt', json_encode($json));
