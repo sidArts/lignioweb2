@@ -60,9 +60,14 @@ class MY_Controller extends CI_Controller {
 							'userDetails' 	=> $this->userDetails,
 							'menuList' 		=> $root_menus
 						];
+						// print_r($this->data); exit;
 						$this->output->set_header('Authorization: '. $token);
 						call_user_func_array(array($this, $method), $params);	
-						$this->layout->render($this->view, $this->data);				
+						// print $this->view; exit;
+						if(!isset($this->view) || empty($this->view)):
+							$this->view = get_class($this) . '/' . $method;
+						endif;
+						$this->layout->render($this->view, $this->data);
 					else:
 						print 'Authorization token could not be updated!'; exit;
 					endif;

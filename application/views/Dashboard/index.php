@@ -6,7 +6,7 @@
 
         <!-- BEGIN PAGE TITLE-->
         <h1 class="page-title">
-            <?= $heading ?>
+            <?= $userDetails['org_name'] ?>
             <!--<small>statistics, charts, recent events and reports</small>-->
         </h1>
         <!-- END PAGE TITLE-->

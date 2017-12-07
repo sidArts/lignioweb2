@@ -36,7 +36,7 @@ class Login extends CI_Controller {
 				unset($credentials['email']);
 			endif;
 
-			// $this->db->join('user_org_map uo', 'uo.user_id = u.user_id');
+			$this->db->join('organizations o', 'o.organization_id = u.org_id', 'left');
 			$query = $this->db->get_where('users u', $credentials);
 
 			if($query->num_rows() > 0):
@@ -47,7 +47,8 @@ class Login extends CI_Controller {
 					'firstname'			=> $result['firstname'],
 					'lastname'			=> $result['lastname'],
 					'expiry'			=> $expiry,
-					'diagnostic_lab_id' => $result['org_id']
+					'diagnostic_lab_id' => $result['org_id'],
+					'org_name'			=> $result['name']
 				];
 				$this->db->flush_cache();
 				$this->db->select('role_id');

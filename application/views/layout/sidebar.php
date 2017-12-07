@@ -22,11 +22,20 @@
          </li>
          <?php foreach ($menuList as $value): ?>
             <li class="nav-item">
+               <?php if($value['url'] == '#'): ?>
                <a href="#" class="nav-link nav-toggle">
                      <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                      <span class="title"><?php print $value['name']; ?></span>
                      <span class="arrow"></span>
-               </a> 
+               </a>
+               <?php else: ?>
+               <a href="javascript:void(0);" onclick="goToPage('<?php print $value['url'] ?>')" class="nav-link nav-toggle">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  <span class="title"><?php print $value['name']; ?></span>
+                  <span class="arrow"></span>
+               </a>
+               <?php endif; ?>
+                
                <?php if(isset($value['sub_menu']) && is_array($value['sub_menu']) && count($value['sub_menu']) > 0): ?>
                <ul class="sub-menu">
                   <?php foreach ($value['sub_menu'] as $sub_menu): ?>

@@ -40,6 +40,7 @@
       </div>
       <script type="text/javascript">
          var goToPage = function(url) {
+            // if(url != )
             var pageNavigateForm = document.getElementById('pageNavigateForm');
             pageNavigateForm.setAttribute('action', BASEPATH + url);
             pageNavigateForm.submit();
