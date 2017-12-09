@@ -99,9 +99,10 @@ class REST_Controller extends CI_Controller {
 					if($this->db->affected_rows() == 1):
 						$p = explode('_', $method)[0];
 						$p = (($p == 'index') ? 'read' : $p); 	
-						$permission = strtolower(get_class($this)) . '_' . $p ;
+						$className = strtolower(get_class($this));
+						$permission = $className . '_' . $p ;
 						$query = $this->db->distinct()
-											->select('permission_description as permission, p.restrict')
+											->select('LOWER(permission_description) as permission, p.restrict')
 											->from('role_permissions rp')
 											->join('permissions p', 'p.permission_id = rp.permission_id')
 											->where_in('role_id', $this->userDetails['roles'])

@@ -1,9 +1,26 @@
 
-var lignioApp = angular.module("masterDiagnosticTestModule", ['datatables']);
+var lignioApp = angular.module("masterDiagnosticTestModule", ['datatables', "ngRoute"]);
 lignioApp.run(function($http) {
   $http.defaults.headers.common.Authorization = document.getElementById('Authorization').value;
 });
-lignioApp.controller("masterDiagnosticTestController", function($scope, $http, $window, DTOptionsBuilder, DTColumnDefBuilder) {
+
+lignioApp.config(function($routeProvider) {
+    $routeProvider
+    .when("/", {
+        templateUrl : "/assets/templates/masterDiagnosticTest/master-diagnostic-test-list.html",
+        controller: 'masterDiagnosticTestListController'
+    })
+    .when("/report-parameters/:id", {
+        templateUrl : "/assets/templates/masterDiagnosticTest/test-report-parameters.html",
+        controller : "testReportParametersController"
+    })
+    .when("/preview-test-report/:id", {
+        templateUrl : "/assets/masterDiagnosticTestTemplates/preview-test-report.html",
+        controller : "parisCtrl"
+    });
+});
+
+lignioApp.controller("masterDiagnosticTestListController", function($scope, $http, DTOptionsBuilder, DTColumnDefBuilder) {
 	$scope.dtOptions = DTOptionsBuilder.newOptions();
 
     $scope.dtColumnDefs = [
@@ -18,4 +35,10 @@ lignioApp.controller("masterDiagnosticTestController", function($scope, $http, $
     $http.get(BASEPATH + '/api/MasterDiagnosticTest').then(function(res) {
         $scope.masterDiagnosticTests = res.data;
     });
+});
+
+lignioApp.controller('testReportParametersController', function($scope, $http, $routeParams) {
+	$http.get(BASEPATH + '/api/MasterDiagnosticTestReportParams/read/' + $routeParams.id).then(function(res) {
+		$scope.diagnosticTestReportParams = res.data;
+	});
 });
