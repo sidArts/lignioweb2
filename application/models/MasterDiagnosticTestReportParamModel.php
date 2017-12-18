@@ -8,9 +8,8 @@ class MasterDiagnosticTestReportParamModel extends MY_Model {
 	}
 
 	public function getReportParamByDiagnosticLabId($diagnostic_test_id) {
-		$query = $this->db->get_where($this->_table, [ 
-			'diagnostic_test_id' => $diagnostic_test_id 
-		]);
+		$sql = 'SELECT tp.*, mu.description as unit, mu.short_form as unit_short_form, it.name as form_input_type FROM master_diagnostic_test_params tp JOIN measurement_units mu JOIN form_input_types it ON mu.id = tp.measurement_unit_id and it.id = tp.input_type_id';
+		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 

@@ -41,4 +41,17 @@ lignioApp.controller('testReportParametersController', function($scope, $http, $
 	$http.get(BASEPATH + '/api/MasterDiagnosticTestReportParams/read/' + $routeParams.id).then(function(res) {
 		$scope.diagnosticTestReportParams = res.data;
 	});
+
+    
+    $http.get(BASEPATH + '/api/MeasurementUnits').then(function(res) {
+        $scope.measurementUnits = res.data;
+    });
+
+    $scope.diagnosticTestReportParams = {};
+    $scope.saveDiagnosticTestParam = function() {
+        var promise = $http.post(BASEPATH + '/api/MasterDiagnosticTestReportParams/create', angular.copy($scope.diagnosticTestReportParams));
+        promise.then(function() {
+            alert('Saved!')
+        });
+    };
 });

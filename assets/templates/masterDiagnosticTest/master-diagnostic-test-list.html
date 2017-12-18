@@ -17,15 +17,14 @@
                 <tr ng-repeat="diagnosticTest in masterDiagnosticTests">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ diagnosticTest.name }}</td>
-                    <td>{{ diagnosticTest.category }}</td>
+                    <td>{{ diagnosticTest.category_desc }}</td>
                     <td>{{ diagnosticTest.specimen }}</td>
-                    <td>{{ booking.created_at | date : 'MMM d, y h:mm a' }}</td>
-                    <td>{{ booking.updated_at | date : 'MMM d, y h:mm a' }}</td>
+                    <td>{{ diagnosticTest.created_at | date : 'MMM d, y h:mm a' }}</td>
+                    <td>{{ diagnosticTest.updated_at | date : 'MMM d, y h:mm a' }}</td>
                     <td class="text-right" style="width: 30px;">
-                        <!-- <button class="btn btn-primary" ng-click="showBookingDetails(booking.booking_id)">
+                        <a href="#!report-parameters/{{diagnosticTest.id}}">
                             <i class="fa fa-eye" aria-hidden="true"></i>
-                        </button> -->
-                        <a href="#!report-parameters/{{diagnosticTest.id}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        </a>
                     </td>
                 </tr>
             </tbody>

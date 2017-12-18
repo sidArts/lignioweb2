@@ -1,4 +1,14 @@
 <div class="row">
+	<div class="col-lg-12 text-right">
+		<button class="btn btn-primary" data-toggle="modal" data-target="#addReportParamModal" style="margin: 5px;">
+			<i class="fa fa-plus"></i>
+		</button>
+		<button class="btn btn-primary" data-target="#previewReportModal" data-toggle="modal" style="margin: 5px;">
+			<i class="fa fa-eye"></i>
+		</button>
+	</div>
+</div>
+<div class="row">
 	<div class="col-lg-12">
 		<table class="table table-hover table-bordered">
 			<thead>
@@ -22,8 +32,8 @@
 				<tr ng-repeat="reportParam in diagnosticTestReportParams">
 					<td>{{ $index + 1 }}</td>
 					<td>{{ reportParam.name }}</td>
-					<td>{{ reportParam.measurement_unit }}</td>
-					<td>{{ reportParam.input_type }}</td>
+					<td>{{ reportParam.unit_short_form }}</td>
+					<td>{{ reportParam.form_input_type }}</td>
 					<td>{{ (reportParam.default_value == null || reportParam.default_value == '') ? 'NA' : reportParam.default_value }}</td>
 					<td>{{ reportParam.created_at | date : 'MMM d, y h:mm a' }}</td>
 					<td>{{ reportParam.updated_at | date : 'MMM d, y h:mm a' }}</td>
@@ -36,4 +46,80 @@
 			</tbody>
 		</table>
 	</div>
+</div>
+
+<!-- Modal -->
+<div id="addReportParamModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Report Parameter</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+        	<label>Parameter Name</label>
+        	<input type="text" class="form-control" ng-model="diagnosticTestReportParams.name">
+        </div>
+        <div class="form-group">
+        	<label>Select Unit</label>
+        	<select ng-model="diagnosticTestReportParams.measurement_unit_id" class="form-control">
+        		<option>--Select--</option>
+        		<option ng-value="value.id" ng-repeat="value in measurementUnits">{{value.description}} ({{value.short_form}})</option>
+        	</select>
+        </div>
+        <div class="form-group">
+        	<label>Select Input Type</label>
+        	<select class="form-control">
+        		<option value="">--Select--</option>
+        		<option>Textbox</option>
+        		<option>Textarea</option>
+        	</select>
+        </div>
+        <div class="form-group">
+        	<label>Default Value</label>
+        	<input type="text" class="form-control">
+        </div>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" ng-click="saveDiagnosticTestParam()" class="btn btn-primary" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div id="previewReportModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Report</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group" ng-repeat="reportParam in diagnosticTestReportParams">
+        	<label>{{ reportParam.name }}</label>
+        	<input type="text" class="form-control">
+        </div>
+        <!-- <div class="input-group" ng-repeat="reportParam in diagnosticTestReportParams">
+        	<label>{{ reportParam.name }}</label>
+		    <span class="input-group-addon">
+		    	<i class="fa fa-user"></i>
+		    </span>
+		    <input type="text" class="form-control">
+	  	</div> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>
