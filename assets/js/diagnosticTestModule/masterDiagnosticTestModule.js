@@ -38,20 +38,28 @@ lignioApp.controller("masterDiagnosticTestListController", function($scope, $htt
 });
 
 lignioApp.controller('testReportParametersController', function($scope, $http, $routeParams) {
-	$http.get(BASEPATH + '/api/MasterDiagnosticTestReportParams/read/' + $routeParams.id).then(function(res) {
-		$scope.diagnosticTestReportParams = res.data;
-	});
-
-    
-    $http.get(BASEPATH + '/api/MeasurementUnits').then(function(res) {
-        $scope.measurementUnits = res.data;
-    });
-
-    $scope.diagnosticTestReportParams = {};
-    $scope.saveDiagnosticTestParam = function() {
-        var promise = $http.post(BASEPATH + '/api/MasterDiagnosticTestReportParams/create', angular.copy($scope.diagnosticTestReportParams));
-        promise.then(function() {
-            alert('Saved!')
+	
+    var getAllTestReportParams = function() {
+        $http.get(BASEPATH + '/api/MasterDiagnosticTestReportParams/read/' + $routeParams.id).then(function(res) {
+            $scope.diagnosticTestReportParams = res.data;
         });
     };
+    var getAllMeasurementUnits = function() {
+        $http.get(BASEPATH + '/api/MeasurementUnits').then(function(res) {
+            $scope.measurementUnits = res.data;
+        });    
+    };    
+
+    $scope.diagnosticTestReportParam = {};
+    $scope.saveDiagnosticTestParam = function() {
+        var data = angular.copy($scope.diagnosticTestReportParam);
+        data.diagnostic_test_id = $routeParams.id;
+        var promise = $http.post(BASEPATH + '/api/MasterDiagnosticTestReportParams/create', data);
+        promise.then(function() {
+            getAllTestReportParams();
+        });
+    };
+
+    getAllTestReportParams();
+    getAllMeasurementUnits();
 });

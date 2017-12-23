@@ -134,7 +134,6 @@
 										<h4 class="modal-title">Add Measurement Unit</h4>
 									</div>
 									<div class="modal-body">
-										{{measurementUnit | json}}
 										<div class="form-group">
 											<label>Mesurement Unit Description</label>
 											<input type="text" class="form-control" ng-model="measurementUnit.description">
@@ -166,19 +165,32 @@
 	})
 	.controller('masterDataController', function($scope, $http) {
 		$scope.diagnosticTestCategories = [];
-		$scope.measurementUnits = [];
+		$scope.measurementUnits         = [];
+		$scope.measurementUnit  		= {};
 
-		$http.get('/api/MasterDiagnosticTestCategories').then(function(res) {
-			$scope.diagnosticTestCategories = res.data;
-		});
-		$http.get('/api/MeasurementUnits').then(function(res) {
-			$scope.measurementUnits = res.data;			
-		});
+		var getAllMasterCategories = function() {
+			$http.get('/api/MasterDiagnosticTestCategories').then(function(res) {
+				$scope.diagnosticTestCategories = res.data;
+			});
+		};		
 
-		$scope.measurementUnit = {};
+		var getAllMeasurementUnits = function() {
+			$http.get('/api/MeasurementUnits').then(function(res) {
+				$scope.measurementUnits = res.data;			
+			});
+		};
+		
 	    $scope.addMeaurementUnit = function() {
-	        var promise = $http.post(BASEPATH + '/api/MeasurementUnits/create', angular.copy($scope.measurementUnit));
-	        $scope.measurementUnit = {};
+	    	var data = angular.copy($scope.measurementUnit);
+	        var promise = $http.post(BASEPATH + '/api/MeasurementUnits/create', data);
+	        promise.then(function() {
+	        	getAllMeasurementUnits();
+	        	$scope.measurementUnit = {};
+	        	$('#addMeasurementUnitModal').modal('hide');
+	        });	        
 	    };
+
+	    getAllMeasurementUnits();
+	    getAllMasterCategories();
 	});
 </script>
