@@ -6,8 +6,80 @@ class MY_Controller extends CI_Controller {
 	const TOKEN_EXPIRY = (60 * 60 * 1000);
 
 	public function __construct() {
-		parent::__construct();		
-		$this->load->library("Layout", "layout");
+		parent::__construct();
+		$stylesheets = [
+			"bootstrap.min.css",
+	        "font-awesome.css",
+	        "bootstrap-switch.min.css",
+	        "daterangepicker.min.css",
+	        "morris.css",
+	        "fullcalendar.min.css",
+	        "jqvmap.css",
+	        "components.min.css",
+	        "plugins.min.css",
+	        "layout.min.css",
+	        "darkblue.min.css",
+	        "custom.min.css"
+		];
+		$javascripts = [
+			"gtm.js",
+			"analytics.js",
+			"jquery.min.js",
+			"bootstrap.min.js",
+			"js.cookie.min.js",
+			"jquery.slimscroll.min.js",
+			"jquery.blockui.min.js",
+			"bootstrap-switch.min.js",
+			"moment.min.js",
+			"daterangepicker.min.js",
+			"morris.min.js",
+			"raphael-min.js",
+			"jquery.waypoints.min.js",
+			"jquery.counterup.min.js",
+			"amcharts.js",
+			"serial.js",
+			"pie.js",
+			"radar.js",
+			"light.js",
+			"patterns.js",
+			"chalk.js",
+			"ammap.js",
+			"worldLow.js",
+			"amstock.js",
+			"fullcalendar.min.js",
+			"horizontal-timeline.js",
+			"jquery.flot.min.js",
+			"jquery.flot.resize.min.js",
+			"jquery.flot.categories.min.js",
+			"jquery.easypiechart.min.js",
+			"jquery.sparkline.min.js",
+			"jquery.vmap.js",
+			"jquery.vmap.russia.js",
+			"jquery.vmap.world.js",
+			"jquery.vmap.europe.js",
+			"jquery.vmap.germany.js",
+			"jquery.vmap.usa.js",
+			"jquery.vmap.sampledata.js",
+			"app.min.js",
+			"dashboard.min.js",
+			"layout.min.js",
+			"demo.min.js",
+			"quick-sidebar.min.js",
+			"quick-nav.min.js",
+			"bootbox.js",
+			"angular/angular.js"
+		];
+		$layoutParams = [
+			'title'		=> 'Lignio | Diagnostic Lab Dashboard',
+			'header'	=> 'layout/header',
+			'footer'	=> 'layout/footer',
+			'sidebar'	=> 'layout/sidebar',
+			'layout'	=> 'layout/dashboardLayout',
+			'styles'	=> $stylesheets,
+			'scripts'	=> $javascripts
+		];
+		$this->load->library("Layout", $layoutParams);
+		// $this->layout->setLayout('layout/dashboardLayout');
 	}
 
 	public function _remap($method, $params = []) {		

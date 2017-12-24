@@ -107,7 +107,7 @@ class MY_Model extends CI_Model {
 		return $data;
 	}
 
-	public function setCreateAndUpdateDate($data) {
+	/*public function setCreateAndUpdateDate($data) {
 		$data['created_at'] = $data['updated_at'] = date('Y-m-d H:i:s');
 		$data['is_active']  = 1;
 		return $data;
@@ -115,6 +115,17 @@ class MY_Model extends CI_Model {
 
 	public function setUpdateDate($data) {
 		$data['updated_at'] = date('Y-m-d H:i:s');
+		return $data;
+	}*/
+
+	public function setCreateAndUpdateDate($data) {
+		$data['created_at'] = $data['updated_at'] = (time() * 1000);
+		$data['is_active']  = 1;
+		return $data;
+	}
+
+	public function setUpdateDate($data) {
+		$data['updated_at'] = (time() * 1000);
 		return $data;
 	}
 }

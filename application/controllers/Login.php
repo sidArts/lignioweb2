@@ -5,6 +5,10 @@ class Login extends CI_Controller {
 
 	function __construct() {
 		parent::__construct();
+		$this->load->library('Layout', [
+			'styles'  => [ "bootstrap.min.css", "font-awesome.css" ],
+			'scripts' => [ "jquery.min.js", "bootstrap.min.js", "angular/angular.js", "bootbox.js" ]
+		]);
 	}
 
 	/**
@@ -24,7 +28,7 @@ class Login extends CI_Controller {
 	 */
 	public function index()
 	{		
-		$this->load->view('login');
+		$this->layout->render('login', []);
 	}
 
 	public function authorize() {
