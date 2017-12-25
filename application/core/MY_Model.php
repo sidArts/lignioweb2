@@ -39,9 +39,13 @@ class MY_Model extends CI_Model {
 	}
 
 
+	/* @param $argument[0] @desc where conditions for fetching data
+	 * @param $argument[1] @desc columns to be fetched
+	 */
 	public function get_all() {
 		$args = func_get_args();
-		if(isset($args[1]) && is_array($args[1])) {
+		
+		if(isset($args[1]) && is_array($args[1]) && !empty($args[1])) {
 			$this->db->select(implode(',', $args[1]));
 		}
 		if (isset($args) && is_array($args[0]))
