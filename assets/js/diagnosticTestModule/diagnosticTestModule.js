@@ -1,33 +1,30 @@
 /**
  * Created by siddhartha on 14/8/17 at 09:56 PM.
  */
-
-var diagnosticLabId = '59744253c9aebe1254fd409b';
-var newDiagnosticTestController = function ($scope, $http, $window) {
-    $scope.diagnosticTest = {};
-    $scope.diagnosticTest.diagnosticLabId = $window.diagnosticLabId;
-
-    $scope.submitNewDiagnosticTest = function () {
-        console.log($scope.diagnosticTest);
-        $http.post(BASEPATH + 'api/DiagnosticTest/create', angular.copy($scope.diagnosticTest))
-            .then(function () {
-                $window.location.href = '/diagnosticTests';
-            }, function () {
-                alert('Something went wrong!');
-            });
-    };
+var newDiagnosticTestController = function ($scope, $http, DTOptionsBuilder, DTColumnDefBuilder) {
     var init = function () {
-        $http.get('/api/DiagnosticTest/category/getAll').then(function(res) {
-            $scope.categoryList = res.data;
+        $http.get(BASEPATH + '/api/MasterDiagnosticTest').then(function(res) {
+            $scope.masterDiagnosticTests = res.data;
         });
-
     };
+
+    /*$scope.dtOptions = DTOptionsBuilder.newOptions();
+
+    $scope.dtColumnDefs = [
+        DTColumnDefBuilder.newColumnDef(0),
+        DTColumnDefBuilder.newColumnDef(1),
+        DTColumnDefBuilder.newColumnDef(2),
+        DTColumnDefBuilder.newColumnDef(3)
+    ];*/
+
+    $scope.selectedDiagnosticTest = {};
+    
     init();
 };
 
 
 
-var newDiagnosticTestModule = angular.module("newDiagnosticTestModule", []);
+var newDiagnosticTestModule = angular.module("newDiagnosticTestModule", ['datatables']);
 newDiagnosticTestModule.run(function($http) {
   $http.defaults.headers.common.Authorization = document.getElementById('Authorization').value;
 });

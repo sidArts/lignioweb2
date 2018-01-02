@@ -15,7 +15,7 @@ class DiagnosticTest extends MY_Controller {
 		$this->view = "diagnosticTest/index";
 	}
 
-	public function create() {
+	public function MasterDiagnosticTests() {
 		$this->data['diagnosticLabId'] = 1;
 		$this->data['heading']     	= "RB Diagnostic Center";
 		$this->view = "diagnosticTest/createNew";

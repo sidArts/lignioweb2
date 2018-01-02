@@ -40,7 +40,7 @@ var diagnosticTestController = function($scope, $http, $window, DTOptionsBuilder
         });
     };
     var getCategoryList = function() {
-        $http.get(BASEPATH + '/api/diagnosticTest/category/getAll').then(function(res) {
+        $http.get(BASEPATH + '/api/Category').then(function(res) {
             $scope.categoryList = res.data;
         });
     };

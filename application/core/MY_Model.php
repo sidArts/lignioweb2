@@ -39,7 +39,7 @@ class MY_Model extends CI_Model {
 	}
 
 
-	/* @param $argument[0] @desc where conditions for fetching data
+	/* @param $argument[0] @desc conditions for fetching data
 	 * @param $argument[1] @desc columns to be fetched
 	 */
 	public function get_all() {
