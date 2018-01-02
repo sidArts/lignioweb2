@@ -1,4 +1,4 @@
-<?php
+	<?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -13,23 +13,14 @@ class Registration extends CI_Controller {
 		$this->load->model("OrganizationModel", "organization");
 	}	
 
-	function index() {		
+	function employee() {		
 		// $this->view = 'register';
-		$this->layout->render('/register', []);
+		$this->layout->render('Registration/employee', []);
 	}
 
-	function save() {
-		if($this->input->method() == 'post'):
-			$data = json_decode($this->input->raw_input_stream, TRUE);
-			$insertedId = $this->organization->insert($data);	
-			if($insertedId) {
-				$this->output->set_status_header(201)
-							 ->set_content_type('application/json');
-				print json_encode([ 'insertedId' => $insertedId ]);
-				exit;
-			} else {
-				$this->output->set_status_header(400);
-			}
-		endif;
+	function organization() {		
+		// $this->view = 'register';
+		$this->layout->render('Registration/organization', []);
 	}
+
 }

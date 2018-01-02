@@ -19,6 +19,8 @@ class REST_Controller extends CI_Controller {
 	const HTTP_MIME_TYPE_TEXT			= 'text/html';
 	const TOKEN_EXPIRY 					= (60 * 60 * 1000);
 
+	protected $escapeTokenFilter = [];
+
 	public function __construct() {
 		parent::__construct();			
 		$this->userDetails = [];
@@ -75,7 +77,9 @@ class REST_Controller extends CI_Controller {
 
 	public function _remap($method, $params = []) {	
 		
-		if (method_exists($this, $method)):		
+		if(in_array($method, $this->escapeTokenFilter)):
+			call_user_func_array(array($this, $method), $params);
+		elseif (method_exists($this, $method)):		
 			$token = $this->input->get_request_header('Authorization');
 			// print $token; exit;
 			if($token === NULL):			

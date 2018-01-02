@@ -41,6 +41,7 @@ class Login extends CI_Controller {
 			endif;
 
 			$this->db->join('organizations o', 'o.organization_id = u.org_id', 'left');
+		//	$this->db->join('')
 			$query = $this->db->get_where('users u', $credentials);
 
 			if($query->num_rows() > 0):
@@ -81,13 +82,15 @@ class Login extends CI_Controller {
 						'token' 	=> $token, 
 						'expiry'	=> $expiry 
 					]);
-					if($this->db->affected_rows() == 1):
+					if($this->db->affected_rows() == 1 ):
+
 						$this->output->set_status_header(200);
 						$this->output->set_content_type('application/json');
 						$output = [ 
 							"success" => TRUE, 
 							'message' => 'Login Successfull!', 
 							'token'   => $token	
+
 						];
 						$this->output->set_output(json_encode($output));
 					else:

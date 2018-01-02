@@ -9,6 +9,10 @@
           background-position: center;
           background-repeat: no-repeat;
           background-attachment: fixed;
+         {
+        h1, h1 
+        font-size: 36px;
+
       }
   </style>
 </head>
@@ -19,9 +23,14 @@
                 <a class="navbar-brand" href="/">Lignio</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="<?php if($this->uri->segment(1) == NULL) print 'active'; ?>"><a href="/">Home</a></li>
-                <li class="<?php if($this->uri->segment(1) == 'Registration') print 'active'; ?>">
-                    <a href="/Registration">Organization Registration</a>
+                <li class="<?php if($this->uri->segment(1) == NULL) print 'active'; ?>">
+                  <a href="/">Home</a>
+                </li>
+                <li class="<?php if($this->uri->segment(2) == 'organization') print 'active'; ?>">
+                   <a href="/Registration/organization">Organization Registration</a>
+                </li>
+                <li class="<?php if($this->uri->segment(2) == 'employee') print 'active'; ?>">
+                  <a href="/Registration/employee">Employee Registration</a>
                 </li>
                 <li><a href="#">Download Manual</a></li>
             </ul>
