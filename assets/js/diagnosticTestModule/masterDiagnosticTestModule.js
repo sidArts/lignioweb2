@@ -21,7 +21,8 @@ lignioApp.config(function($routeProvider) {
 });
 
 lignioApp.controller("masterDiagnosticTestListController", function($scope, $http, DTOptionsBuilder, DTColumnDefBuilder) {
-	$scope.dtOptions = DTOptionsBuilder.newOptions();
+	$scope.masterDiagnosticTest = {};
+    $scope.dtOptions = DTOptionsBuilder.newOptions();
 
     $scope.dtColumnDefs = [
         DTColumnDefBuilder.newColumnDef(0),
@@ -35,6 +36,17 @@ lignioApp.controller("masterDiagnosticTestListController", function($scope, $htt
     $http.get(BASEPATH + '/api/MasterDiagnosticTest').then(function(res) {
         $scope.masterDiagnosticTests = res.data;
     });
+
+    var getAllCategories = function() {
+        $http.get(BASEPATH + '/api/Category').then(function(res) {
+            $scope.categories = res.data;
+        });    
+    };
+
+    $scope.saveMasterDiagnosticTest = function() {
+        $http.post(BASEPATH + '/api/MasterDiagnosticTest/create', $scope.masterDiagnosticTest);
+    };
+    getAllCategories();
 });
 
 lignioApp.controller('testReportParametersController', function($scope, $http, $routeParams) {
@@ -60,6 +72,32 @@ lignioApp.controller('testReportParametersController', function($scope, $http, $
         });
     };
 
+
+
     getAllTestReportParams();
     getAllMeasurementUnits();
+
+});
+
+lignioApp.directive('customInput', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            formInputType: "=",
+            model: "=",
+            listValues: "="
+        },
+        template: '<span>'+ 
+                    '<textarea class="form-control" ng-if="formInputType == 2"></textarea>'+
+                    '<input type="text" class="form-control" ng-if="formInputType == 1">' + 
+                    '<select ng-if="formInputType == 3" class="form-control">'+
+                        '<option>--select--</option>' +
+                        '<option ng-repeat="value in listValues" value="{{value}}">{{value}}</option>' +
+                    '</select>' + 
+                  '</span>',
+        controller: function($scope) {
+            if(typeof $scope.listValues == 'string')
+                $scope.listValues = $scope.listValues.split(',');
+        }
+    }
 });

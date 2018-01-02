@@ -7,4 +7,8 @@ class MasterDiagnosticTest extends REST_Controller {
 	function __construct() {
 		parent::__construct();
 	}
+
+	function read_OrgSpecificMasterDiagnosticTest() {
+		
+	}
 }

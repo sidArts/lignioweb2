@@ -114,7 +114,7 @@
       <div class="modal-body">
         <div class="form-group" ng-repeat="reportParam in diagnosticTestReportParams">
         	<label>{{ reportParam.name }}</label>
-        	<input type="text" class="form-control">
+        	<custom-input form-input-type="reportParam.input_type_id" list-values="reportParam.list_values"></custom-input>
         </div>
       </div>
       <div class="modal-footer">

@@ -52,7 +52,7 @@ class Login extends CI_Controller {
 					'firstname'			=> $result['firstname'],
 					'lastname'			=> $result['lastname'],
 					'expiry'			=> $expiry,
-					'diagnostic_lab_id' => $result['org_id'],
+					'org_id' 			=> $result['org_id'],
 					'org_name'			=> $result['name']
 				];
 				$this->db->flush_cache();
