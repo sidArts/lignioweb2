@@ -3,7 +3,7 @@
  */
 var newDiagnosticTestController = function ($scope, $http, DTOptionsBuilder, DTColumnDefBuilder) {
     var init = function () {
-        $http.get(BASEPATH + '/api/MasterDiagnosticTest').then(function(res) {
+        $http.get(BASEPATH + '/api/MasterDiagnosticTest/read_OrgSpecificMasterDiagnosticTest').then(function(res) {
             $scope.masterDiagnosticTests = res.data;
         });
     };
@@ -17,7 +17,19 @@ var newDiagnosticTestController = function ($scope, $http, DTOptionsBuilder, DTC
         DTColumnDefBuilder.newColumnDef(3)
     ];*/
 
-    $scope.selectedDiagnosticTest = {};
+    $scope.addDiagnosticTestToOrg = function(index) {
+        $scope.diagnosticTestDetails = angular.copy($scope.masterDiagnosticTests[index]);
+        $('#addToListModal').modal('show') 
+    };
+
+    $scope.viewDiagnosticTestDetails = function(index) {
+        $scope.diagnosticTestDetails = angular.copy($scope.masterDiagnosticTests[index]);
+        $('#diagnosticTestDetails').modal('show');
+    };
+
+    $scope.saveDetails = function() {
+        
+    };
     
     init();
 };

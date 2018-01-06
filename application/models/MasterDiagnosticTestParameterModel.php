@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class MasterDiagnosticTestReportParamModel extends MY_Model {
+class MasterDiagnosticTestParameterModel extends MY_Model {
 	protected $_table = "master_diagnostic_test_params";
 
 	function __construct() {

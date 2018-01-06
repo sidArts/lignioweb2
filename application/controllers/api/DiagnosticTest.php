@@ -13,4 +13,6 @@ class DiagnosticTest extends REST_Controller {
 		$res = $this->$model->get_all($this->access_permission_restrict);
 		$this->_response(REST_Controller::HTTP_OK, $res);
 	}
+
+	
 }
