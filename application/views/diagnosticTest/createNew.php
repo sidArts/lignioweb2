@@ -141,7 +141,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Price</label>
-                            <input class="form-control" type="text">
+                            <input ng-model="data.cost" class="form-control" type="text">
                         </div>
                     </div>
                     <div class="modal-footer">

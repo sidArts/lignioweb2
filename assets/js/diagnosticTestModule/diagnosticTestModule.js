@@ -24,11 +24,21 @@ var newDiagnosticTestController = function ($scope, $http, DTOptionsBuilder, DTC
 
     $scope.viewDiagnosticTestDetails = function(index) {
         $scope.diagnosticTestDetails = angular.copy($scope.masterDiagnosticTests[index]);
+        $scope.diagnosticTestDetails.index = index;
         $('#diagnosticTestDetails').modal('show');
     };
 
     $scope.saveDetails = function() {
-        
+        var data = { 
+            master_diagnostic_test_id: $scope.diagnosticTestDetails.id, 
+            cost: $scope.data.cost 
+        };
+
+        var promise = $http.post('/api/DiagnosticTest/create', data);
+        promise.then(function() {
+            bootbox.alert('Test Successfully Added!');
+            $scope.masterDiagnosticTests[$scope.diagnosticTestDetails.index]['isAdded'] = 1;
+        });
     };
     
     init();

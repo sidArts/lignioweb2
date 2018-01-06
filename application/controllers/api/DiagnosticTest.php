@@ -14,5 +14,12 @@ class DiagnosticTest extends REST_Controller {
 		$this->_response(REST_Controller::HTTP_OK, $res);
 	}
 
+	public function create() {	
+		$model 			= $this->modelName;
+		$data 			= json_decode($this->input->raw_input_stream, TRUE);
+		$data['org_id'] = $this->userDetails['org_id'];
+		$insertedId = $this->$model->insert($data);
+		$this->_response(REST_Controller::HTTP_CREATED, $insertedId);
+	}
 	
 }
