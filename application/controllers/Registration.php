@@ -8,7 +8,12 @@ class Registration extends CI_Controller {
 		parent::__construct();
 		$this->load->library('Layout', [
 			'styles'  => [ "bootstrap.min.css", "font-awesome.css" ],
-			'scripts' => [ "jquery.min.js", "bootstrap.min.js", "angular/angular.js", "bootbox.js" ]
+			'scripts' => [ 
+				"jquery.min.js", 
+				"bootstrap.min.js", 
+				"angular/angular.js", 
+				"bootbox.js" 
+			]
 		]);
 		$this->load->model("OrganizationModel", "organization");
 	}	
