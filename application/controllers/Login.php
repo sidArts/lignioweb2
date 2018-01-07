@@ -57,7 +57,7 @@ class Login extends CI_Controller {
 				];
 				$this->db->flush_cache();
 				$this->db->select('role_id');
-				$query = $this->db->get_where('user_role', [ 
+				$query = $this->db->get_where('user_roles', [ 
 					'user_id' => $result['user_id'] 
 				]);
 
