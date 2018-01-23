@@ -105,24 +105,27 @@ class REST_Controller extends CI_Controller {
 						$p = (($p == 'index') ? 'read' : $p); 	
 						$className = strtolower(get_class($this));
 						$permission = $className . '_' . $p ;
-						$query = $this->db->distinct()
-											->select('LOWER(permission_description) as permission, p.restrict')
-											->from('role_permissions rp')
-											->join('permissions p', 'p.permission_id = rp.permission_id')
+						/*$query = $this->db->distinct()
+											->select('LOWER(code) as permission, p.restrict')
+											->from('org_role_permissions rp')
+											->join('permissions p', 'p.id = rp.permission_id')
 											->where_in('role_id', $this->userDetails['roles'])
 											->like('permission_description', $permission, 'none')
-											->get();
+											->get();*/
 
+						$sql = 'SELECT p.code, p.restrict FROM permissions p WHERE p.id IN ( (SELECT orp.permission_id FROM org_role_permissions orp WHERE orp.role_id IN (SELECT r.id as role_id FROM org_roles r WHERE r.org_id = '. $this->userDetails['org_id'] .'))) AND p.code LIKE \'' . $permission . '\'';
+						$query = $this->db->query($sql);
 						if($query->num_rows() > 0):
 							$row = $query->result_array();						
 
 							$this->access_permission_restrict = [];
-							if($this->userDetails['org_id'] != 0) {
-								foreach ($row as $value) {
+							if($this->userDetails['org_id'] != 1) {
+								/*foreach ($row as $value) {
 									if(isset($value['restrict']) && !empty($value['restrict'])):
 										$this->access_permission_restrict[$value['restrict']] = $this->userDetails[$value['restrict']];
 									endif;
-								}	
+								}*/
+								$this->access_permission_restrict['org_id'] = $this->userDetails['org_id'];	
 							}
 							// $this->_validateRequest($method);
 							call_user_func_array(array($this, $method), $params);

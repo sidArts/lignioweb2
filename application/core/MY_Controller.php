@@ -108,7 +108,8 @@ class MY_Controller extends CI_Controller {
 					$this->db->where('token', $token);
 					$this->db->update('jwt', [ 'expiry' => $milliseconds + self::TOKEN_EXPIRY ]);
 					if($this->db->affected_rows() == 1) :
-						$menu_query = $this->db->query('select * from menus ms where ms.id in (select distinct menu_id from menu_access_by_roles join menus ms1 on ms1.id = menu_id where role_id in ('. join(',', $this->userDetails['roles']) .'))');
+						/*$menu_query = $this->db->query('select * from menus ms where ms.id in (select distinct menu_id from menu_access_by_roles join menus ms1 on ms1.id = menu_id where role_id in ('. join(',', $this->userDetails['roles']) .'))');*/
+						$menu_query = $this->db->query('select * from menus ms');
 						$menu = $menu_query->result_array();
 						$root_menus = [];
 						foreach($menu as $val):

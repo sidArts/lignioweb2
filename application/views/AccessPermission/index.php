@@ -1,7 +1,7 @@
  <!-- BEGIN CONTENT -->
  <div class="page-content-wrapper">
 
-    <div ng-app="orgMangementModule" ng-controller="orgMangementController" class="page-content" style="min-height: 1001px;">
+    <div ng-app="accessPermissionModule" ng-controller="accessPermissionController" class="page-content" style="min-height: 1001px;">
         <!-- BEGIN PAGE HEADER-->
 
         <!-- BEGIN PAGE TITLE
@@ -18,7 +18,7 @@
                     <i class="fa fa-arrow-right"></i>
                 </li>
                 <li>
-                    <span>Organization Management</span>
+                    <span>Access Permissions</span>
                 </li>
             </ul>
         </div>
@@ -32,27 +32,33 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
-                            <th width="40%">Location</th>
-                            <th>Website</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Gender</th>
+                            <th>Location</th>
                             <th>Created At</th>
                             <th class="text-right" width="20%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="org in organizations">
+                        <tr ng-repeat="user in users">
                             <td>
                                 {{$index + 1}}
                             </td>
-                            <td>{{ org.name }}</td>
-                            <td>{{ org.address }}, {{ org.city }}, {{ org.state }}</td>
-                            <td>{{ org.website }}</td>
-                            <td>{{ org.created_at | date : 'MMM d, y h:mm a' }}</td>
+                            <td>
+                                {{ user.firstname }}&nbsp;{{ user.lastname }}
+                            </td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.phone }}</td>
+                            <td>{{ user.gender }}</td>
+                            <td>{{ user.address }}, {{ user.city }}, {{ user.state }}</td>                            
+                            <td>{{ user.created_at | date : 'MMM d, y h:mm a' }}</td>
                             <td class="text-right">
                                 <span class="label" ng-class="{ 'label-warning': (org.status_id == 1), 'label-success': (org.status_id == 7),
                                 'label-danger' : (org.status_id == 8) }">
                                     {{org.status}}
                                 </span>&nbsp;
-                                <button ng-click="viewOrganizationDetails($index)" class="btn btn-default btn-xs">
+                                <button ng-click="viewUserDetails($index)" class="btn btn-default btn-xs">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </button>
                             </td>
@@ -63,7 +69,7 @@
         </div>
 
         <!-- Modal -->
-        <div id="organizationDetailsModal" class="modal fade" role="dialog">
+        <div id="userDetailsModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -127,4 +133,4 @@
 <script src="<?php print base_url('assets/js/lib/datatables/jquery.dataTables.js'); ?>"></script>
 <script src="<?php print base_url('assets/js/lib/datatables/dataTables.bootstrap.js'); ?>"></script>
 <script src="<?php print base_url('assets/js/lib/datatables/angular-datatables.js'); ?>"></script>
-<script src="<?= base_url() . "assets" ?>/js/organizationManagementModule.js"></script>
+<script src="<?= base_url() . "assets" ?>/js/userManagementModule.js"></script>

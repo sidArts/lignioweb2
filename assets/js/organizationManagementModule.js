@@ -18,4 +18,4 @@ var orgMangementModule = angular.module("orgMangementModule", []);
 orgMangementModule.run(function($http) {
   $http.defaults.headers.common.Authorization = document.getElementById('Authorization').value;
 });
-orgMangementModule.controller("newDiagnosticTestController", orgMangementController);
+orgMangementModule.controller("orgMangementController", orgMangementController);
