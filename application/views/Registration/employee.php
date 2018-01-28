@@ -29,6 +29,24 @@
           <input type="text" ng-model="employee.lastname" class="form-control">
         </div>
         <div class="form-group">
+         <label>Country</label>
+         <select ng-change="getStatesByCountry(employee.country_id)" ng-options="country.id as country.name for country in countries" ng-model="employee.country_id" class="form-control">
+           <option value="">--Select--</option>
+         </select>
+       </div>
+       <div class="form-group">
+         <label>State</label>
+         <select ng-change="getCitiesByState(employee.state_id)" ng-options="state.id as state.name for state in states" ng-model="employee.state_id" class="form-control">
+           <option value="">--Select--</option>
+         </select>
+       </div>
+       <div class="form-group">
+         <label>City</label>
+         <select ng-options="city.id as city.name for city in cities" ng-model="employee.city_id" class="form-control">
+          <option value="">--Select--</option>
+        </select>
+      </div>
+        <div class="form-group">
           <input type="checkbox">
           Agree <a href="#">Terms and Conditions</a>
         </div>

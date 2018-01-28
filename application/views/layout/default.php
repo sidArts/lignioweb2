@@ -5,7 +5,7 @@
   <?php print $css; ?>
   <style type="text/css">
       body {
-          background-image: url('/assets/img/background.jpg');
+          background-image: url('/assets/img/lignio.png');
           background-position: center;
           background-repeat: no-repeat;
           background-attachment: fixed;
@@ -20,7 +20,7 @@
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">Lignio</a>
+               <a class="navbar-brand" href="/">Lignio</a>
             </div>
             <ul class="nav navbar-nav">
                 <li class="<?php if($this->uri->segment(1) == NULL) print 'active'; ?>">

@@ -64,4 +64,66 @@ class Booking extends REST_Controller {
 			$this->_response(parent::HTTP_NO_CONTENT);		
 		endif;
 	}
+	public function update_booking_detail($booking_detail_id,$assigned_to)
+	{
+		 	$sql = "UPDATE booking_details SET `status` = 2, `assigned_to`= ? where `booking_detail_id`=?";
+			$query = $this->db->query($sql, array($assigned_to, $booking_detail_id));
+			if($this->db->affected_rows() > 0)
+			$this
+			->output
+			->set_status_header('204');
+			else
+			$this
+			->output
+			->set_status_header('500');
+		 
+			
+	}
+	public function delete_booking($booking_id)
+{
+      $sql="DELETE FROM booking_details WHERE 'booking_id'=?";
+	  $query = $this->db->query($sql, array($assigned_to, $booking_id));
+	  if($this->db->affected_rows() > 0)
+			$this
+			->output
+			->set_status_header('204');
+			else
+			$this
+			->output
+			->set_status_header('500');
+
+
+}
+
+
+public function payment($status,$paid_amount)
+{
+$this->load->model('BookingDetailModel');
+//$this->load->model('EndUserModel');
+$data = $this->BookingModel->get($this->access_permission_restrict);
+if($data!=NULL):
+{
+	$paymentDetails=$this->bookings->payment();
+	$data['paid_amount']=$paid_amount;
+	$data['cost']=$cost;
+
+	if($paymentDetails == $cost)
+	{
+		$user = [];
+			$user['end_user_id'] = $this->EndUserModel->insert([ 
+				'reports'			=> $data['reports']
+				
+			]);
+			if(!$user['end_user_id']):
+				$this->_response(parent::HTTP_BAD_REQUEST);
+			endif;
+	}
+
+
+
+}
+  
+
+
+}
 }

@@ -2,4 +2,8 @@
 
 class EndUserModel extends MY_Model {
 	protected $_table = "end_users";
+
+
+
+
 }

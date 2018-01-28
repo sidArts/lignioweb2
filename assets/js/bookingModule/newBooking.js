@@ -2,8 +2,8 @@ var newBookingController = function($scope, $http, $window) {
     $scope.diagnosticTestList = [];
     $scope.booking = {};
     $scope.booking.diagnosticTests = [];
-    
     $scope.checkedDiagnosticTests = {};
+    
     var getDiagnosticTestList = function(diagnosticLabId) {
         var promise = $http({
             url: BASEPATH + '/api/DiagnosticTest',
