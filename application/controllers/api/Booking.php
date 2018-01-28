@@ -54,8 +54,8 @@ class Booking extends REST_Controller {
 
 	public function read($booking_id) {
 		$this->load->model('BookingDetailModel');
-		$this->access_permission_restrict['booking_id'] = $booking_id;
-		$data = $this->BookingModel->get($this->access_permission_restrict);
+		// $this->access_permission_restrict['b.id'] = $booking_id;
+		$data = $this->BookingModel->get($booking_id);
 		if($data != NULL):
 			$bookingDetails = $this->BookingDetailModel->get_all(['booking_id' => $booking_id]);	
 			$data['bookingDetails'] = $bookingDetails;

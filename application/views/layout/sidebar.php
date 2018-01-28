@@ -13,7 +13,7 @@
       <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
       <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
          <li class="nav-item start active open">
-            <a href="<?php print base_url(); ?>" class="nav-link nav-toggle">
+            <a href="#"  onclick="goToPage('/Dashboard')" class="nav-link nav-toggle">
                <i class="fa fa-tachometer" aria-hidden="true"></i>
                <span class="title">Dashboard</span>
                <span class="selected"></span>

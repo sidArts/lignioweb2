@@ -11,14 +11,16 @@ class DiagnosticTest extends MY_Controller {
 	public function index() {
 		$this->data['diagnosticLabId']= 1;
 		$this->data['heading']     	= "RB Diagnostic Center";
-		
-		$this->view = "diagnosticTest/index";
 	}
 
 	public function MasterDiagnosticTests() {
 		$this->data['diagnosticLabId'] = 1;
 		$this->data['heading']     	= "RB Diagnostic Center";
-		$this->view = "diagnosticTest/createNew";
+	}
+
+	public function TestResults() {
+		$this->data['diagnosticLabId'] = 1;
+		$this->data['heading']     	= "RB Diagnostic Center";
 	}
 
 }

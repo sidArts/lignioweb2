@@ -7,7 +7,12 @@ class Login extends CI_Controller {
 		parent::__construct();
 		$this->load->library('Layout', [
 			'styles'  => [ "bootstrap.min.css", "font-awesome.css" ],
-			'scripts' => [ "jquery.min.js", "bootstrap.min.js", "angular/angular.js", "bootbox.js" ]
+			'scripts' => [ 
+				"jquery.min.js", 
+				"bootstrap.min.js", 
+				"angular/angular.js", 
+				"bootbox.js" 
+			]
 		]);
 	}
 
@@ -41,14 +46,13 @@ class Login extends CI_Controller {
 			endif;
 
 			$this->db->join('organizations o', 'o.organization_id = u.org_id', 'left');
-		//	$this->db->join('')
 			$query = $this->db->get_where('users u', $credentials);
 
 			if($query->num_rows() > 0):
 				$result = $query->row_array();	
 				$expiry = round(microtime(true) * 1000) + (1 * 60 * 1000);
 				$json = [
-					'user_id'			=> $result['user_id'],
+					'id'				=> $result['id'],
 					'firstname'			=> $result['firstname'],
 					'lastname'			=> $result['lastname'],
 					'expiry'			=> $expiry,
@@ -56,26 +60,20 @@ class Login extends CI_Controller {
 					'org_name'			=> $result['name']
 				];
 				$this->db->flush_cache();
-				$this->db->select('role_id');
-				$query = $this->db->get_where('user_role', [ 
-					'user_id' => $result['user_id'] 
+				$this->db->select('id');
+				$query = $this->db->get_where('org_roles', [ 
+					'org_id'	=> $result['org_id']
 				]);
 
 				if($query->num_rows() > 0):
 
 					$result = $query->result_array();
-					// in_array(5, $result)
-					if(count($result) == 1 && $result[0]['role_id'] == 3):
-						$json['roles'] = [3];
-					else:
-						$roleIds = [];
-						foreach ($result as $value):
-							$roleIds[] = $value['role_id'];						
-						endforeach;
-						$json['roles'] = $roleIds;	
-						$this->db->flush_cache();
-					endif;			
-
+					$json['roles'] = [];
+					foreach($query->result_array() as $val) {
+						$json['roles'][] = $val['id'];
+					}
+					$this->db->flush_cache();
+					
 					$token = $this->_encryptDecrypt('encrypt', json_encode($json));
 
 					$this->db->insert('jwt', [ 

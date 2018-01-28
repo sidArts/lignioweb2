@@ -10,7 +10,7 @@ class MasterDiagnosticTestModel extends MY_Model {
 	}
 
 	public function getOrgSpecificDiagnosticTests($org_id) {
-		$sql = sprintf('SELECT c.name as category,mdt.*,(select count(odt.id) from org_diagnostic_tests odt where odt.id = mdt.id and org_id = %s) as isAdded FROM master_diagnostic_tests mdt JOIN diagnostic_test_categories c ON c.id = mdt.category_id ', $org_id);
+		$sql = sprintf('SELECT c.name as category,mdt.*,(select count(odt.id) from org_diagnostic_tests odt where odt.master_diagnostic_test_id = mdt.id and org_id = %s) as isAdded FROM master_diagnostic_tests mdt JOIN diagnostic_test_categories c ON c.id = mdt.category_id ', $org_id);
 		$query = $this->db->query($sql);
 		$masterDiagnosticTests = $query->result_array();
 		foreach ($masterDiagnosticTests as $index => $masterDiagnosticTest) {
