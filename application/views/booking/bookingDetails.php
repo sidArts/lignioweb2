@@ -36,11 +36,11 @@
                         <table class="table">
                             <tr>
                                 <td>Order ID</td>
-                                <td>{{booking.booking_id}}</td>
+                                <td>{{booking.id}}</td>
                             </tr>
                             <tr>
                                 <td>Order Date</td>
-                                <td>{{booking.created_at | dateFilter : 'MMM d, y h:mm:ss a'}}</td>
+                                <td>{{booking.created_at | date : 'MMM d, y h:mm:ss a'}}</td>
                             </tr>
                             <tr>
                                 <td>Total Amount</td>
@@ -52,11 +52,11 @@
                         <table class="table">
                             <tr>
                                 <td>Expected Delivery Date</td>
-                                <td>{{booking.expected_report_delivery_date | dateFilter : 'MMM d, y h:mm:ss a'}}</td>
+                                <td>{{booking.expected_report_delivery_date | date : 'MMM d, y h:mm:ss a'}}</td>
                             </tr>
                             <tr>
                                 <td>Actual Delivery Date</td>
-                                <td>{{booking.actual_report_delivery_date | dateFilter : 'MMM d, y h:mm:ss a'}}</td>
+                                <td>{{booking.actual_report_delivery_date | date : 'MMM d, y h:mm:ss a'}}</td>
                             </tr>
                             <tr>
                                 <td>Paid Amount</td>
@@ -94,10 +94,7 @@
                                     <th>Specimen</th>
                                     <th>Cost</th>
                                     <th>Status</th>
-                                    <th>Assigned To</th>
-                                    <?php if(in_array(4, $userDetails['roles'])): ?>
                                     <th>Action</th>
-                                    <?php endif; ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,32 +105,8 @@
                                     <td>{{value.cost}}</td>
                                     <td>{{value.statusDesc}}</td>
                                     <td>
-{{ ((value.status == 1) ? 'NA' : (value.assignee_firstname + ' ' + value.assignee_lastname + '(' + value.assignee_phone + ')')) }}
+                                        <button ng-disabled="value.status_id != 10" class="btn btn-primary btn-xs">download report</button>
                                     </td>
-                                    <?php if(in_array(4, $userDetails['roles'])):  // if user has manager role then do ?>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button 
-                                                
-                                                class="btn btn-primary dropdown-toggle" 
-                                                type="button" 
-                                                data-toggle="dropdown">
-                                                <i class="fa fa-cog"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a 
-                                                        href="javascript:void(0);" 
-                                                        data-toggle="modal"
-                                                        data-target="#assignUserModal"
-                                                        ng-click="selectBookingDetail($index)">
-                                                        Assign To
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <?php endif; ?>
                                 </tr>
                             </tbody>
                         </table>

@@ -52,7 +52,7 @@ class Login extends CI_Controller {
 				$result = $query->row_array();	
 				$expiry = round(microtime(true) * 1000) + (1 * 60 * 1000);
 				$json = [
-					'user_id'			=> $result['user_id'],
+					'id'				=> $result['id'],
 					'firstname'			=> $result['firstname'],
 					'lastname'			=> $result['lastname'],
 					'expiry'			=> $expiry,

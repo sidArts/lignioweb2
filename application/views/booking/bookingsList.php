@@ -34,7 +34,7 @@
                             <th>#</th>
                             <th>Booking Type</th>
                             <th>Booking ID</th>
-                            <th>Full Name (Phone)</th>
+                            <th>Full Name</th>
                             <th>Status</th>
                             <th>Created At</th>
                             <th>Expected Delivery Date</th>
@@ -46,14 +46,17 @@
                         <tr ng-repeat="booking in bookings">
                             <td>{{ $index + 1 }}</td>
                             <td>{{ booking.booking_type }}</td>
-                            <td>{{ booking.booking_id }}</td>
-                            <td>{{ booking.firstname }}&nbsp;{{ booking.lastname }}&nbsp;({{booking.phone}})</td>
+                            <td>{{ booking.id }}</td>
+                            <td style="white-space: nowrap;">
+                                {{ booking.firstname }}&nbsp;{{ booking.lastname }}&nbsp;
+                                <button class="btn btn-primary btn-xs">details</button>
+                            </td>
                             <td>{{ booking.status_desc }}</td>
                             <td>{{ booking.created_at | date : 'MMM d, y h:mm a' }}</td>
                             <td>{{ booking.expected_report_delivery_date }}</td>
                             <td>{{ ((booking.status == 3) ? booking.actual_report_delivery_date : 'NA')}}</td>
                             <td class="text-right" style="width: 30px;">
-                                <button class="btn btn-primary" ng-click="showBookingDetails(booking.booking_id)">
+                                <button class="btn btn-primary" ng-click="showBookingDetails(booking.id)">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </button>
                             </td>
@@ -62,48 +65,11 @@
                 </table>
             </div>
         </div>
-        <div id="booking-details-modal" class="modal fade">
-            <div class="modal-dialog modal-lg">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Booking Details</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Diagnostic Test</th>
-                                <th>Specimen</th>
-                                <th>Cost</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="value in bookingDetails">
-                                <td>{{$index + 1 }}</td>
-                                <td>{{value.name}}</td>
-                                <td>{{value.specimen}}</td>
-                                <td>{{value.cost}}</td>
-                                <td>{{value.statusDesc}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
     </div>
     <!-- END CONTENT BODY -->
 </div>
 <!-- END CONTENT -->
 <?php print $js; ?>
-<script src="<?php print base_url('assets/js/lib/angular/angular.js'); ?>"></script>
 <script src="<?php print base_url('assets/js/lib/datatables/jquery.dataTables.js'); ?>"></script>
 <script src="<?php print base_url('assets/js/lib/datatables/dataTables.bootstrap.js'); ?>"></script>
 <script src="<?php print base_url('assets/js/lib/datatables/angular-datatables.js'); ?>"></script>

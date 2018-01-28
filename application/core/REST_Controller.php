@@ -36,6 +36,7 @@ class REST_Controller extends CI_Controller {
 
 	public function index() {
 		$model = $this->modelName;
+		// print_r($this->access_permission_restrict); exit;
 		$res = $this->$model->get_all($this->access_permission_restrict);
 		$this->_response(REST_Controller::HTTP_OK, $res);
 	}
@@ -113,7 +114,7 @@ class REST_Controller extends CI_Controller {
 											->like('permission_description', $permission, 'none')
 											->get();*/
 
-						$sql = 'SELECT p.code, p.restrict FROM permissions p WHERE p.id IN ( (SELECT orp.permission_id FROM org_role_permissions orp WHERE orp.role_id IN (SELECT r.id as role_id FROM org_roles r WHERE r.org_id = '. $this->userDetails['org_id'] .'))) AND p.code LIKE \'' . $permission . '\'';
+						$sql = 'SELECT p.name, p.restrict FROM permissions p WHERE p.id IN ( (SELECT orp.permission_id FROM org_role_permissions orp WHERE orp.role_id IN (SELECT r.id as role_id FROM org_roles r WHERE r.org_id = '. $this->userDetails['org_id'] .'))) AND p.name LIKE \'' . $permission . '\'';
 						$query = $this->db->query($sql);
 						if($query->num_rows() > 0):
 							$row = $query->result_array();						
@@ -125,7 +126,7 @@ class REST_Controller extends CI_Controller {
 										$this->access_permission_restrict[$value['restrict']] = $this->userDetails[$value['restrict']];
 									endif;
 								}*/
-								$this->access_permission_restrict['org_id'] = $this->userDetails['org_id'];	
+								// $this->access_permission_restrict['org_id'] = $this->userDetails['org_id'];	
 							}
 							// $this->_validateRequest($method);
 							call_user_func_array(array($this, $method), $params);

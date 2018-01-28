@@ -8,29 +8,29 @@ class BookingModel extends MY_Model {
 		$args = func_get_args();
 		$this->db->select('b.*, u.firstname, u.lastname, u.phone, s.name as status_desc ');
 		$this->db->from('bookings b');
-		$this->db->join('end_users u', 'u.end_user_id = b.end_user_id');	
-		$this->db->join('status s', 'b.status = s.status_id');	
+		$this->db->join('end_users u', 'u.id = b.end_user_id');	
+		$this->db->join('status s', 'b.status_id = s.id');	
 		if (isset($args) && count($args) > 1 && is_array($args[0]) && count($args[0]) > 0)
 			$this->db->where($args);
 		$query = $this->db->get();
-		if($query->num_rows() > 0):
+		/*if($query->num_rows() > 0):
 			$result = $query->result_array();
 			foreach ($result as $index => $booking) {
-				$bookingDetails = $this->BookingDetailModel->get_all(['booking_id' => $booking['booking_id']]);	
+				$bookingDetails = $this->BookingDetailModel->get_all(['booking_id' => $booking['id']]);	
 				$result[$index]['bookingDetails'] = $bookingDetails;
 			}
 			return $result;
 		endif;
-		return [];
+		return []; */
+		return $query->result_array();
 	}
 
 	public function get() {
-		$where = func_get_args()[0];
-		$this->db->select('b.*, s.name as statusDesc, (select sum(dt.cost) from booking_details bd join diagnostic_tests dt on dt.diagnostic_test_id = bd.diagnostic_test_id where booking_id = '. $where['booking_id'] .') as required_amount');
-		$this->db->from('lignio_db.bookings b');
-		$this->db->join('status s', 's.status_id = b.status');		
-		$this->db->where($where);
-		$query = $this->db->get();
+		$args = func_get_args();
+		$booking_id = $args[0];
+		$sql = sprintf('SELECT `b`.*, `s`.`name` as `statusDesc`, (select sum(odt.cost) from booking_details bd join org_diagnostic_tests odt on odt.id = bd.diagnostic_test_id where bd.booking_id = %s) as required_amount FROM `bookings` `b` JOIN `status` `s` ON `s`.`id` = `b`.`status_id` WHERE `b`.`id` = %s', $booking_id, $booking_id);
+		
+		$query = $this->db->query($sql);
 		if($query->num_rows() > 0):
 			return $query->row_array();
 		else:
