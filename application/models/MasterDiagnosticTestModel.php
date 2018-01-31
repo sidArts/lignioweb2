@@ -15,7 +15,7 @@ class MasterDiagnosticTestModel extends MY_Model {
 		$masterDiagnosticTests = $query->result_array();
 		foreach ($masterDiagnosticTests as $index => $masterDiagnosticTest) {
 			$q = $this->db->get_where('master_diagnostic_test_params', [ 
-				'diagnostic_test_id' => $masterDiagnosticTest['id'] 
+				'master_diagnostic_test_id' => $masterDiagnosticTest['id'] 
 			]);
 			$masterDiagnosticTests[$index]['laboratoryParameters'] = $q->result_array();
 		}

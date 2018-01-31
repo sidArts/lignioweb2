@@ -6,7 +6,7 @@ class MasterDiagnosticTests extends MY_Controller {
 		parent::__construct();
 		$this->load->model("MasterDiagnosticTestModel", "booking");
 	}
-	public function index() {
-		// $this->view = "booking/master-diagnostic-test-view";		
-	}
+	public function index() { }
+
+	public function new() { }
 }
