@@ -66,9 +66,7 @@
             							<i class="fa fa-cogs"></i>
             						</button>
         							<ul class="dropdown-menu dropdown-menu-right">
-        								<li><a href="#">HTML</a></li>
-        								<li><a href="#">CSS</a></li>
-        								<li><a href="#">JavaScript</a></li>
+        								<li><a href="#testResultsEntry">Test Results Entry</a></li>
         							</ul>
         						</div>
             				</td>
@@ -76,6 +74,27 @@
             		</tbody>
             	</table>
             </div>
+        </div>
+
+        <div id="testResultsEntry" class="modal fade">
+        	<div class="modal-dialog">
+
+			    <!-- Modal content-->
+			    <div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Test Results Entry</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group" ng-repeat="testParam in diagnosticTestParams">
+							<label>{{ testParam. }}</label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+			    </div>
+		  	</div>
         </div>
     </div>
 </div>
@@ -87,6 +106,15 @@ angular.module('lignioApp', [])
 })
 .controller('lignioAppController', function($scope, $http) {
 	$scope.filter = 'created_at';
+	$scope.diagnosticTestParams = [];
+
+	$scope.getMasterDiagnosticTestParams = function(masterDiagnosticTestId) {
+		var url = '/api/MasterDiagnosticTestReportParams/read/' + masterDiagnosticTestId;
+		$http.get(url).then(function(res) {
+			$scope.diagnosticTestParams = angular.copy(res.data);
+		});
+	};
+
 	var init = function() {
 		$http.get('/api/DiagnosticTest/read_TestResults').then(function(res) {
 			$scope.diagnosticTestList = res.data;

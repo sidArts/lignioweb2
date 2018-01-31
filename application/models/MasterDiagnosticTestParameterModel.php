@@ -7,7 +7,7 @@ class MasterDiagnosticTestParameterModel extends MY_Model {
 		parent::__construct();
 	}
 
-	public function getReportParamByDiagnosticLabId($diagnostic_test_id) {
+	public function getReportParamByDiagnosticTestId($diagnostic_test_id) {
 		$sql = 'SELECT tp.*, mu.description as unit, mu.short_form as unit_short_form, it.name as form_input_type FROM master_diagnostic_test_params tp JOIN measurement_units mu JOIN form_input_types it ON mu.id = tp.measurement_unit_id and it.id = tp.input_type_id WHERE tp.diagnostic_test_id = ?';
 		$query = $this->db->query($sql, $diagnostic_test_id);
 		return $query->result_array();
