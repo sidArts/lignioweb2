@@ -17,7 +17,7 @@ class User extends REST_Controller {
 	}*/
 
 	public function read_all_pathologists() {
-		$res = $this->UserModel->get_all_user_by_role_and_organization(3, $this->userDetails['diagnostic_lab_id']);
+		$res = $this->UserModel->get_all_user_by_role_and_organization($this->userDetails['org_id']);
 		$this->_response(parent::HTTP_OK, $res);
 	}
 

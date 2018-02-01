@@ -45,7 +45,7 @@ class Login extends CI_Controller {
 				unset($credentials['email']);
 			endif;
 
-			$this->db->join('organizations o', 'o.organization_id = u.org_id', 'left');
+			$this->db->join('organizations o', 'o.id = u.org_id', 'left');
 			$query = $this->db->get_where('users u', $credentials);
 
 			if($query->num_rows() > 0):

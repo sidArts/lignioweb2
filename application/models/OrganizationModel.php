@@ -3,6 +3,7 @@
 class OrganizationModel extends MY_Model {
 
 	protected $_table = 'organizations';
+	protected $_table_alias = 'o';
 	function __construct() {
 		parent::__construct();
 	}

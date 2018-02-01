@@ -35,9 +35,10 @@ var newBookingController = function($scope, $http, $window) {
     $scope.selectDiagnosticTest = function() {
         $scope.booking.diagnosticTests = [];
         $scope.booking.totalAmount = 0;
+       // $scope.booking.cost={};
         angular.forEach($scope.checkedDiagnosticTests, function(value, key){
             if(value) {
-                var diagnosticTest = _.find($scope.diagnosticTestList, { 'diagnostic_test_id': key });
+                var diagnosticTest = _.find($scope.diagnosticTestList, { 'id': key });
                 $scope.booking.diagnosticTests.push(diagnosticTest);
                 $scope.booking.totalAmount += parseFloat(diagnosticTest.cost);
             }

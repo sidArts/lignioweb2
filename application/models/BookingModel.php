@@ -41,7 +41,7 @@ class BookingModel extends MY_Model {
 
 	public function payment()
 {
-  $sql= 'SELECT b.paid_amount,e.firstname,e.lastname,o.name,od.cost from bookings as b INNER JOIN booking_details as bd on b.id=bd.booking_id INNER JOIN org_diagnostic_tests as od on od.master_diagnostic_test_id=bd.diagnostic_test_id INNER JOIN end_users as e on e.id=b.end_user_id inner JOIN organizations as o on o.organization_id=od.id';
+  $sql= 'SELECT b.paid_amount,e.firstname,e.lastname,o.name,od.cost from bookings as b INNER JOIN booking_details as bd on b.id=bd.booking_id INNER JOIN org_diagnostic_tests as od on od.master_diagnostic_test_id=bd.diagnostic_test_id INNER JOIN end_users as e on e.id=b.end_user_id inner JOIN organizations as o on o.id = od.org_id';
   $query = $this->db->query($sql);
   
     return $query->result_array();

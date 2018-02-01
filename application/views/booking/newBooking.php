@@ -6,7 +6,7 @@
 
             <!-- BEGIN PAGE TITLE-->
             <h1 class="page-title">
-                <h1 class="page-title"> New Booking</h1>
+                <h1 class="page-title"> <?php print $userDetails['org_name'] ?></h1>
                 <!--<small>statistics, charts, recent events and reports</small>-->
             </h1>
             <!-- END PAGE TITLE-->
@@ -155,8 +155,26 @@
                                     </div>
                                     <div class="modal-body">
 
-                                        <diagnostic-test-view diagnostic-test-list="diagnosticTestList" checked-tests="checkedDiagnosticTests">
-
+                                        <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Name</th>
+                                                    <th>Category</th>
+                                                    <th>Specimen</th>
+                                                    <th>Cost</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="value in diagnosticTestList">
+                                                    <td><input type="checkbox" ng-model="checkedDiagnosticTests[value.id]"></td>
+                                                    <td>{{ value.name }}</td>
+                                                    <td></td>
+                                                    <td>{{ value.specimen }}</td>
+                                                    <td>{{value.cost}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                             
                                     </div>
                                     <div class="modal-footer">

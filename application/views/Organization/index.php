@@ -35,6 +35,7 @@
                             <th width="40%">Location</th>
                             <th>Website</th>
                             <th>Created At</th>
+                            <th>Status</th>
                             <th class="text-right" width="20%">Action</th>
                         </tr>
                     </thead>
@@ -47,13 +48,14 @@
                             <td>{{ org.address }}, {{ org.city }}, {{ org.state }}</td>
                             <td>{{ org.website }}</td>
                             <td>{{ org.created_at | date : 'MMM d, y h:mm a' }}</td>
+                            <td>{{ org.status }}</td>
                             <td class="text-right">
-                                <span class="label" ng-class="{ 'label-warning': (org.status_id == 1), 'label-success': (org.status_id == 7),
+                                <span class="label" ng-class="{ 'label-warning': (org.status_id == 1 || org.status_id == 13), 'label-success': (org.status_id == 7),
                                 'label-danger' : (org.status_id == 8) }">
                                     {{org.status}}
                                 </span>&nbsp;
-                                <button ng-click="viewOrganizationDetails($index)" class="btn btn-default btn-xs">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                <button ng-click="setStatus($index)" class="btn btn-default btn-xs">
+                                    <i class="fa fa-cogs" aria-hidden="true"></i>
                                 </button>
                             </td>
                         </tr>
@@ -62,64 +64,37 @@
             </div>
         </div>
 
+        
         <!-- Modal -->
-        <div id="organizationDetailsModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="modal-title">Diagnostic Test Details</h3>
-                    </div>
-                    <div class="modal-body">
-                        <!-- <div class="row">
-                            <div class="col-lg-6">
-                                <strong>Diagnostic Test</strong>
-                            </div>
-                            <div class="col-lg-6">
-                                {{diagnosticTestDetails.name}}
-                            </div>
-                        </div> -->
-                        <table class="table table-striped">
-                            <tr>
-                                <th width="15%">Diagnostic Test</th>
-                                <td>{{diagnosticTestDetails.name}}</td>
-                            </tr>
-                            <tr>
-                                <th>Category</th>
-                                <td>{{diagnosticTestDetails.category}}</td>
-                            </tr>
-                            <tr>
-                                <th>Specimen</th>
-                                <td>{{diagnosticTestDetails.specimen}}</td>
-                            </tr>
-                            <tr>
-                                <th>Description</th>
-                                <td>{{diagnosticTestDetails.description}}</td>
-                            </tr>
-                        </table>
-                        <h3 class="page-header">
-                            Laboratory Parameters
-                        </h3>
-                        <table class="table table-striped">
-                            <tr>
-                                <th width="1%">#</th>
-                                <th>Parameter</th>
-                                <th>Healthy Range</th>
-                            </tr>
-                            <tr ng-repeat="parameter in diagnosticTestDetails.laboratoryParameters">
-                                <td>{{$index + 1 }}</td>
-                                <td>{{parameter.name}}</td>
-                                <td>{{parameter.healthy_range}}</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
+<div id="setOrganizationStatusModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Organization </h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <label>Select Status</label>
+            <select class="form-control" ng-model="organization.status_id">
+                <option value="">--select--</option>
+                <option value="7">Approved</option>
+                <option value="8">Rejected</option>
+                <option value="1">Pending</option>
+                <option value="13">Inactive</option>
+            </select>
         </div>
+        <button class="btn btn-primary" ng-click="saveOrgStatus()">Save</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
     </div>
 </div>
 

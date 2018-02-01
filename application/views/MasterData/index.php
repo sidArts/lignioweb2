@@ -4,7 +4,7 @@
 	<div class="page-content" style="min-height: 1001px;">
 		<!-- BEGIN PAGE TITLE-->
 	    <h1 class="page-title">
-	        <h1 class="page-title"> Master Data</h1>
+	        <h1 class="page-title"> <?php print $userDetails['org_name'] ?></h1>
 	    </h1>
 	    <!-- BEGIN PAGE BAR -->
 	    <div class="page-bar">

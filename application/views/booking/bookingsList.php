@@ -6,7 +6,7 @@
 
         <!-- BEGIN PAGE TITLE-->
         <h1 class="page-title">
-            <h1 class="page-title"> Bookings</h1>
+            <h1 class="page-title"> <?php print $userDetails['org_name'] ?></h1>
             <!--<small>statistics, charts, recent events and reports</small>-->
         </h1>
         <!-- END PAGE TITLE-->

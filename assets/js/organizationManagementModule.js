@@ -1,4 +1,6 @@
 var orgMangementController = function($scope, $http) {
+
+	$scope.organization = {};
 	var getOrganizationList = function() {
 		var url = '/api/organization';
 		var promise = $http.get(url);
@@ -7,9 +9,24 @@ var orgMangementController = function($scope, $http) {
 		});
 	};
 
-	$scope.viewOrganizationDetails = function(index) {
+	var getStatusList = function() {
+		var url = '/api/Status';
+		var promise = $http.get(url);
+		promise.then(function(res) {
+			$scope.statusList = res.data;
+		});
+	}
+
+	$scope.setStatus = function(index) {
 		$scope.organizationDetails = angular.copy($scope.organizations[index]);
-		$('#organizationDetailsModal').modal('show');
+		$scope.organization.status_id = $scope.organizations[index].status_id;
+		$scope.organization.id = $scope.organizations[index].id;
+		$('#setOrganizationStatusModal').modal('show');
+	}
+
+	$scope.saveOrgStatus = function() {
+		var promise = $http.post('/api/Organization/update', $scope.organization);
+		promise.then(function() { getOrganizationList(); $('#setOrganizationStatusModal').modal('hide'); })
 	}
 	getOrganizationList();
 }

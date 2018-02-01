@@ -23,5 +23,10 @@ class DiagnosticTest extends MY_Controller {
 		$this->data['heading']     	= "RB Diagnostic Center";
 	}
 
+	public function PendingSampleCollection() {
+		$this->data['org_id'] = 1;
+		$this->data['heading']     	= "RB Diagnostic Center";
+	}
+
 }
 	

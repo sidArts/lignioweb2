@@ -11,7 +11,7 @@ class Booking extends REST_Controller {
 	}	
 
 	public function read_all() {
-		$res 	= $this->BookingModel->get_all($this->access_permission_restrict);
+		$res 	= $this->BookingModel->get_all([ 'org_id' => $this->userDetails['org_id'] ]);
 		$this->_response(parent::HTTP_OK, $res);
 	}
 
@@ -20,7 +20,7 @@ class Booking extends REST_Controller {
 		$this->load->model('BookingDetailModel');
 		$data 		= json_decode($this->input->raw_input_stream, TRUE);
 		$booking 	= [];		
-		$user 		= $this->EndUserModel->get([ 'phone' => $data['phone'] ], ['end_user_id']);
+		$user 		= $this->EndUserModel->get([ 'phone' => $data['phone'] ], ['id']);
 		
 		if(!$user):
 			$user = [];
@@ -33,12 +33,12 @@ class Booking extends REST_Controller {
 				$this->_response(parent::HTTP_BAD_REQUEST);
 			endif;
 		endif;
-		$booking['end_user_id'] 		= $user['end_user_id'];
-		$booking['diagnostic_lab_id'] 	= $this->userDetails['diagnostic_lab_id'];
+		$booking['end_user_id'] 		= $user['id'];
+		$booking['org_id'] 				= $this->userDetails['org_id'];
 		$booking['booking_type']		= 'Offline';
-		$booking['booking_creator_id'] 	= $this->userDetails['user_id'];
+		$booking['booking_creator_id'] 	= $this->userDetails['id'];
 		$booking['paid_amount']			= $data['paid_amount'];
-		$booking['status']				= 1;
+		$booking['status_id']				= 1;
 		$insertedBookingId 				= $this->BookingModel->insert($booking);
 		if(!$insertedBookingId):
 			$this->_response(parent::HTTP_BAD_REQUEST);
@@ -46,7 +46,7 @@ class Booking extends REST_Controller {
 		foreach($data['diagnosticTests'] as $diagnosticTest):
 			$bookingDetails 						= [];
 			$bookingDetails['booking_id'] 			= $insertedBookingId;
-			$bookingDetails['diagnostic_test_id'] 	= $diagnosticTest['diagnostic_test_id'];
+			$bookingDetails['diagnostic_test_id'] 	= $diagnosticTest['id'];
 			$this->BookingDetailModel->insert($bookingDetails);
 		endforeach;
 		$this->_response(REST_Controller::HTTP_CREATED, $insertedBookingId);
@@ -101,7 +101,7 @@ public function payment($status,$paid_amount)
 $this->load->model('BookingDetailModel');
 //$this->load->model('EndUserModel');
 $data = $this->BookingModel->get($this->access_permission_restrict);
-if($data!=NULL):
+if($data!=NULL)
 {
 	$paymentDetails=$this->bookings->payment();
 	$data['paid_amount']=$paid_amount;

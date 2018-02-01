@@ -120,14 +120,14 @@ class REST_Controller extends CI_Controller {
 							$row = $query->result_array();						
 
 							$this->access_permission_restrict = [];
-							if($this->userDetails['org_id'] != 1) {
+							//if($this->userDetails['org_id'] != 1) {
 								/*foreach ($row as $value) {
 									if(isset($value['restrict']) && !empty($value['restrict'])):
 										$this->access_permission_restrict[$value['restrict']] = $this->userDetails[$value['restrict']];
 									endif;
 								}*/
 								// $this->access_permission_restrict['org_id'] = $this->userDetails['org_id'];	
-							}
+							//}
 							// $this->_validateRequest($method);
 							call_user_func_array(array($this, $method), $params);
 						else:
