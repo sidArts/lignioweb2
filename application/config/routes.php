@@ -50,4 +50,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] 	= 'Homepage';
+$route['superadmin'] = 'superadmin/Home/login';
 $route['translate_uri_dashes'] 	= FALSE;

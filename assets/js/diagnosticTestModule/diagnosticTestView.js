@@ -19,7 +19,12 @@ var diagnosticTestController = function($scope, $http, $window, DTOptionsBuilder
     };
 
     $scope.updateDiagnosticTest = function () {
-        $http.put('/api/diagnosticTest/update', angular.copy($scope.diagnosticTest)).then(function () {
+        var updateData = { 
+            id:         $scope.diagnosticTest.id, 
+            cost:       $scope.diagnosticTest.cost, 
+            is_active:  $scope.diagnosticTest.is_active 
+        };
+        $http.put('/api/diagnosticTest/update', updateData).then(function () {
             $("#editDiagnosticTestModal").modal('hide');
             bootbox.alert({
                 size: "small",

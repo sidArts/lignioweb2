@@ -48,6 +48,8 @@
                             <td>{{ value.specimen }}</td>
                             <td>{{ value.cost }}</td>
                             <td class="text-right">
+                                <label class="label label-success" ng-if="value.is_active == 1">Active</label>
+                                <label class="label label-warning" ng-if="value.is_active == 0">Inactive</label>
                                 <button class="btn btn-primary btn-xs" ng-click="editDiagnosticTest($index)">
                                     <i class="fa fa-pencil"></i>
                                 </button>
@@ -72,29 +74,8 @@
                         <!-- BEGIN FORM-->
                         <div class="form-horizontal1">
                             <div class="form-body">
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">Diagnostic Category</label>
-                                    <div class="col-md-5">
-                                        <select class="form-control input-circle-left input-circle-right" ng-model="diagnosticTest.category" ng-options="value._id as value.name for value in categoryList">
-                                            <option value="">--Select--</option>
-                                        </select>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">Diagnostic Test</label>
-                                    <div class="col-md-5">
-                                        <input type="text" ng-model="diagnosticTest.name" class="form-control">
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">Description</label>
-                                    <div class="col-md-5 col-lg-5 col-sm-5">
-                                        <textarea rows="6" ng-model="diagnosticTest.description" class="form-control" placeholder="Add Description"></textarea>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
+                                
+                                
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Cost</label>
                                     <div class="col-md-5">
@@ -107,22 +88,14 @@
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">Physical Presence Required</label>
-                                    <div class="col-md-5">
-                                        <div class="input-group">
-                                            <input type="checkbox" ng-model="diagnosticTest.presenceRequired">
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
+                                
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Status</label>
                                     <div class="col-md-5">
                                         <div class="input-group">
-                                            <select class="form-control" ng-model="diagnosticTest.isActive">
-                                                <option ng-value="true">Active</option>
-                                                <option ng-value="false">Inactive</option>
+                                            <select class="form-control" ng-model="diagnosticTest.is_active">
+                                                <option value="1">Active</option>
+                                                <option value="0">Inactive</option>
                                             </select>
                                         </div>
                                     </div>
