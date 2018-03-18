@@ -16,11 +16,12 @@ class Registration extends CI_Controller {
 			]
 		]);
 		$this->load->model("OrganizationModel", "organization");
+		$this->load->model("CountryModel", "country");
 	}	
 
 	function employee() {		
 		// $this->view = 'register';
-		$this->layout->render('Registration/employee', []);
+		$this->layout->render('Registration/employee');
 	}
 
 	function organization() {		

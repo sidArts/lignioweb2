@@ -80,6 +80,26 @@ app.controller("EmployeeregistrationController", function($scope, $http) {
           bootbox.alert('Your data has been saved successfully...!');
       });
     };
+
+    $scope.getCitiesByState = function(state_id) {
+      $http.get('/api/LocationManagement/getCities/' + state_id).then(function(res) { 
+        $scope.cities = res.data; 
+      });
+    };
+
+    $scope.getStatesByCountry = function(country_id) {
+      $http.get('/api/LocationManagement/getStates/' + country_id).then(function(res) { 
+        $scope.states = res.data; 
+      });
+    };
+
+    $scope.getCountries = function(country_id) {
+      $http.get('/api/LocationManagement/getCountries').then(function(res) { 
+        $scope.countries = res.data; 
+      });
+    };
+
+    $scope.getCountries();
     getAllOrganizations();    
 });
 

@@ -83,6 +83,7 @@ class REST_Controller extends CI_Controller {
 		elseif (method_exists($this, $method)):		
 			$token = $this->input->get_request_header('Authorization');
 			// print $token; exit;
+			// $this->_response(200, $token);
 			if($token === NULL):			
 				$this->_response(self::HTTP_UNAUTHORIZED);
 			endif;

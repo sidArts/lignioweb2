@@ -15,7 +15,7 @@ class UserModel extends MY_Model {
 			return [];
 		endif;
 	}
-
+	
     public function registeredUsers($role_id,$diagnostic_lab_id,$isactive)
     {
         $this->db->select('u.user_id, u.firstname, u.lastname, u.phone');

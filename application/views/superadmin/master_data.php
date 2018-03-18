@@ -1,3 +1,12 @@
+
+
+
+<!-- ###########################################################################################
+#########################################
+##########################
+################### -->
+
+
 <html lang="en"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <title>Lignio | Diagnostic Lab Dashboard</title>
@@ -205,7 +214,7 @@
       <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
         <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
             <li class="nav-item start active open">
-                <a href="#" onclick="goToPage('/superadmin/Home/organizations')" class="nav-link nav-toggle">
+                <a href="#" onclick="goToPage('/superadmin/Home/MasterData')" class="nav-link nav-toggle">
                    <i class="fa fa-tachometer" aria-hidden="true"></i>
                    <span class="title">Dashboard</span>
                    <span class="selected"></span>
@@ -221,7 +230,7 @@
                 </a>
                            
             </li>
-            
+
             <li class="nav-item">
                 <a href="javascript:void(0);" onclick="goToPage('/superadmin/Home/MasterData')" class="nav-link nav-toggle">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -236,151 +245,248 @@
    </div>
    <!-- END SIDEBAR -->
 </div>
-<!-- END SIDEBAR -->                <!-- BEGIN CONTENT -->
-            <div class="page-content-wrapper">
-                <!-- BEGIN CONTENT -->
- <div class="page-content-wrapper">
+<!-- END SIDEBAR --> 
 
-    <div ng-app="orgMangementModule" ng-controller="orgMangementController" class="page-content ng-scope" style="min-height: 592px;">
-        <!-- BEGIN PAGE HEADER-->
 
-        <!-- BEGIN PAGE TITLE
-        <h1 class="page-title">
-            <h1 class="page-title"> View Master Diagnostic Tests</h1>
-            <small>statistics, charts, recent events and reports</small>
-        </h1>
-         END PAGE TITLE-->
-        <!-- BEGIN PAGE BAR -->
-        <div class="page-bar">
-            <ul class="page-breadcrumb">
-                <li>
-                    <a href="http://lignio.com/">Home</a>
-                    <i class="fa fa-arrow-right"></i>
-                </li>
-                <li>
-                    <span>Organization Management</span>
-                </li>
-            </ul>
-        </div>
-        <!-- END PAGE BAR -->
-        <!-- END PAGE HEADER-->
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper" ng-app="lignioApp" ng-controller="masterDataController">
 
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th width="40%">Location</th>
-                            <th>Website</th>
-                            <th>Created At</th>
-                            <th>Status</th>
-                            <th class="text-right" width="20%">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="org in organizations">
-                            <td>
-                                {{$index + 1}}
-                            </td>
-                            <td>{{ org.name }}</td>
-                            <td>{{ org.address }}, {{ org.city }}, {{ org.state }}</td>
-                            <td>{{ org.website }}</td>
-                            <td>{{ org.created_at | date : 'MMM d, y h:mm a' }}</td>
-                            <td>{{ org.status }}</td>
-                            <td class="text-right">
-                                <span class="label" ng-class="{ 'label-warning': (org.status_id == 1 || org.status_id == 13), 'label-success': (org.status_id == 7),
-                                'label-danger' : (org.status_id == 8) }">
-                                    {{org.status}}
-                                </span>&nbsp;
-                                <button ng-click="setStatus($index)" class="btn btn-default btn-xs">
-                                    <i class="fa fa-cogs" aria-hidden="true"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+	<div class="page-content" style="min-height: 1001px;">
+		<!-- BEGIN PAGE TITLE-->
+	    <h1 class="page-title">
+	        <h1 class="page-title"> Master Data</h1>
+	    </h1>
+	    <!-- BEGIN PAGE BAR -->
+	    <div class="page-bar">
+	        <ul class="page-breadcrumb">
+	            <li>
+	                <a href="<?php print base_url(); ?>">Home</a>
+	                <i class="fa fa-arrow-right"></i>
+	            </li>
+	            <li>
+	                <span>Master Data</span>
+	            </li>
+	        </ul>
+	    </div>
+	    <div class="row">
+	    	<div class="col-lg-12 col-md-12 col-sm-12">
+	    		<ul class="nav nav-tabs">
+					<li class="active">
+						<a data-toggle="tab" href="#category">Diagnostic Test Category</a>
+					</li>
+					<li>
+						<a data-toggle="tab" href="#measurement-units" href="#">Measurement Units</a>
+					</li>
+					<li>
+						<a data-toggle="tab" href="#diagnostic-tests" href="#">Diagnostic Tests</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div id="category" class="tab-pane fade in active">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Category</th>
+									<th>Diagnostic Test Count</th>
+									<th>Created At</th>
+									<th>Updated At</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-if="diagnosticTestCategories.length == 0">
+									<td colspan="8" class="text-center">
+										<strong>No Records Found</strong>
+									</td>
+								</tr>
+								<tr ng-repeat="category in diagnosticTestCategories">
+									<td>{{ $index + 1 }}</td>
+									<td>{{ category.name }}</td>
+									<td>{{ category.diagnostic_test_count }}</td>
+									<td>{{ category.created_at | date : 'MMM d, y h:mm a' }}</td>
+									<td>{{ category.updated_at | date : 'MMM d, y h:mm a' }}</td>
+									<td>
+										<button class="btn btn-primary btn-xs">
+											<i class="fa fa-pencil"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div id="measurement-units" class="tab-pane fade">
+						<div class="form-group text-right">
+							<button class="btn btn-primary" data-toggle="modal" data-target="#addMeasurementUnitModal">
+								<i class="fa fa-plus"></i>
+							</button>
+						</div>
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Long Name</th>
+									<th>Short Name</th>
+									<th>Created At</th>
+									<th>Updated At</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-if="measurementUnits.length == 0">
+									<td colspan="8" class="text-center">
+										<strong>No Records Found</strong>
+									</td>
+								</tr>
+								<tr ng-repeat="unit in measurementUnits">
+									<td>{{ $index + 1 }}</td>
+									<td>{{ unit.description }}</td>
+									<td>{{ unit.short_form }}</td>
+									<td>{{ unit.created_at | date : 'MMM d, y h:mm a' }}</td>
+									<td>{{ unit.updated_at | date : 'MMM d, y h:mm a' }}</td>
+									<td>
+										<button class="btn btn-primary btn-xs">
+											<i class="fa fa-pencil"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 
-        
-        <!-- Modal -->
-<div id="setOrganizationStatusModal" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-sm">
+						<!-- Modal -->
+						<div id="previewReportModal" class="modal fade" role="dialog">
+							<div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title">Organization </h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-            <label>Select Status</label>
-            <select class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="organization.status_id">
-                <option value="" selected="selected">--select--</option>
-                <option value="7">Approved</option>
-                <option value="8">Rejected</option>
-                <option value="1">Pending</option>
-                <option value="13">Inactive</option>
-            </select>
-        </div>
-        <button class="btn btn-primary" ng-click="saveOrgStatus()">Save</button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<h4 class="modal-title">Report</h4>
+									</div>
+									<div class="modal-body">
+										<div class="form-group">
+											<label>{{ reportParam.name }}</label>
+											<input type="text" class="form-control">
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+								</div>
 
-  </div>
+							</div>
+						</div>
+
+						<div id="addMeasurementUnitModal" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<h4 class="modal-title">Add Measurement Unit</h4>
+									</div>
+									<div class="modal-body">
+										<div class="form-group">
+											<label>Mesurement Unit Description</label>
+											<input type="text" class="form-control" ng-model="measurementUnit.description">
+										</div>
+										<div class="form-group">
+											<label>Mesurement Unit in Short</label>
+											<input type="text" ng-model="measurementUnit.short_form" class="form-control">
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" ng-click="addMeaurementUnit()">Save</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+					<div id="diagnostic-tests" class="tab-pane fade">
+						<table class="table table-striped">    
+		                    <thead>
+		                        <tr>
+		                            <th>#</th>
+		                            <th>Diagnostic Test</th>
+		                            <th>Category</th>
+		                            <th>Specimen</th>
+		                            <th>Created At</th>
+		                            <th>Updated At</th>
+		                            <th>Action</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <tr ng-repeat="diagnosticTest in masterDiagnosticTests">
+		                            <td>{{ $index + 1 }}</td>
+		                            <td>{{ diagnosticTest.name }}</td>
+		                            <td>{{ diagnosticTest.category_desc }}</td>
+		                            <td>{{ diagnosticTest.specimen }}</td>
+		                            <td>{{ diagnosticTest.created_at | date : 'MMM d, y h:mm a' }}</td>
+		                            <td>{{ diagnosticTest.updated_at | date : 'MMM d, y h:mm a' }}</td>
+		                            <td class="text-right" style="width: 30px;">
+		                                <a href="#!report-parameters/{{diagnosticTest.id}}">
+		                                    <i class="fa fa-eye" aria-hidden="true"></i>
+		                                </a>
+		                            </td>
+		                        </tr>
+		                    </tbody>
+		                </table>
+					</div>
+				</div>
+	    	</div>
+	    </div>
+	</div>
 </div>
-    </div>
-</div>
-
 <script type="text/javascript" src="http://lignio.com/assets/js/lib/gtm.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/analytics.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/bootstrap.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/js.cookie.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.slimscroll.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.blockui.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/bootstrap-switch.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/moment.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/daterangepicker.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/morris.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/raphael-min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.waypoints.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.counterup.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/amcharts.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/serial.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/pie.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/radar.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/light.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/patterns.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/chalk.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/ammap.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/worldLow.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/amstock.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/fullcalendar.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/horizontal-timeline.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.flot.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.flot.resize.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.flot.categories.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.easypiechart.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.sparkline.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.vmap.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.vmap.russia.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.vmap.world.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.vmap.europe.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.vmap.germany.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.vmap.usa.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/jquery.vmap.sampledata.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/app.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/dashboard.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/layout.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/demo.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/quick-sidebar.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/quick-nav.min.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/bootbox.js"></script><script type="text/javascript" src="http://lignio.com/assets/js/lib/angular/angular.js"></script><script src="http://lignio.com/assets/js/lib/datatables/jquery.dataTables.js"></script>
 <script src="http://lignio.com/assets/js/lib/datatables/dataTables.bootstrap.js"></script>
 <script src="http://lignio.com/assets/js/lib/datatables/angular-datatables.js"></script>
 <!-- <script src="http://lignio.com/assets/js/organizationManagementModule.js"></script> -->
 <script type="text/javascript">
-  var orgMangementController = function($scope, $http) {
+	angular.module('lignioApp', [])
+	.run(function($http) {
+	  	$http.defaults.headers.common.Authorization = document.getElementById('Authorization').value;
+	})
+	.controller('masterDataController', function($scope, $http) {
+		$scope.diagnosticTestCategories = [];
+		$scope.measurementUnits         = [];
+		$scope.measurementUnit  		= {};
 
-  $scope.organization = {};
-  var getOrganizationList = function() {
-    var url = '/superadmin/Home/getOrganizations';
-    var promise = $http.get(url);
-    promise.then(function(res) {
-      $scope.organizations = res.data;
-    });
-  };
+		var getAllMasterCategories = function() {
+			$http.get('/superadmin/Home/getDiagnosticTestCategories').then(function(res) {
+				$scope.diagnosticTestCategories = res.data;
+			});
+		};		
 
-  var getStatusList = function() {
-    var url = '/superadmin/Home/getStatus';
-    var promise = $http.get(url);
-    promise.then(function(res) {
-      $scope.statusList = res.data;
-    });
-  }
+		var getAllMeasurementUnits = function() {
+			$http.get('/superadmin/Home/getMeasurementUnits').then(function(res) {
+				$scope.measurementUnits = res.data;			
+			});
+		};
 
-  $scope.setStatus = function(index) {
-    $scope.organizationDetails = angular.copy($scope.organizations[index]);
-    $scope.organization.status_id = $scope.organizations[index].status_id;
-    $scope.organization.id = $scope.organizations[index].id;
-    $('#setOrganizationStatusModal').modal('show');
-  }
+		var getAllMasterDiagnosticTests = function() {
+			$http.get('/superadmin/Home/getMasterDiagnosticTests').then(function(res) {
+				$scope.masterDiagnosticTests = res.data;			
+			});
+		};
+		
+	    $scope.addMeaurementUnit = function() {
+	    	var data = angular.copy($scope.measurementUnit);
+	        var promise = $http.post(BASEPATH + '/api/MeasurementUnits/create', data);
+	        promise.then(function() {
+	        	getAllMeasurementUnits();
+	        	$scope.measurementUnit = {};
+	        	$('#addMeasurementUnitModal').modal('hide');
+	        });	        
+	    };
 
-  $scope.saveOrgStatus = function() {
-    var promise = $http.post('/api/Organization/update', $scope.organization);
-    promise.then(function() { getOrganizationList(); $('#setOrganizationStatusModal').modal('hide'); })
-  }
-  getOrganizationList();
-}
-
-var orgMangementModule = angular.module("orgMangementModule", []);
-orgMangementModule.run(function($http) {
-  $http.defaults.headers.common.Authorization = document.getElementById('Authorization').value;
-});
-orgMangementModule.controller("orgMangementController", orgMangementController);
+	    getAllMeasurementUnits();
+	    getAllMasterCategories();
+	    getAllMasterDiagnosticTests();
+	});
 </script>
             </div>
             <!-- END CONTENT -->

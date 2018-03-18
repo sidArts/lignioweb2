@@ -128,6 +128,10 @@ class Home extends CI_Controller {
 		$this->load->view('superadmin/org_approval', $this->data);	
 	}
 
+	public function MasterData() {
+		$this->load->view('superadmin/master_data', $this->data);		
+	}
+
 	public function getOrganizations() {
 		$this->db->select('o.*, s.name as status');
 		$this->db->join('status s', 's.id = o.status_id' );
@@ -138,6 +142,21 @@ class Home extends CI_Controller {
 	public function getStatus() {
 		$query = $this->db->get('status');
 		$this->_response(self::HTTP_OK, $query->result_array());
+	}
+
+	public function getDiagnosticTestCategories() {
+		$query = $this->db->get('diagnostic_test_categories');
+		$this->_response(self::HTTP_OK, $query->result_array());	
+	}
+
+	public function getMeasurementUnits() {
+		$query = $this->db->get('measurement_units');
+		$this->_response(self::HTTP_OK, $query->result_array());	
+	}
+
+	public function getMasterDiagnosticTests() {
+		$query = $this->db->get('master_diagnostic_tests');
+		$this->_response(self::HTTP_OK, $query->result_array());		
 	}
 
 	public function _encryptDecrypt($action, $string) {

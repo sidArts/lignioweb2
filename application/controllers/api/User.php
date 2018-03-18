@@ -11,17 +11,12 @@ class User extends REST_Controller {
 		$this->escapeTokenFilter = [ 'save' ];
 	}	
 
-	/*public function read_all() {
-		$res = $this->UserModel->get_all($this->access_permission_restrict);
-		$this->_response(parent::HTTP_OK, $res);
-	}*/
-
-	public function read_all_pathologists() {
-		$res = $this->UserModel->get_all_user_by_role_and_organization($this->userDetails['org_id']);
+	public function index() {
+		$res = $this->UserModel->get_all([ 'org_id' => $this->userDetails['org_id']]);
 		$this->_response(parent::HTTP_OK, $res);
 	}
 
-	function save() {
+	public function save() {
 		$modelName = $this->modelName;
 		if($this->input->method() == 'post'):
 			$data = json_decode($this->input->raw_input_stream, TRUE);
