@@ -62,20 +62,25 @@
                                         <i class="fa fa-cogs"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right">
-                                        <li>
-                                            <a data-toggle="modal" data-target="#initSampleCollection" href="javascript:void(0);">
+                                        <li ng-if="value.status_id == 1">
+                                            <a ng-click="openModalForSampleCollectionInit($index)" href="javascript:void(0);">
                                                 Initiate Sample Collection
                                             </a>
                                         </li>
-                                        <li>
-                                            <a data-toggle="modal" data-target="#updateSampleCollection" href="javascript:void(0);">
-                                                Update Sample Collection
+                                        <li  ng-if="value.status_id == 2">
+                                            <a ng-click="openModalForSampleCollectionComplete($index)" href="javascript:void(0);">
+                                                Complete Sample Collection
                                             </a>
                                         </li>
-                                        <li>
+                                        <li  ng-if="value.status_id == 3">
+                                            <a ng-click="openModalForLabAnalysis($index)" href="javascript:void(0);">
+                                                Start Lab Analysis
+                                            </a>
+                                        </li>
+                                        <li  ng-if="value.status_id == 4">
                                             <a data-toggle="modal" data-target="#testResultsEntry" href="javascript:void(0);">Test Results Entry</a>
                                         </li>
-                                        <li>
+                                        <li  ng-if="value.status_id == 6">
                                             <a data-toggle="modal" href="javascript:void(0);" data-target="#reportApproval">Report Approval</a>
                                         </li>
                                     </ul>
@@ -87,7 +92,7 @@
             </div>
         </div>
 
-        <div id="initSampleCollection" class="modal fade">
+        <div id="initSampleCollectionModal" class="modal fade">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
@@ -99,12 +104,12 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Assign To</label>
-                            <select class="form-control" ng-model="initiateSampleCollection.assigned_to">
+                            <select class="form-control" ng-model="updateSampleCollection.assigned_to">
                                 <option value="">--Select Sample Collector--</option>
                                 <option value="{{user.id}}" ng-repeat="user in users">{{user.firstname + ' ' + user.lastname}}</option>
-                            </select>
-                            <button class="btn btn-primary" ng-click="saveSampleCollectionInit()">Update</button>
+                            </select>                            
                         </div>
+                        <button class="btn btn-primary" ng-click="initiateSampleCollection()">Update</button>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -113,21 +118,25 @@
             </div>
         </div>
 
-        <div id="updateSampleCollection" class="modal fade">
+        <div id="completeSampleCollectionModal" class="modal fade">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Update Sample Collection Status</h4>
+                        <h4 class="modal-title">Initiate Sample Collection</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <select class="form-control" ng-model="">
-                                
-                            </select>
+                            <label>Status</label>
+                            <select class="form-control" ng-model="updateSampleCollection.status_id">
+                                <option value="">--Select Status--</option>
+                                <option value="7">Approve</option>
+                                <option value="8">Reject</option>
+                            </select>                            
                         </div>
+                        <button class="btn btn-primary" ng-click="completeSampleCollection()">Update</button>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -147,7 +156,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group" ng-repeat="testParam in diagnosticTestParams">
-                            <label>{{ testParam. }}</label>
+                            <label>{{ testParam.name }}</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -180,7 +189,10 @@
     </div>
 </div>
 <?php print $js; ?>
+
+
 <script type="text/javascript">
+
 angular.module('lignioApp', [])
 .run(function($http) {
     $http.defaults.headers.common.Authorization = document.getElementById('Authorization').value;
@@ -190,13 +202,54 @@ angular.module('lignioApp', [])
     $scope.diagnosticTestParams = [];
     $scope.users = [];
 
-    $scope.initiateSampleCollection = {};
+    $scope.selectedBookingDetail = {};
+
     $scope.updateSampleCollection = {};
+    $scope.labAnalysisDetails = {};
     $scope.testResultsEntry = {};
     $scope.reportApproval = {};
 
-    $scope.saveSampleCollectionInit = function() {
+    $scope.openModalForSampleCollectionInit = function(index) {
+        $scope.updateSampleCollection = {
+            'booking_detail_id': $scope.diagnosticTestList[index].id
+        };
+        $scope.selectedIndex = index;
+        $('#initSampleCollectionModal').modal('show');
+    };
 
+    $scope.openModalForSampleCollectionComplete = function(index) {
+        $scope.updateSampleCollection = {
+            'booking_detail_id': $scope.diagnosticTestList[index].id
+        };
+        $('#completeSampleCollectionModal').modal('show');
+    };
+
+    $scope.openModalForLabAnalysis = function(index) {
+        $scope.updateSampleCollection = {
+            'booking_detail_id': $scope.diagnosticTestList[index].id
+        };
+        $('#completeSampleCollectionModal').modal('show');
+    };
+
+    $scope.initiateSampleCollection = function() {
+        
+        var url = '/api/BookingDetail/update_initiate_sample_collection';
+        $http.post(url, $scope.updateSampleCollection).then(function(res) { 
+            $('#initSampleCollectionModal').modal('hide');
+            bootbox.alert('Sample Collection Initiated Successfully..');
+            $scope.diagnosticTestList[$scope.selectedIndex].status_id = 2;
+        });
+    };
+
+    $scope.completeSampleCollection = function() {
+        
+        var url = '/api/BookingDetail/update_complete_sample_collection';
+        $http.post(url, $scope.updateSampleCollection)
+        .then(function(res) { 
+            $('#completeSampleCollectionModal').modal('hide');
+            bootbox.alert('Sample Collection Completed Successfully..');
+            $scope.diagnosticTestList[$scope.selectedIndex].status_id = $scope.updateSampleCollection.status_id;
+        });
     };
 
     $scope.getMasterDiagnosticTestParams = function(masterDiagnosticTestId) {
