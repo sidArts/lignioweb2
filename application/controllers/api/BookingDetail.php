@@ -57,7 +57,7 @@ class BookingDetail extends REST_Controller {
 		$this->_response(parent::HTTP_OK, $sample_collection_id);
 	}
 
-	public function update_for_lab_analysis() {
+	public function update_initiate_lab_analysis() {
 		$data = json_decode($this->input->raw_input_stream, TRUE);
 		$this->BookingDetailModel->update($data['booking_detail_id'], 
 			['status_id' => 4]);
@@ -65,8 +65,41 @@ class BookingDetail extends REST_Controller {
 		$insertData['booking_detail_id'] = $data['booking_detail_id'];
 		$insertData['assigned_at'] 		 = $milliseconds = round(microtime(true) * 1000);
 		$insertData['assigned_to'] 		 = $data['assigned_to'];
-		$this->db->insert('sample_collection_details', $insertData);
-
+		$this->db->insert('lab_analysis_details', $insertData);
 		$this->_response(parent::HTTP_OK, $this->db->insert_id());
+	}
+
+	public function update_complete_lab_analysis() {
+		$data = json_decode($this->input->raw_input_stream, TRUE);
+		$sql = "select max(id) as lab_analysis_detail_id from lab_analysis_details where booking_detail_id = " . $data['booking_detail_id'];
+		$query = $this->db->query($sql);
+		$lab_analysis_detail_id = $query->row_array()['lab_analysis_detail_id'];
+		$updateData = [];
+		$updateData['completed_at'] = $milliseconds = round(microtime(true) * 1000);
+		$updateData['status_id']	= $data['status_id'];		
+		$this->db->where('id', $lab_analysis_detail_id);
+		$this->db->update('lab_analysis_details', $updateData);
+		if($data['status_id'] == 7):
+			$this->BookingDetailModel->update($data['booking_detail_id'], 
+				['status_id' => 5 ]);
+		elseif ($data['status_id'] == 8):
+			$this->BookingDetailModel->update($data['booking_detail_id'], 
+				['status_id' => 3]);
+		endif;
+		$this->_response(parent::HTTP_OK, $lab_analysis_detail_id);
+	}
+
+	public function insert_test_result() {
+		$data = json_decode($this->input->raw_input_stream, TRUE);
+		$sql = "select max(id) as lab_analysis_detail_id from lab_analysis_details where booking_detail_id = " . $data[0]['booking_detail_id'];
+		$query = $this->db->query($sql);
+		$lab_analysis_detail_id = $query->row_array()['lab_analysis_detail_id'];
+		$test_results_param_id = [];
+		foreach ($data as $key => $reportParam) {
+			$reportParam['lab_analysis_detail_id'] = $lab_analysis_detail_id;
+			$this->db->insert('diagnostic_test_results', $reportParam);
+			$test_results_param_id[$key] = $this->db->insert_id(); 
+		}
+		$this->_response(parent::HTTP_OK, $test_results_param_id);
 	}
 }
