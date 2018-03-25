@@ -18,4 +18,12 @@ class MasterDiagnosticTestParameters extends REST_Controller {
 		// print_r($res); exit;
 		$this->_response(parent::HTTP_OK, $res);
 	}
+
+	public function read_with_param_value($diagnostic_test_id, $booking_detail_id) {
+		$modelName = $this->modelName;
+		$res = $this->$modelName->getTestParameterWithValueByBookingDetailId($diagnostic_test_id, $booking_detail_id);
+		// print_r($res); exit;
+		$this->_response(parent::HTTP_OK, $res);
+		// $this->_response(parent::HTTP_OK, $this->db->last_query());
+	}
 }

@@ -24,12 +24,12 @@
 
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3">
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label>Sort by</label>
                     <select ng-model="filter" class="form-control">
                         <option value="created_at">Created Date</option>
                     </select>
-                </div>              
+                </div>  -->             
             </div>
         </div>
 
@@ -86,7 +86,10 @@
                                             <a ng-click="openModalForTestResultEntry($index)" href="javascript:void(0);">Test Results Entry</a>
                                         </li>
                                         <li  ng-if="value.status_id == 6">
-                                            <a data-toggle="modal" href="javascript:void(0);" data-target="#reportApproval">Report Approval</a>
+                                            <a href="javascript:void(0);" ng-click="openModalForTestReportApproval($index)">Report Approval</a>
+                                        </li>
+                                        <li  ng-if="value.status_id > 6">
+                                            <a href="javascript:void(0);" ng-click="viewTestReport($index)">View Report</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -203,7 +206,7 @@
             </div>
         </div>
 
-        <div id="testResultsEntry" class="modal fade">
+        <div id="testResultsEntryModal" class="modal fade">
             <div class="modal-dialog modal-lg">
 
                 <!-- Modal content-->
@@ -247,21 +250,142 @@
             </div>
         </div>
 
-        <div id="reportApproval" class="modal fade">
-            <div class="modal-dialog">
+        <div id="testReportApprovalModal" class="modal fade">
+            <div class="modal-dialog modal-lg">
 
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Test Report Approval</h4>
+                        <h4 class="modal-title">Test Results Approval</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group" ng-repeat="testParam in diagnosticTestParams">
-                            <label>{{ testParam.name }}</label>
-                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Value</th>
+                                    <th>Unit</th>
+                                    <th>Healthy Range</th>
+                                    <th>Threatning?</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="param in diagnosticTestParams">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{param.name}}</td>
+                                    <td>
+                                        <input type="text" ng-model="param.value" class="form-control" disabled>
+                                    </td>
+                                    <td>{{param.unit_short_form}}</td>
+                                    <td>{{param.healthy_range}}</td>
+                                    <td>
+                                        <input type="checkbox" ng-model="param.is_alarming" ng-true-value="'1'" ng-false-value="'0'">
+                                    </td>
+                                    <td style="width: 150px;">
+                                        <span>
+                                            <label class="label label-success" ng-if="param.status_id == 7">Approved</label>
+                                            <label class="label label-danger" ng-if="param.status_id == 8">Rejected</label>    
+                                        </span>
+                                        
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown"> 
+                                                <i class="fa fa-cogs"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li>
+                                                    <a ng-click="approveTestParamValue($index)" href="javascript:void(0);">
+                                                        Approve
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a ng-click="rejectTestParamValue($index)" href="javascript:void(0);">
+                                                        Reject
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                     </div>
                     <div class="modal-footer">
+                        <button class="btn btn-primary" ng-click="submitReportStatus()">Submit</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="testReportViewModal" class="modal fade">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Test Report View</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Value</th>
+                                    <th>Unit</th>
+                                    <th>Healthy Range</th>
+                                    <th>Threatning?</th>
+                                    <!-- <th>Action</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="param in diagnosticTestParams">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{param.name}}</td>
+                                    <td>
+                                        <input type="text" ng-model="param.value" class="form-control" disabled>
+                                    </td>
+                                    <td>{{param.unit_short_form}}</td>
+                                    <td>{{param.healthy_range}}</td>
+                                    <td>
+                                        <input type="checkbox" ng-model="param.is_alarming" ng-true-value="'1'" ng-false-value="'0'" disabled>
+                                    </td>
+                                    <!-- <td style="width: 150px;">
+                                        <span>
+                                            <label class="label label-success" ng-if="param.status_id == 7">Approved</label>
+                                            <label class="label label-danger" ng-if="param.status_id == 8">Rejected</label>    
+                                        </span>
+                                        
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown"> 
+                                                <i class="fa fa-cogs"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li>
+                                                    <a ng-click="approveTestParamValue($index)" href="javascript:void(0);">
+                                                        Approve
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a ng-click="rejectTestParamValue($index)" href="javascript:void(0);">
+                                                        Reject
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button class="btn btn-primary" ng-click="submitReportStatus()">Submit</button> -->
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -323,16 +447,39 @@ angular.module('lignioApp', [])
     };
 
     $scope.openModalForTestResultEntry = function(index) {
-        $scope.updateSampleCollection = {
-            'booking_detail_id': $scope.diagnosticTestList[index].id
-        };
-        $scope.selectedIndex = index;
-        var masterTestId = $scope.diagnosticTestList[index].master_diagnostic_test_id;
-        var url = '/api/MasterDiagnosticTestParameters/read/' + masterTestId;
+        
+        $scope.selectedIndex    = index;
+        var masterTestId        = $scope.diagnosticTestList[index].master_diagnostic_test_id;
+        var booking_detail_id   = $scope.diagnosticTestList[index].id;
+        var url = '/api/MasterDiagnosticTestParameters/read_with_param_value/' + masterTestId + '/' + booking_detail_id;
         $http.get(url).then(function(res) {
             $scope.diagnosticTestParams = res.data;
-            $('#testResultsEntry').modal('show');
+            $('#testResultsEntryModal').modal('show');
         });        
+    };
+
+    $scope.openModalForTestReportApproval = function(index) {
+        
+        $scope.selectedIndex    = index;
+        var masterTestId        = $scope.diagnosticTestList[index].master_diagnostic_test_id;
+        var booking_detail_id   = $scope.diagnosticTestList[index].id;
+        var url = '/api/MasterDiagnosticTestParameters/read_with_param_value/' + masterTestId + '/' + booking_detail_id;
+        $http.get(url).then(function(res) {
+            $scope.diagnosticTestParams = res.data;
+            $('#testReportApprovalModal').modal('show');
+        });        
+    };
+
+    $scope.viewTestReport = function(index) {
+        $scope.selectedIndex    = index;
+        var masterTestId        = $scope.diagnosticTestList[index].master_diagnostic_test_id;
+        var booking_detail_id   = $scope.diagnosticTestList[index].id;
+        var url = '/api/MasterDiagnosticTestParameters/read_with_param_value/' + masterTestId + '/' + booking_detail_id;
+        $http.get(url).then(function(res) {
+            $scope.diagnosticTestParams = res.data;
+            $('#testReportViewModal').modal('show');
+        });        
+        $('#testReportViewModal').modal('show');
     };
 
     $scope.initiateSampleCollection = function() {
@@ -393,6 +540,38 @@ angular.module('lignioApp', [])
             // $scope.diagnosticTestList[$scope.selectedIndex].status_id = 2;
         });
     }
+
+    $scope.approveTestParamValue = function(index) {
+        
+        var url = '/api/BookingDetail/update_approve_test_param_value';
+        $http.post(url, {
+            booking_detail_id: $scope.diagnosticTestList[$scope.selectedIndex].id,
+            test_param_id: $scope.diagnosticTestParams[index].id
+        }).then(function() {
+            bootbox.alert('Test Results approved successfully!');
+        });
+    };
+
+    $scope.rejectTestParamValue = function(index) {
+
+        var url = '/api/BookingDetail/update_reject_test_param_value';
+        $http.post(url, {
+            booking_detail_id: $scope.diagnosticTestList[$scope.selectedIndex].id,
+            test_param_id: $scope.diagnosticTestParams[index].id
+        }).then(function() {
+            bootbox.alert('Test Results rejected successfully!'); 
+        });
+    };
+
+    $scope.submitReportStatus = function() {
+        var url = '/api/BookingDetail/update_test_report_status';
+        $http.post(url, {
+            booking_detail_id: $scope.diagnosticTestList[$scope.selectedIndex].id
+        }).then(function() {
+            $('#testReportApprovalModal').modal('hide');
+            bootbox.alert('Test Report Evaluation Completed successfully!');  
+        });
+    };
 
     $scope.getMasterDiagnosticTestParams = function(masterDiagnosticTestId) {
         var url = '/api/MasterDiagnosticTestReportParams/read/' + masterDiagnosticTestId;

@@ -95,7 +95,7 @@ class BookingDetail extends REST_Controller {
 		$query = $this->db->query($sql);
 		$lab_analysis_detail_id = $query->row_array()['lab_analysis_detail_id'];
 		$test_results_param_id = [];
-		foreach ($data as $key => $reportParam) {
+		foreach ($data as $key => $reportParam) :
 			$reportParam['lab_analysis_detail_id'] = $lab_analysis_detail_id;
 
 			$query = $this->db->get_where('diagnostic_test_results', [
@@ -114,8 +114,59 @@ class BookingDetail extends REST_Controller {
 			endif;
 			
 			
-		}
+		endforeach;
 		$this->BookingDetailModel->update($data[0]['booking_detail_id'], ['status_id' => 6 ]);
 		$this->_response(parent::HTTP_OK, $test_results_param_id);
+	}
+
+	public function update_approve_test_param_value() {
+		$data = json_decode($this->input->raw_input_stream, TRUE);
+		$sql = "select max(id) as lab_analysis_detail_id from lab_analysis_details where booking_detail_id = " . $data['booking_detail_id'];
+		$query = $this->db->query($sql);
+		$data['lab_analysis_detail_id'] = $query->row_array()['lab_analysis_detail_id'];
+		$this->db->where($data);
+		$this->db->update('diagnostic_test_results', ['status_id' => 7]);
+	}
+
+	public function update_reject_test_param_value() {
+		$data = json_decode($this->input->raw_input_stream, TRUE);
+		$sql = "select max(id) as lab_analysis_detail_id from lab_analysis_details where booking_detail_id = " . $data['booking_detail_id'];
+		$query = $this->db->query($sql);
+		$data['lab_analysis_detail_id'] = $query->row_array()['lab_analysis_detail_id'];
+		$this->db->where($data);
+		$this->db->update('diagnostic_test_results', ['status_id' => 8]);
+	}
+
+	public function update_test_report_status() {
+		$data = json_decode($this->input->raw_input_stream, TRUE);
+		$sql = "select max(id) as lab_analysis_detail_id from lab_analysis_details where booking_detail_id = " . $data['booking_detail_id'];
+		$query = $this->db->query($sql);
+		$data['lab_analysis_detail_id'] = $query->row_array()['lab_analysis_detail_id'];
+		$this->db->where($data);
+		$query = $this->db->get('diagnostic_test_results');	
+
+		$isRejected = false;
+		foreach($query->result_array() as $key => $value) {
+			if($value['status_id'] == 8):
+				$isRejected = true;
+				break;
+			endif;
+		}
+		if($isRejected):
+			$this->BookingDetailModel->update($data['booking_detail_id'], ['status_id' => 14]);
+		else:
+			/*$query = $this->db->query('SELECT booking_id FROM booking_details bd where bd.id = '. $data['booking_detail_id']);
+			$booking_id = $query->row_array()['booking_id'];
+			$query = $this->db->query('select sum(cost) as total_amount from org_diagnostic_tests where id in ( select diagnostic_test_id from booking_details where booking_id = '. $booking_id .')');
+			$total_amount = $query->row_array()['total_amount'];
+			$query = $this->db->query('select paid_amount from bookings where id = ' . $booking_id);
+			$paid_amount = $query->row_array()['paid_amount'];
+			if(($total_amount - $paid_amount) > 0):
+				$this->BookingDetailModel->update($data['booking_detail_id'], ['status_id' => 9]);
+			else:
+				$this->BookingDetailModel->update($data['booking_detail_id'], ['status_id' => 10]);
+			endif;*/
+			$this->BookingDetailModel->update($data['booking_detail_id'], ['status_id' => 7]);
+		endif;
 	}
 }
