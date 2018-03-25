@@ -97,9 +97,25 @@ class BookingDetail extends REST_Controller {
 		$test_results_param_id = [];
 		foreach ($data as $key => $reportParam) {
 			$reportParam['lab_analysis_detail_id'] = $lab_analysis_detail_id;
-			$this->db->insert('diagnostic_test_results', $reportParam);
-			$test_results_param_id[$key] = $this->db->insert_id(); 
+
+			$query = $this->db->get_where('diagnostic_test_results', [
+				'booking_detail_id' => $reportParam['booking_detail_id'],
+				'test_param_id'		=> $reportParam['test_param_id'],
+				'lab_analysis_detail_id' => $lab_analysis_detail_id
+			]);
+			if($query->num_rows() > 0):
+				$old_data = $query->row_array();
+				$old_data['value'] = $reportParam['value'];
+				$this->db->where('id', $old_data['id']);
+				$this->db->update('diagnostic_test_results', $old_data);
+			else:
+				$this->db->insert('diagnostic_test_results', $reportParam);
+				$test_results_param_id[$key] = $this->db->insert_id(); 
+			endif;
+			
+			
 		}
+		$this->BookingDetailModel->update($data[0]['booking_detail_id'], ['status_id' => 6 ]);
 		$this->_response(parent::HTTP_OK, $test_results_param_id);
 	}
 }
