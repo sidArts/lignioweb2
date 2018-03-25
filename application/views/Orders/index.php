@@ -48,7 +48,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="value in diagnosticTestList | orderBy : '-' + filter">
+                        <tr ng-repeat="value in diagnosticTestList">
                             <td>{{ $index + 1 }}</td>
                             <td>{{ value.diagnostic_test }}</td>
                             <td>{{ value.fullname }}</td>
@@ -535,7 +535,7 @@ angular.module('lignioApp', [])
             data.push(postData);
         });
         $http.post(url, data).then(function(res) { 
-            $('#testResultsEntry').modal('hide');
+            $('#testResultsEntryModal').modal('hide');
             bootbox.alert('Test Results saved Successfully..');
             // $scope.diagnosticTestList[$scope.selectedIndex].status_id = 2;
         });

@@ -32,8 +32,10 @@ class Booking extends REST_Controller {
 			if(!$user['end_user_id']):
 				$this->_response(parent::HTTP_BAD_REQUEST);
 			endif;
+		else:
+			$user['end_user_id'] = $user['id']
 		endif;
-		$booking['end_user_id'] 		= $user['id'];
+		$booking['end_user_id'] 		= $user['end_user_id'];
 		$booking['org_id'] 				= $this->userDetails['org_id'];
 		$booking['booking_type']		= 'Offline';
 		$booking['booking_creator_id'] 	= $this->userDetails['id'];
